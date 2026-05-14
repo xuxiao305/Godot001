@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cfs5j43uhk2is"]
+
+[ext_resource type="PackedScene" uid="uid://cmaagdpmgajtf" path="res://Scenes/Prefabs/player_click.tscn" id="1_h4uoi"]
+
+[node name="Node2D" type="Node2D" unique_id=1325230277]
+
+[node name="Player_Click" parent="." unique_id=489566763 instance=ExtResource("1_h4uoi")]

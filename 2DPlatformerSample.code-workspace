@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../Source/godot-master"
+		}
+	],
+	"settings": {
+		"godotTools.editorPath.godot4": "d:\\GoDot\\Godot_v4.6.2-stable_win64.exe\\Godot_v4.6.2-stable_win64.exe"
+	}
+}
