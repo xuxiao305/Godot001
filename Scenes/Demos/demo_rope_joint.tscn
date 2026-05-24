@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Demos/demo_rope_joint.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Demos/joint_line_visualizer.gd" id="2"]
+[ext_resource type="PackedScene" path="res://Scenes/Demos/demo_damped_spring.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1152, 40)
@@ -23,6 +24,7 @@ script = ExtResource("1")
 title = "RopeJoint 绳索关节"
 description = "左:摆锤(max=280); 右:链条(每节 36)"
 demo_index = 5
+prev_scene = ExtResource("3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
