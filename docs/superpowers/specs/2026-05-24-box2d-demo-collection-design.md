@@ -148,3 +148,21 @@ Scripts/Demos/
 | 新建 | `Scripts/Demos/demo_menu.gd` |
 | 新建 | `Scripts/Demos/demo_rigid_body.gd` |
 | 修改 | `project.godot`（添加 Demo 入口，如主场景切换或 autoload） |
+
+
+## 附录：Phase 3 实施变更（2026-05-24）
+
+inspection of `addons/godot-box2d/bin/libgodot-box2d.windows.template_release.x86_64.dll` 显示该 GDExtension 是 PhysicsServer2D backend only —— 它不注册任何 Joint 节点类。spec 中编号 3-10 的 Box2D 扩展 joint 全部**不可用**：WeldJoint2D / RopeJoint2D / PulleyJoint2D / MotorJoint2D / WheelJoint2D / GearJoint2D / MouseJoint2D 均为图标。
+
+可用 joint 类只有 Godot 内置三个：`PinJoint2D` / `GrooveJoint2D` / `DampedSpringJoint2D`。
+
+**Phase 3 已交付：**
+- 7 MotorJoint → GrooveJoint2D + sin 推力模拟
+- 8 WheelJoint → PinJoint2D（轮转） + DampedSpringJoint2D（弹簧悬挂） + 摆臂模拟
+- 9 GearJoint → 2 PinJoint2D + 脚本 angular_velocity 耦合
+- 10 MouseDrag → DemoLevel velocity-drag + DragVisualizer（无 joint）
+
+**Phase 3 已跳过：**
+- 6 PulleyJoint → 需要等长约束 joint，无可行的伪造方案，菜单按钮保持灰色
+
+如未来 godot-box2d 升级到注册更多 joint 类，可重做以上 demos 用真正的 Box2D joint，并启用 Pulley demo。
