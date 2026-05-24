@@ -4,21 +4,24 @@
 class_name Player3C
 extends RigidBody2D
 
+# 单位约定：1 m = 100 px。spec 中所有 m, m/s, N 的数值在 export 默认值里都乘以此常量。
+const PX_PER_M: float = 100.0
+
 # --------- EXPORT (Debug 面板会读写这些) ---------- #
 @export_category("Engine — Ground (§4.2)")
-@export var v_max: float = 8.0 * 100.0          # m/s → 100 px/m
-@export var f_max_ground: float = 80.0 * 100.0
-@export var saturation_full: float = 2.0 * 100.0
+@export var v_max: float = 8.0 * PX_PER_M          # 8 m/s
+@export var f_max_ground: float = 80.0 * PX_PER_M  # 80 N
+@export var saturation_full: float = 2.0 * PX_PER_M
 @export var f_active_brake: float = 0.0
 
 @export_category("Engine — Air (§4.3)")
-@export var f_max_air: float = 40.0 * 100.0
+@export var f_max_air: float = 40.0 * PX_PER_M     # 40 N
 
 @export_category("Jump (§4.4)")
-@export var j_jump_initial: float = 11.2 * 100.0
-@export var f_jump_hold: float = 8.0 * 100.0
+@export var j_jump_initial: float = 11.2 * PX_PER_M
+@export var f_jump_hold: float = 8.0 * PX_PER_M
 @export var hold_window_max: float = 0.30
-@export var gravity_y: float = 25.0 * 100.0      # 单位 px/s²
+@export var gravity_y: float = 25.0 * PX_PER_M     # 25 m/s² → 2500 px/s²
 
 @export_category("Perceptual Compensation (§4.5)")
 @export var coyote_time: float = 0.10
@@ -52,7 +55,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_ground_debounce.buffer_frames = ground_state_buffer_frames
 	var gc := GroundCheck.check(state, cos_theta_max)
 	is_grounded = _ground_debounce.feed(gc.grounded)
-	ground_normal_y = gc.min_normal_y
+	# 未接地时不暴露哨兵值 1.0（"完美朝下"的假象），归零方便 Debug 面板读
+	ground_normal_y = gc.min_normal_y if gc.grounded else 0.0
 
 	# 2. 恒定重力（ADR-0003）
 	var force := Vector2(0, gravity_y * mass)
