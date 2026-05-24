@@ -92,15 +92,14 @@ offset_bottom = 10.0
 text = "硬 + 高阻尼"
 horizontal_alignment = 1
 
-[node name="SpringStiff" type="DampedSpringJoint2D" parent="." unique_id=1202490195]
-position = Vector2(379, 122)
-node_a = NodePath("../AnchorStiff")
-node_b = NodePath("../WeightStiff")
-length = 100.0
-rest_length = 100.0
-stiffness = 1.0
-damping = 5.0
+[node name="SpringStiff" type="Node2D" parent="." unique_id=1202490195]
+position = Vector2(380, 120)
 script = ExtResource("2_3wdce")
+anchor_path = NodePath("../AnchorStiff")
+body_path = NodePath("../WeightStiff")
+rest_length = 100.0
+stiffness = 200.0
+spring_damping = 30.0
 
 [node name="SpringStiffLine" type="Line2D" parent="." unique_id=1861747082]
 top_level = true
@@ -148,14 +147,14 @@ offset_bottom = 10.0
 text = "软 + 低阻尼"
 horizontal_alignment = 1
 
-[node name="SpringSoft" type="DampedSpringJoint2D" parent="." unique_id=1773114817]
-position = Vector2(780, 235)
-node_a = NodePath("../AnchorSoft")
-node_b = NodePath("../WeightSoft")
-length = 230.0
-rest_length = 230.0
-stiffness = 15.0
-damping = 0.5
+[node name="SpringSoft" type="Node2D" parent="." unique_id=1773114817]
+position = Vector2(780, 120)
+script = ExtResource("2_3wdce")
+anchor_path = NodePath("../AnchorSoft")
+body_path = NodePath("../WeightSoft")
+rest_length = 100.0
+stiffness = 40.0
+spring_damping = 2.5
 
 [node name="SpringSoftLine" type="Line2D" parent="." unique_id=971812488]
 top_level = true
