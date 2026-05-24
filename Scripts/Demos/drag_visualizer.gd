@@ -38,7 +38,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _demo == null:
 		return
-	var body: RigidBody2D = _demo._drag_body
+	var body: RigidBody2D = _demo.get_drag_body()
 	if body == null or not is_instance_valid(body):
 		_spring_line.clear_points()
 		_trail_points.clear()

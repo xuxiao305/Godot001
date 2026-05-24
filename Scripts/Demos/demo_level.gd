@@ -120,6 +120,9 @@ func _start_drag(body: RigidBody2D) -> void:
 func _release_body() -> void:
 	_drag_body = null
 
+func get_drag_body() -> RigidBody2D:
+	return _drag_body
+
 # --------- NAVIGATION ---------- #
 
 func _on_back_pressed() -> void:
