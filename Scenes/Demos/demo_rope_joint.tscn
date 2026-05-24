@@ -1,0 +1,232 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Demos/demo_rope_joint.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Demos/joint_line_visualizer.gd" id="2"]
+
+[sub_resource type="RectangleShape2D" id="GroundShape"]
+size = Vector2(1152, 40)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(20, 648)
+
+[sub_resource type="RectangleShape2D" id="AnchorShape"]
+size = Vector2(60, 16)
+
+[sub_resource type="CircleShape2D" id="WeightShape"]
+radius = 28.0
+
+[sub_resource type="CircleShape2D" id="LinkShape"]
+radius = 10.0
+
+[node name="RopeJointDemo" type="Node2D"]
+script = ExtResource("1")
+title = "RopeJoint 绳索关节"
+description = "左:摆锤(max=280); 右:链条(每节 36)"
+demo_index = 5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.12, 0.18, 0.18, 1)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(576, 620)
+shape = SubResource("GroundShape")
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_top = 600.0
+offset_right = 1152.0
+offset_bottom = 640.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(10, 324)
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(1142, 324)
+shape = SubResource("WallShape")
+
+[node name="PendAnchor" type="StaticBody2D" parent="."]
+position = Vector2(360, 100)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PendAnchor"]
+shape = SubResource("AnchorShape")
+[node name="ColorRect" type="ColorRect" parent="PendAnchor"]
+offset_left = -30.0
+offset_top = -8.0
+offset_right = 30.0
+offset_bottom = 8.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="PendBob" type="RigidBody2D" parent="."]
+position = Vector2(360, 360)
+mass = 3.0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PendBob"]
+shape = SubResource("WeightShape")
+[node name="ColorRect" type="ColorRect" parent="PendBob"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+color = Color(0.85, 0.45, 0.2, 1)
+
+[node name="PendRope" type="RopeJoint2D" parent="."]
+position = Vector2(360, 230)
+max_length = 280.0
+node_a = NodePath("../PendAnchor")
+node_b = NodePath("../PendBob")
+
+[node name="PendLine" type="Line2D" parent="."]
+script = ExtResource("2")
+width = 2.5
+default_color = Color(0.9, 0.85, 0.6, 1)
+point_a = NodePath("../PendAnchor")
+point_b = NodePath("../PendBob")
+spring_segments = 0
+
+[node name="ChainAnchor" type="StaticBody2D" parent="."]
+position = Vector2(820, 100)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChainAnchor"]
+shape = SubResource("AnchorShape")
+[node name="ColorRect" type="ColorRect" parent="ChainAnchor"]
+offset_left = -30.0
+offset_top = -8.0
+offset_right = 30.0
+offset_bottom = 8.0
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="Link1" type="RigidBody2D" parent="."]
+position = Vector2(820, 140)
+mass = 0.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Link1"]
+shape = SubResource("LinkShape")
+[node name="ColorRect" type="ColorRect" parent="Link1"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.7, 0.7, 0.8, 1)
+
+[node name="Link2" type="RigidBody2D" parent="."]
+position = Vector2(820, 176)
+mass = 0.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Link2"]
+shape = SubResource("LinkShape")
+[node name="ColorRect" type="ColorRect" parent="Link2"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.7, 0.7, 0.8, 1)
+
+[node name="Link3" type="RigidBody2D" parent="."]
+position = Vector2(820, 212)
+mass = 0.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Link3"]
+shape = SubResource("LinkShape")
+[node name="ColorRect" type="ColorRect" parent="Link3"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.7, 0.7, 0.8, 1)
+
+[node name="Link4" type="RigidBody2D" parent="."]
+position = Vector2(820, 248)
+mass = 0.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Link4"]
+shape = SubResource("LinkShape")
+[node name="ColorRect" type="ColorRect" parent="Link4"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.7, 0.7, 0.8, 1)
+
+[node name="Link5" type="RigidBody2D" parent="."]
+position = Vector2(820, 290)
+mass = 1.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Link5"]
+shape = SubResource("WeightShape")
+[node name="ColorRect" type="ColorRect" parent="Link5"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+color = Color(0.3, 0.6, 0.9, 1)
+
+[node name="ChainRope0" type="RopeJoint2D" parent="."]
+position = Vector2(820, 120)
+max_length = 40.0
+node_a = NodePath("../ChainAnchor")
+node_b = NodePath("../Link1")
+
+[node name="ChainRope1" type="RopeJoint2D" parent="."]
+position = Vector2(820, 158)
+max_length = 36.0
+node_a = NodePath("../Link1")
+node_b = NodePath("../Link2")
+
+[node name="ChainRope2" type="RopeJoint2D" parent="."]
+position = Vector2(820, 194)
+max_length = 36.0
+node_a = NodePath("../Link2")
+node_b = NodePath("../Link3")
+
+[node name="ChainRope3" type="RopeJoint2D" parent="."]
+position = Vector2(820, 230)
+max_length = 36.0
+node_a = NodePath("../Link3")
+node_b = NodePath("../Link4")
+
+[node name="ChainRope4" type="RopeJoint2D" parent="."]
+position = Vector2(820, 270)
+max_length = 42.0
+node_a = NodePath("../Link4")
+node_b = NodePath("../Link5")
+
+[node name="ChainLine0" type="Line2D" parent="."]
+script = ExtResource("2")
+width = 2.0
+default_color = Color(0.9, 0.85, 0.6, 1)
+point_a = NodePath("../ChainAnchor")
+point_b = NodePath("../Link1")
+spring_segments = 0
+
+[node name="ChainLine1" type="Line2D" parent="."]
+script = ExtResource("2")
+width = 2.0
+default_color = Color(0.9, 0.85, 0.6, 1)
+point_a = NodePath("../Link1")
+point_b = NodePath("../Link2")
+spring_segments = 0
+
+[node name="ChainLine2" type="Line2D" parent="."]
+script = ExtResource("2")
+width = 2.0
+default_color = Color(0.9, 0.85, 0.6, 1)
+point_a = NodePath("../Link2")
+point_b = NodePath("../Link3")
+spring_segments = 0
+
+[node name="ChainLine3" type="Line2D" parent="."]
+script = ExtResource("2")
+width = 2.0
+default_color = Color(0.9, 0.85, 0.6, 1)
+point_a = NodePath("../Link3")
+point_b = NodePath("../Link4")
+spring_segments = 0
+
+[node name="ChainLine4" type="Line2D" parent="."]
+script = ExtResource("2")
+width = 2.0
+default_color = Color(0.9, 0.85, 0.6, 1)
+point_a = NodePath("../Link4")
+point_b = NodePath("../Link5")
+spring_segments = 0
