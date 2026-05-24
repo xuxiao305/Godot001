@@ -9,17 +9,17 @@ const DEMOS: Dictionary = {
 	},
 	3: {
 		"name": "WeldJoint 焊接关节",
-		"path": "",
+		"path": "res://Scenes/Demos/demo_weld_joint.tscn",
 		"description": "多个物体焊接成一体"
 	},
 	4: {
 		"name": "DampedSpring 弹簧关节",
-		"path": "",
+		"path": "res://Scenes/Demos/demo_damped_spring.tscn",
 		"description": "弹簧悬挂与振荡"
 	},
 	5: {
 		"name": "RopeJoint 绳索关节",
-		"path": "",
+		"path": "res://Scenes/Demos/demo_rope_joint.tscn",
 		"description": "绳索摆锤与长度约束"
 	},
 	6: {
