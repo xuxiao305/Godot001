@@ -8,6 +8,7 @@ extends RigidBody2D
 const PX_PER_M: float = 100.0
 const EngineTorque := preload("res://Scripts/Prototypes/3C/engine_torque.gd")
 const JumpController := preload("res://Scripts/Prototypes/3C/jump_controller.gd")
+const InputBuffer := preload("res://Scripts/Prototypes/3C/input_buffer.gd")
 
 # --------- EXPORT (Debug 面板会读写这些) ---------- #
 @export_category("Engine — Ground (§4.2)")
@@ -41,6 +42,7 @@ var net_force_this_frame: Vector2 = Vector2.ZERO
 
 var _ground_debounce := GroundCheck.Debouncer.new()
 var _jump := JumpController.new()
+var _input_buf := InputBuffer.new()
 
 # --------- LIFECYCLE ---------- #
 func _ready() -> void:
@@ -51,6 +53,8 @@ func _ready() -> void:
 	# 单位策略：1 m = 100 px。所有 spec 中的 m, m/s, N 在 export 默认值里已乘 100。
 	# 项目重力关掉（用 ADR-0003 的恒定 gravity_y）：
 	gravity_scale = 0.0  # 我们自己施加重力，便于 Debug 面板调
+	_input_buf.coyote_time = coyote_time
+	_input_buf.jump_buffer_time = jump_buffer_time
 
 # 用 _integrate_forces 而非 _physics_process —— Box2D 提供完整 state，且这是 Godot 推荐的物理操作时机。
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
@@ -61,10 +65,23 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# 未接地时不暴露哨兵值 1.0（"完美朝下"的假象），归零方便 Debug 面板读
 	ground_normal_y = gc.min_normal_y if gc.grounded else 0.0
 
-	# 2.5 跳跃触发（v1：只接地起跳；Coyote/Buffer 在 Task 7 加）
-	if Input.is_action_just_pressed("Jump") and is_grounded:
+	var now := Time.get_ticks_msec() / 1000.0
+	# 同步 export 滑条值（Task 10 Debug 面板会实时改这两个）
+	_input_buf.coyote_time = coyote_time
+	_input_buf.jump_buffer_time = jump_buffer_time
+	_input_buf.update_grounded(is_grounded, now)
+
+	# 2.5 跳跃触发（Coyote / Buffer）
+	if Input.is_action_just_pressed("Jump"):
+		_input_buf.on_jump_pressed(now)
+	# 满足条件即起跳：
+	#   - 接地 + 当前 buffer 有效（落地瞬间按下生效）
+	#   - 不接地 + coyote 窗口内 + 当前 buffer 有效
+	var can_jump_now := _input_buf.can_buffer(now) and (is_grounded or _input_buf.can_coyote(now))
+	if can_jump_now and not _jump.hold_active:
 		var impulse := _jump.trigger_jump(j_jump_initial, f_jump_hold, hold_window_max)
 		state.apply_central_impulse(impulse)
+		_input_buf.consume_buffer()
 
 	# 2. 恒定重力（ADR-0003）
 	var force := Vector2(0, gravity_y * mass)
