@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://dgearscn001d"]
+
+[ext_resource type="Script" uid="uid://dgearjnt0001d" path="res://Scripts/Demos/demo_gear_joint.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="GroundShape"]
+size = Vector2(1152, 40)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(20, 648)
+
+[sub_resource type="CircleShape2D" id="GearShape"]
+radius = 80.0
+
+[sub_resource type="RectangleShape2D" id="AnchorShape"]
+size = Vector2(20, 20)
+
+[node name="GearJointDemo" type="Node2D"]
+script = ExtResource("1")
+title = "GearJoint 齿轮关节"
+description = "拖任一齿轮转动 → 另一齿轮反向同速联动 (脚本耦合 ratio=-1)"
+demo_index = 9
+gear_a_path = NodePath("LeftGear")
+gear_b_path = NodePath("RightGear")
+ratio = -1.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.13, 0.16, 0.2, 1)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(576, 620)
+shape = SubResource("GroundShape")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_top = 600.0
+offset_right = 1152.0
+offset_bottom = 640.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(10, 324)
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(1142, 324)
+shape = SubResource("WallShape")
+
+[node name="LeftAnchor" type="StaticBody2D" parent="."]
+position = Vector2(420, 320)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftAnchor"]
+shape = SubResource("AnchorShape")
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="LeftAnchor"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.6, 0.6, 0.65, 1)
+
+[node name="RightAnchor" type="StaticBody2D" parent="."]
+position = Vector2(720, 320)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightAnchor"]
+shape = SubResource("AnchorShape")
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="RightAnchor"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.6, 0.6, 0.65, 1)
+
+[node name="LeftGear" type="RigidBody2D" parent="."]
+position = Vector2(420, 320)
+mass = 1.0
+gravity_scale = 0.0
+angular_damp = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftGear"]
+shape = SubResource("GearShape")
+
+[node name="ColorRect" type="ColorRect" parent="LeftGear"]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0.85, 0.55, 0.25, 0.6)
+
+[node name="RadiusMarker" type="ColorRect" parent="LeftGear"]
+offset_left = 0.0
+offset_top = -4.0
+offset_right = 78.0
+offset_bottom = 4.0
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="RightGear" type="RigidBody2D" parent="."]
+position = Vector2(720, 320)
+mass = 1.0
+gravity_scale = 0.0
+angular_damp = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightGear"]
+shape = SubResource("GearShape")
+
+[node name="ColorRect" type="ColorRect" parent="RightGear"]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0.3, 0.6, 0.9, 0.6)
+
+[node name="RadiusMarker" type="ColorRect" parent="RightGear"]
+offset_left = 0.0
+offset_top = -4.0
+offset_right = 78.0
+offset_bottom = 4.0
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="LeftPin" type="PinJoint2D" parent="."]
+position = Vector2(420, 320)
+node_a = NodePath("../LeftAnchor")
+node_b = NodePath("../LeftGear")
+softness = 0.0
+
+[node name="RightPin" type="PinJoint2D" parent="."]
+position = Vector2(720, 320)
+node_a = NodePath("../RightAnchor")
+node_b = NodePath("../RightGear")
+softness = 0.0
