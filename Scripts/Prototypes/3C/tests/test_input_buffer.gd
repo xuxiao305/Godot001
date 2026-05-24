@@ -37,5 +37,20 @@ func _ready() -> void:
 	b3.on_jump_pressed(0.03)
 	assert(b3.can_buffer(0.04), "落地后再按 Jump 应有 buffer")
 
+	# 4) Coyote 消费后不能再用（防止 rapid-tap 触发二段跳）
+	var b4 := InputBuffer.new()
+	b4.coyote_time = 0.10
+	b4.jump_buffer_time = 0.10
+	b4.update_grounded(true, 0.10)
+	b4.update_grounded(false, 0.11)
+	assert(b4.can_coyote(0.12), "离地 0.01s 应有 coyote")
+	b4.consume_coyote()
+	assert(not b4.can_coyote(0.12), "consume 后不应再触发 coyote")
+	assert(not b4.can_coyote(0.15), "consume 后任何窗口内都不应再触发")
+	# 落地应复位
+	b4.update_grounded(true, 0.20)
+	b4.update_grounded(false, 0.21)
+	assert(b4.can_coyote(0.22), "重新落地→离地后 coyote 应再次可用")
+
 	print("[TEST input_buffer] ALL PASS")
 	get_tree().quit()

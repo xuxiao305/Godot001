@@ -82,6 +82,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		var impulse := _jump.trigger_jump(j_jump_initial, f_jump_hold, hold_window_max)
 		state.apply_central_impulse(impulse)
 		_input_buf.consume_buffer()
+		if not is_grounded:
+			_input_buf.consume_coyote()
 
 	# 2. 恒定重力（ADR-0003）
 	var force := Vector2(0, gravity_y * mass)
