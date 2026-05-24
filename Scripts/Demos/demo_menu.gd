@@ -120,17 +120,6 @@ func _setup_menu_ui() -> void:
 
 		vbox.add_child(btn)
 
-	# 返回游戏的按钮
-	var spacer2 := Control.new()
-	spacer2.custom_minimum_size = Vector2(0, 30)
-	vbox.add_child(spacer2)
-
-	var game_btn := Button.new()
-	game_btn.text = "回到平台游戏"
-	game_btn.custom_minimum_size = Vector2(200, 36)
-	game_btn.pressed.connect(_on_game_pressed)
-	vbox.add_child(game_btn)
-
 
 func _on_demo_selected(scene_path: String) -> void:
 	print("[demo_menu] button clicked, loading: ", scene_path)
@@ -139,13 +128,4 @@ func _on_demo_selected(scene_path: String) -> void:
 		push_error("[demo_menu] failed to load: %s" % scene_path)
 		return
 	print("[demo_menu] loaded OK, requesting transition")
-	SceneTransition.load_scene(packed)
-
-
-func _on_game_pressed() -> void:
-	print("[demo_menu] back-to-game pressed")
-	var scene := load("res://Scenes/Levels/Level_01.tscn") as PackedScene
-	if scene == null:
-		push_error("[demo_menu] failed to load Level_01.tscn")
-		return
-	SceneTransition.load_scene(scene)
+	get_tree().change_scene_to_packed(packed)

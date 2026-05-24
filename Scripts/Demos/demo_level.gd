@@ -127,13 +127,13 @@ func _on_back_pressed() -> void:
 
 func _on_prev_pressed() -> void:
 	if prev_scene != null:
-		SceneTransition.load_scene(prev_scene)
+		get_tree().change_scene_to_packed(prev_scene)
 
 func _on_next_pressed() -> void:
 	if next_scene != null:
-		SceneTransition.load_scene(next_scene)
+		get_tree().change_scene_to_packed(next_scene)
 
 func _load_scene(path: String) -> void:
 	var packed := load(path) as PackedScene
 	if packed != null:
-		SceneTransition.load_scene(packed)
+		get_tree().change_scene_to_packed(packed)
