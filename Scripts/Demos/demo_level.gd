@@ -106,7 +106,7 @@ func _try_pick_body(_screen_pos: Vector2) -> void:
 
 	for result in results:
 		var body := result.get("collider") as Node
-		if body is RigidBody2D and body.freeze_mode != RigidBody2D.FREEZE_MODE_STATIC:
+		if body is RigidBody2D and not body.freeze:
 			_start_drag(body)
 			break
 
