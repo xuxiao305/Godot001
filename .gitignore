@@ -16,3 +16,10 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# .NET / C# Dev Kit (project is GDScript-only — these should never appear)
+*.csproj.lscache
+*.csproj.user
+*.sln.DotSettings.user
+bin/
+obj/
