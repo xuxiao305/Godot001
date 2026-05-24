@@ -105,5 +105,20 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	var jump_hold_force := _jump.tick(state.step, Input.is_action_pressed("Jump"), state.linear_velocity.y)
 	force += jump_hold_force
 
+	# 5. 状态转换（仅用于显示，不影响物理）
+	var vy := state.linear_velocity.y
+	var vx := state.linear_velocity.x
+	if is_grounded:
+		if absf(vx) < 5.0:
+			current_state = "Idle"
+		else:
+			current_state = "Running"
+	else:
+		if vy < 0.0:
+			current_state = "Rising"
+		else:
+			current_state = "Falling"
+	# Landed 是瞬时态，v1 简化：不做单独 Landed 帧
+
 	net_force_this_frame = force
 	state.apply_central_force(force)
