@@ -8,7 +8,7 @@ const DEMOS: Dictionary = {
 		"description": "拖拽物体 — 体验不同质量、弹性和摩擦力的表现"
 	},
 	3: {
-		"name": "WeldJoint 焊接关节",
+		"name": "Weld 焊接（PinJoint 模拟）",
 		"path": "res://Scenes/Demos/demo_weld_joint.tscn",
 		"description": "多个物体焊接成一体"
 	},
@@ -18,34 +18,36 @@ const DEMOS: Dictionary = {
 		"description": "弹簧悬挂与振荡"
 	},
 	5: {
-		"name": "RopeJoint 绳索关节",
+		"name": "Chain 链条（PinJoint 串联）",
 		"path": "res://Scenes/Demos/demo_rope_joint.tscn",
-		"description": "绳索摆锤与长度约束"
+		"description": "刚性摆锤与多段链条"
 	},
+	# PulleyJoint 需要"两段绳子等长约束"的关节；godot-box2d v0.9.11 不提供
+	# PulleyJoint2D 节点类，只能用脚本伪造（失去物理正确性）。暂时跳过。
 	6: {
-		"name": "PulleyJoint 滑轮关节",
+		"name": "PulleyJoint 滑轮关节 (不可用)",
 		"path": "",
-		"description": "滑轮对重系统"
+		"description": "addon 未提供 PulleyJoint2D 类，需等长约束 — 跳过"
 	},
 	7: {
 		"name": "MotorJoint 马达关节",
-		"path": "",
-		"description": "线性马达驱动"
+		"path": "res://Scenes/Demos/demo_motor_joint.tscn",
+		"description": "GrooveJoint2D + 周期性推力 — 平台沿直线往返"
 	},
 	8: {
 		"name": "WheelJoint 轮子关节",
-		"path": "",
-		"description": "轮子滚动与悬挂"
+		"path": "res://Scenes/Demos/demo_wheel_joint.tscn",
+		"description": "PinJoint 轮 + DampedSpringJoint 悬挂 — 拖动车身体验弹跳"
 	},
 	9: {
 		"name": "GearJoint 齿轮关节",
-		"path": "", 
-		"description": "旋转联动传递"
+		"path": "res://Scenes/Demos/demo_gear_joint.tscn",
+		"description": "脚本耦合两个 PinJoint 齿轮的角速度 — 拨动一个另一个反向同步转"
 	},
 	10: {
-		"name": "MouseJoint 鼠标关节",
-		"path": "",
-		"description": "拖拽弹性与拖尾效果"
+		"name": "MouseDrag 拖拽可视化",
+		"path": "res://Scenes/Demos/demo_mouse_drag.tscn",
+		"description": "拖拽弹性线 + 拖尾（addon 未提供 MouseJoint2D 类）"
 	},
 }
 
