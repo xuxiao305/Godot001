@@ -16,8 +16,13 @@ func _ready() -> void:
 		"启动应满力向左")
 
 	# 3) 接近目标：差值在 (0, saturation_full) → 衰减
+	# diff=1.0, saturation_full=2.0 → 80 * 1.0 * 0.5 = 40.0
 	var f1 := EngineTorque.compute(7.0, 8.0, 80.0, 2.0)
-	assert(f1 > 0.0 and f1 < 80.0, "接近顶速应衰减出力, got %f" % f1)
+	assert(_approx(f1, 40.0), "接近顶速应衰减出力到 40.0, got %f" % f1)
+
+	# Test 3b: 反向接近目标 (从 -3 加速到 8)
+	var f3b := EngineTorque.compute(-3.0, 8.0, 80.0, 2.0)
+	assert(_approx(f3b, 80.0), "test 3b failed: expected 80.0, got %f" % f3b)
 
 	# 4) 到达目标 → 力 = 0
 	assert(_approx(EngineTorque.compute(8.0, 8.0, 80.0, 2.0), 0.0),
@@ -43,4 +48,4 @@ func _ready() -> void:
 	get_tree().quit()
 
 static func _approx(a: float, b: float) -> bool:
-	return abs(a - b) < 0.001
+	return absf(a - b) < 0.001

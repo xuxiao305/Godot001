@@ -4,6 +4,8 @@
 class_name EngineTorque
 extends RefCounted
 
+const DIFF_EPSILON := 0.0001
+
 # 计算当前帧发动机输出力。
 #   v_current:        当前水平速度
 #   v_target:         目标水平速度（±v_max 或 0）
@@ -11,12 +13,13 @@ extends RefCounted
 #   saturation_full:  |v_target - v_current| 大于此值时 saturation = 1
 static func compute(v_current: float, v_target: float, f_max: float, saturation_full: float) -> float:
 	var diff := v_target - v_current
-	if absf(diff) < 0.0001:
+	if absf(diff) < DIFF_EPSILON:
 		return 0.0
 	# ADR-0002 "v_target=0 时发动机不出力，靠摩擦衰减"：无输入不主动刹车（那是 f_active_brake 的事）
-	if v_target == 0.0:
+	if absf(v_target) < DIFF_EPSILON:
 		return 0.0
 	# ADR-0002 "超过目标方向 → 力 = 0"：当前已超过 v_target 且方向相同
+	# signf(0)==0，静止启动 (v_current==0) 不会误入此分支
 	if signf(v_current) == signf(v_target) and absf(v_current) > absf(v_target):
 		return 0.0
 	var dir := signf(diff)
