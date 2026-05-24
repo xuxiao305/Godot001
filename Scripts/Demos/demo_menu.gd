@@ -49,6 +49,11 @@ const DEMOS: Dictionary = {
 		"path": "res://Scenes/Demos/demo_mouse_drag.tscn",
 		"description": "拖拽弹性线 + 拖尾（addon 未提供 MouseJoint2D 类）"
 	},
+	11: {
+		"name": "3C 原型",
+		"path": "res://Scenes/Prototypes/3C/test_level.tscn",
+		"description": "角色控制 + 摄像机 + Debug 面板（F1 切换）"
+	},
 }
 
 
