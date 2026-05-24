@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dwpnprojbal01"]
+
+[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/projectile.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dwpnfxrocket01" path="res://Scenes/Prototypes/Weapon/effects/rocket_explosion_effect.tscn" id="2"]
+
+[sub_resource type="PhysicsMaterial" id="ProjMat"]
+friction = 0.0
+bounce = 0.0
+
+[sub_resource type="CircleShape2D" id="ProjShape"]
+radius = 10.0
+
+[node name="BallisticProjectile" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 5
+gravity_scale = 1.0
+linear_damp = 0.0
+mass = 0.02
+continuous_cd = 2
+physics_material_override = SubResource("ProjMat")
+script = ExtResource("1")
+effect_scene = ExtResource("2")
+max_lifetime = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("ProjShape")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.9, 0.3, 0.1, 1)
