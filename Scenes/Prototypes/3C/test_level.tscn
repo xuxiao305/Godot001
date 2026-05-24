@@ -57,7 +57,7 @@ size = Vector2(60, 60)
 
 [node name="TestLevel" type="Node2D"]
 
-[node name="CameraFollow" type="Camera2D" parent="." node_paths=PackedStringArray("target_path")]
+[node name="CameraFollow" type="Camera2D" parent="."]
 position = Vector2(700, 400)
 enabled = true
 script = ExtResource("2")
@@ -325,5 +325,5 @@ offset_right = 30.0
 offset_bottom = 30.0
 color = Color(1.0, 0.6, 0.2, 1)
 
-[node name="DebugPanel" parent="." instance=ExtResource("3") node_paths=PackedStringArray("player_path")]
+[node name="DebugPanel" parent="." instance=ExtResource("3")]
 player_path = NodePath("../Player3C")
