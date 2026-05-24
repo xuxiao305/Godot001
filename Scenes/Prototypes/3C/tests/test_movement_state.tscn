@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dtmvst001"]
+
+[ext_resource type="Script" uid="uid://stmvst001" path="res://Scripts/Prototypes/3C/tests/test_movement_state.gd" id="1_mvst"]
+
+[node name="TestMovementState" type="Node"]
+script = ExtResource("1_mvst")
