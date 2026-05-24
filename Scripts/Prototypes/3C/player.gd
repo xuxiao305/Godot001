@@ -62,7 +62,6 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# 2. 恒定重力（ADR-0003）
 	var force := Vector2(0, gravity_y * mass)
 
-	# 3. 其他子系统的力会在后续 Task 累加进 force
 	# 3. 地面/空中发动机力（§4.2 §4.3）
 	var input_dir := Input.get_axis("Left", "Right")  # -1, 0, +1
 	var v_target := input_dir * v_max
