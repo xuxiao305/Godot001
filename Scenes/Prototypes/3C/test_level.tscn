@@ -1,26 +1,59 @@
-[gd_scene load_steps=10 format=3 uid="uid://dt3clvl0001"]
+[gd_scene load_steps=20 format=3 uid="uid://dt3clvl0001"]
 
 [ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="1"]
 [ext_resource type="Script" uid="uid://scamfollow001" path="res://Scripts/Prototypes/3C/camera_follow.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://ddbgpanel001" path="res://Scenes/Prototypes/3C/debug_panel.tscn" id="3"]
 
-[sub_resource type="PhysicsMaterial" id="GroundMat"]
-friction = 0.1
+[sub_resource type="PhysicsMaterial" id="MatDefault"]
+friction = 0.01
 
-[sub_resource type="RectangleShape2D" id="WallShape"]
-size = Vector2(10, 120)
+[sub_resource type="PhysicsMaterial" id="MatIce"]
+friction = 0.0004
 
-[sub_resource type="RectangleShape2D" id="StandShape"]
-size = Vector2(200, 40)
+[sub_resource type="PhysicsMaterial" id="MatMud"]
+friction = 0.09
 
-[sub_resource type="RectangleShape2D" id="StandTargetShape"]
-size = Vector2(200, 40)
+[sub_resource type="RectangleShape2D" id="ShapeWalkway"]
+size = Vector2(600, 40)
 
-[sub_resource type="RectangleShape2D" id="RunSourceShape"]
+[sub_resource type="RectangleShape2D" id="ShapeBand400"]
 size = Vector2(400, 40)
 
-[sub_resource type="RectangleShape2D" id="RunTargetShape"]
-size = Vector2(200, 40)
+[sub_resource type="RectangleShape2D" id="ShapeLongFloor"]
+size = Vector2(1800, 40)
+
+[sub_resource type="RectangleShape2D" id="ShapeStair1"]
+size = Vector2(80, 60)
+
+[sub_resource type="RectangleShape2D" id="ShapeStair2"]
+size = Vector2(80, 120)
+
+[sub_resource type="RectangleShape2D" id="ShapeStair3"]
+size = Vector2(80, 180)
+
+[sub_resource type="RectangleShape2D" id="ShapeStair4"]
+size = Vector2(80, 240)
+
+[sub_resource type="RectangleShape2D" id="ShapeStair5"]
+size = Vector2(80, 300)
+
+[sub_resource type="RectangleShape2D" id="ShapeBump"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="ShapePlatform"]
+size = Vector2(120, 40)
+
+[sub_resource type="RectangleShape2D" id="ShapeCliff"]
+size = Vector2(80, 40)
+
+[sub_resource type="RectangleShape2D" id="ShapeDropdown"]
+size = Vector2(80, 20)
+
+[sub_resource type="RectangleShape2D" id="ShapeWall"]
+size = Vector2(40, 200)
+
+[sub_resource type="RectangleShape2D" id="ShapeDynamicBox"]
+size = Vector2(60, 60)
 
 [node name="TestLevel" type="Node2D"]
 
@@ -31,42 +64,266 @@ script = ExtResource("2")
 target_path = NodePath("../Player3C")
 
 [node name="Player3C" parent="." instance=ExtResource("1")]
-position = Vector2(130, 100)
+position = Vector2(100, 500)
+
+[node name="Walkway" type="StaticBody2D" parent="."]
+position = Vector2(300, 620)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walkway"]
+shape = SubResource("ShapeWalkway")
+
+[node name="Ice" type="StaticBody2D" parent="."]
+position = Vector2(800, 620)
+physics_material_override = SubResource("MatIce")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ice"]
+shape = SubResource("ShapeBand400")
+
+[node name="ColorRect" type="ColorRect" parent="Ice"]
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+color = Color(0.4, 0.7, 1.0, 1)
+
+[node name="Mud" type="StaticBody2D" parent="."]
+position = Vector2(1200, 620)
+physics_material_override = SubResource("MatMud")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mud"]
+shape = SubResource("ShapeBand400")
+
+[node name="ColorRect" type="ColorRect" parent="Mud"]
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+color = Color(0.5, 0.3, 0.2, 1)
+
+[node name="Stair1" type="StaticBody2D" parent="."]
+position = Vector2(1440, 570)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair1"]
+shape = SubResource("ShapeStair1")
+
+[node name="ColorRect" type="ColorRect" parent="Stair1"]
+offset_left = -40.0
+offset_top = -30.0
+offset_right = 40.0
+offset_bottom = 30.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Stair2" type="StaticBody2D" parent="."]
+position = Vector2(1520, 540)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair2"]
+shape = SubResource("ShapeStair2")
+
+[node name="ColorRect" type="ColorRect" parent="Stair2"]
+offset_left = -40.0
+offset_top = -60.0
+offset_right = 40.0
+offset_bottom = 60.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Stair3" type="StaticBody2D" parent="."]
+position = Vector2(1600, 510)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair3"]
+shape = SubResource("ShapeStair3")
+
+[node name="ColorRect" type="ColorRect" parent="Stair3"]
+offset_left = -40.0
+offset_top = -90.0
+offset_right = 40.0
+offset_bottom = 90.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Stair4" type="StaticBody2D" parent="."]
+position = Vector2(1680, 480)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair4"]
+shape = SubResource("ShapeStair4")
+
+[node name="ColorRect" type="ColorRect" parent="Stair4"]
+offset_left = -40.0
+offset_top = -120.0
+offset_right = 40.0
+offset_bottom = 120.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Stair5" type="StaticBody2D" parent="."]
+position = Vector2(1760, 450)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair5"]
+shape = SubResource("ShapeStair5")
+
+[node name="ColorRect" type="ColorRect" parent="Stair5"]
+offset_left = -40.0
+offset_top = -150.0
+offset_right = 40.0
+offset_bottom = 150.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="RunupRunway" type="StaticBody2D" parent="."]
+position = Vector2(2200, 620)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunupRunway"]
+shape = SubResource("ShapeBand400")
+
+[node name="LongFloor" type="StaticBody2D" parent="."]
+position = Vector2(3500, 620)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LongFloor"]
+shape = SubResource("ShapeLongFloor")
+
+[node name="Bump1" type="StaticBody2D" parent="."]
+position = Vector2(2700, 596)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bump1"]
+shape = SubResource("ShapeBump")
+
+[node name="Bump2" type="StaticBody2D" parent="."]
+position = Vector2(2750, 596)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bump2"]
+shape = SubResource("ShapeBump")
+
+[node name="PlatformA" type="StaticBody2D" parent="."]
+position = Vector2(2900, 420)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformA"]
+shape = SubResource("ShapePlatform")
+
+[node name="ColorRect" type="ColorRect" parent="PlatformA"]
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="."]
+position = Vector2(3050, 270)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformB"]
+shape = SubResource("ShapePlatform")
+
+[node name="ColorRect" type="ColorRect" parent="PlatformB"]
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="PlatformC" type="StaticBody2D" parent="."]
+position = Vector2(3200, 120)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformC"]
+shape = SubResource("ShapePlatform")
+
+[node name="ColorRect" type="ColorRect" parent="PlatformC"]
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="CliffEdge" type="StaticBody2D" parent="."]
+position = Vector2(3300, 420)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CliffEdge"]
+shape = SubResource("ShapeCliff")
+
+[node name="ColorRect" type="ColorRect" parent="CliffEdge"]
+offset_left = -40.0
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="Dropdown1" type="StaticBody2D" parent="."]
+position = Vector2(3450, 320)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dropdown1"]
+shape = SubResource("ShapeDropdown")
+
+[node name="ColorRect" type="ColorRect" parent="Dropdown1"]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 10.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="Dropdown2" type="StaticBody2D" parent="."]
+position = Vector2(3550, 400)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dropdown2"]
+shape = SubResource("ShapeDropdown")
+
+[node name="ColorRect" type="ColorRect" parent="Dropdown2"]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 10.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="Dropdown3" type="StaticBody2D" parent="."]
+position = Vector2(3650, 480)
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dropdown3"]
+shape = SubResource("ShapeDropdown")
+
+[node name="ColorRect" type="ColorRect" parent="Dropdown3"]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 10.0
+color = Color(0.7, 0.5, 0.3, 1)
 
 [node name="Wall" type="StaticBody2D" parent="."]
-position = Vector2(50, 540)
-physics_material_override = SubResource("GroundMat")
+position = Vector2(3900, 500)
+physics_material_override = SubResource("MatDefault")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
-shape = SubResource("WallShape")
+shape = SubResource("ShapeWall")
 
-[node name="StandPlatform" type="StaticBody2D" parent="."]
-position = Vector2(160, 600)
-physics_material_override = SubResource("GroundMat")
+[node name="ColorRect" type="ColorRect" parent="Wall"]
+offset_left = -20.0
+offset_top = -100.0
+offset_right = 20.0
+offset_bottom = 100.0
+color = Color(0.3, 0.3, 0.3, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StandPlatform"]
-shape = SubResource("StandShape")
+[node name="DynamicBox" type="RigidBody2D" parent="."]
+position = Vector2(4200, 540)
+physics_material_override = SubResource("MatDefault")
 
-[node name="StandTarget" type="StaticBody2D" parent="."]
-position = Vector2(490, 600)
-physics_material_override = SubResource("GroundMat")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicBox"]
+shape = SubResource("ShapeDynamicBox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StandTarget"]
-shape = SubResource("StandTargetShape")
-
-[node name="RunSource" type="StaticBody2D" parent="."]
-position = Vector2(800, 600)
-physics_material_override = SubResource("GroundMat")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RunSource"]
-shape = SubResource("RunSourceShape")
-
-[node name="RunTarget" type="StaticBody2D" parent="."]
-position = Vector2(1300, 600)
-physics_material_override = SubResource("GroundMat")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RunTarget"]
-shape = SubResource("RunTargetShape")
+[node name="ColorRect" type="ColorRect" parent="DynamicBox"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+color = Color(1.0, 0.6, 0.2, 1)
 
 [node name="DebugPanel" parent="." instance=ExtResource("3") node_paths=PackedStringArray("player_path")]
 player_path = NodePath("../Player3C")
