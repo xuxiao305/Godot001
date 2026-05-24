@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://dmotorscn01b"]
 
 [ext_resource type="Script" uid="uid://dmotorjnt001b" path="res://Scripts/Demos/demo_motor_joint.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://ebjkw3hp8qz5n" path="res://Scenes/Demos/demo_rope_joint.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://dwheelscn01c" path="res://Scenes/Demos/demo_wheel_joint.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1152, 40)
@@ -24,8 +22,8 @@ script = ExtResource("1")
 title = "MotorJoint 马达关节"
 description = "GrooveJoint2D 约束 + sin 推力 — 平台沿水平槽往返；顶部箱子随之颠"
 demo_index = 7
-prev_scene = ExtResource("2")
-next_scene = ExtResource("3")
+prev_scene = "res://Scenes/Demos/demo_rope_joint.tscn"
+next_scene = "res://Scenes/Demos/demo_wheel_joint.tscn"
 platform_path = NodePath("Platform")
 force_magnitude = 1500.0
 period = 4.0

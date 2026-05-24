@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://dwheelscn01c"]
 
 [ext_resource type="Script" uid="uid://dwheeljnt001c" path="res://Scripts/Demos/demo_wheel_joint.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dmotorscn01b" path="res://Scenes/Demos/demo_motor_joint.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://dgearscn001d" path="res://Scenes/Demos/demo_gear_joint.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="WallShape"]
 size = Vector2(20, 648)
@@ -27,8 +25,8 @@ script = ExtResource("1")
 title = "WheelJoint 轮子关节"
 description = "摆臂(PinJoint) + DampedSpring 悬挂；A/D 给轮子施加扭矩前后开"
 demo_index = 8
-prev_scene = ExtResource("2")
-next_scene = ExtResource("3")
+prev_scene = "res://Scenes/Demos/demo_motor_joint.tscn"
+next_scene = "res://Scenes/Demos/demo_gear_joint.tscn"
 left_wheel_path = NodePath("LeftWheelBody")
 right_wheel_path = NodePath("RightWheelBody")
 drive_torque = 5000.0

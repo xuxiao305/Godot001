@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://ebjkw3hp8qz5n"]
+[gd_scene load_steps=6 format=3 uid="uid://ebjkw3hp8qz5n"]
 
 [ext_resource type="Script" path="res://Scripts/Demos/demo_rope_joint.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Demos/joint_line_visualizer.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://c7m2vfdgnxqr3" path="res://Scenes/Demos/demo_damped_spring.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://dmotorscn01b" path="res://Scenes/Demos/demo_motor_joint.tscn" id="4"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1152, 40)
@@ -25,8 +23,8 @@ script = ExtResource("1")
 title = "Chain 链条（PinJoint 串联）"
 description = "左:刚性摆锤(单 Pin); 右:多段链条 — 拖动末端摆动"
 demo_index = 5
-prev_scene = ExtResource("3")
-next_scene = ExtResource("4")
+prev_scene = "res://Scenes/Demos/demo_damped_spring.tscn"
+next_scene = "res://Scenes/Demos/demo_motor_joint.tscn"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
