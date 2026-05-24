@@ -1,0 +1,146 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Demos/demo_rigid_body.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="GroundShape"]
+size = Vector2(1152, 40)
+
+[sub_resource type="RectangleShape2D" id="SlopeShape"]
+size = Vector2(300, 20)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(20, 648)
+
+[sub_resource type="RectangleShape2D" id="CubeShape"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="BallShape"]
+radius = 24.0
+
+[sub_resource type="PhysicsMaterial" id="BouncyMat"]
+bounce = 0.9
+
+[sub_resource type="PhysicsMaterial" id="FlatMat"]
+bounce = 0.1
+
+[node name="RigidBodyDemo" type="Node2D"]
+script = ExtResource("1")
+title = "RigidBody 物理属性"
+description = "拖拽物体 — 体验不同质量、弹性和摩擦力的表现"
+demo_index = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Background" type="ColorRect" parent="."]
+color = Color(0.15, 0.15, 0.2, 1)
+size = Vector2(1152, 648)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(576, 620)
+shape = SubResource("GroundShape")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+color = Color(0.3, 0.25, 0.2, 1)
+size = Vector2(1152, 40)
+position = Vector2(0, 600)
+
+[node name="Slope" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slope"]
+position = Vector2(900, 560)
+rotation = -0.463648
+shape = SubResource("SlopeShape")
+
+[node name="ColorRect" type="ColorRect" parent="Slope"]
+color = Color(0.3, 0.25, 0.2, 1)
+size = Vector2(300, 20)
+position = Vector2(750, 560)
+rotation = -0.463648
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(10, 324)
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(1142, 324)
+shape = SubResource("WallShape")
+
+[node name="HeavyCube" type="RigidBody2D" parent="."]
+position = Vector2(250, 300)
+mass = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeavyCube"]
+shape = SubResource("CubeShape")
+
+[node name="ColorRect" type="ColorRect" parent="HeavyCube"]
+color = Color(0.8, 0.2, 0.2, 1)
+size = Vector2(64, 64)
+position = Vector2(-32, -32)
+
+[node name="Label" type="Label" parent="HeavyCube"]
+position = Vector2(-30, -10)
+text = "重方块
+质量=5"
+horizontal_alignment = 1
+
+[node name="LightCube" type="RigidBody2D" parent="."]
+position = Vector2(450, 300)
+mass = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightCube"]
+shape = SubResource("CubeShape")
+
+[node name="ColorRect" type="ColorRect" parent="LightCube"]
+color = Color(0.2, 0.8, 0.2, 1)
+size = Vector2(64, 64)
+position = Vector2(-32, -32)
+
+[node name="Label" type="Label" parent="LightCube"]
+position = Vector2(-30, -10)
+text = "轻方块
+质量=0.5"
+horizontal_alignment = 1
+
+[node name="BouncyBall" type="RigidBody2D" parent="."]
+position = Vector2(650, 200)
+physics_material_override = SubResource("BouncyMat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BouncyBall"]
+shape = SubResource("BallShape")
+
+[node name="ColorRect" type="ColorRect" parent="BouncyBall"]
+color = Color(0.2, 0.5, 0.9, 1)
+size = Vector2(48, 48)
+position = Vector2(-24, -24)
+
+[node name="Label" type="Label" parent="BouncyBall"]
+position = Vector2(-28, -26)
+text = "高弹性
+弹力=0.9"
+horizontal_alignment = 1
+
+[node name="FlatBall" type="RigidBody2D" parent="."]
+position = Vector2(850, 200)
+physics_material_override = SubResource("FlatMat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlatBall"]
+shape = SubResource("BallShape")
+
+[node name="ColorRect" type="ColorRect" parent="FlatBall"]
+color = Color(0.6, 0.6, 0.6, 1)
+size = Vector2(48, 48)
+position = Vector2(-24, -24)
+
+[node name="Label" type="Label" parent="FlatBall"]
+position = Vector2(-28, -26)
+text = "低弹性
+弹力=0.1"
+horizontal_alignment = 1
