@@ -37,13 +37,14 @@ func _ready() -> void:
 
 	# 4) 等 0.5s 后探针 contact 列表（保证已落地）
 	await get_tree().create_timer(0.5).timeout
-	body.apply_central_force(Vector2(150, 0))
+	body.apply_central_force(Vector2(800, 0))
 	await get_tree().create_timer(0.2).timeout
 
-	# 通过 _integrate_forces 桥读 contact 数据 —— 见下方 PlayerProbe
+	# 通过 _physics_process + PhysicsServer2D.body_get_direct_state 读 contact 数据 —— 见下方 PlayerProbe
 	var probe := PlayerProbe.new()
 	probe.target = body
 	add_child(probe)
+	print("[SPIKE] all 4 API blocks scheduled — watch output for contacts/velocity")
 
 class PlayerProbe extends Node:
 	var target: RigidBody2D
