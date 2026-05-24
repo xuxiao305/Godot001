@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	anchor.y += _lookahead_target_y
 
 	# 临界阻尼平滑（指数松弛）
-	var alpha := 1.0 - expf(-delta / follow_time_constant)
+	var alpha := 1.0 - exp(-delta / follow_time_constant)
 	global_position = global_position.lerp(anchor, alpha)
 
 func _get_target_vy() -> float:

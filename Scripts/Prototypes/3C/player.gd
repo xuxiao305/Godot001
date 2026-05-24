@@ -47,7 +47,7 @@ var _input_buf := InputBuffer.new()
 # --------- LIFECYCLE ---------- #
 func _ready() -> void:
 	lock_rotation = true
-	linear_damping = 0.0
+	linear_damp = 0.0
 	contact_monitor = true
 	max_contacts_reported = 8
 	# 单位策略：1 m = 100 px。所有 spec 中的 m, m/s, N 在 export 默认值里已乘 100。
