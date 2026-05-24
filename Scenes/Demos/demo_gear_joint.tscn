@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dgearscn001d"]
 
 [ext_resource type="Script" uid="uid://dgearjnt0001d" path="res://Scripts/Demos/demo_gear_joint.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dwheelscn01c" path="res://Scenes/Demos/demo_wheel_joint.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://dmousescn01f" path="res://Scenes/Demos/demo_mouse_drag.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1152, 40)
@@ -19,6 +21,8 @@ script = ExtResource("1")
 title = "GearJoint 齿轮关节"
 description = "拖任一齿轮转动 → 另一齿轮反向同速联动 (脚本耦合 ratio=-1)"
 demo_index = 9
+prev_scene = ExtResource("2")
+next_scene = ExtResource("3")
 gear_a_path = NodePath("LeftGear")
 gear_b_path = NodePath("RightGear")
 ratio = -1.0
