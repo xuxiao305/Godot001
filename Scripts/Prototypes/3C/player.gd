@@ -6,6 +6,7 @@ extends RigidBody2D
 
 # 单位约定：1 m = 100 px。spec 中所有 m, m/s, N 的数值在 export 默认值里都乘以此常量。
 const PX_PER_M: float = 100.0
+const EngineTorque := preload("res://Scripts/Prototypes/3C/engine_torque.gd")
 
 # --------- EXPORT (Debug 面板会读写这些) ---------- #
 @export_category("Engine — Ground (§4.2)")
@@ -62,7 +63,19 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	var force := Vector2(0, gravity_y * mass)
 
 	# 3. 其他子系统的力会在后续 Task 累加进 force
-	# TODO(Task 4): + 地面/空中发动机力（统一处理，is_grounded 分支）
+	# 3. 地面/空中发动机力（§4.2 §4.3）
+	var input_dir := Input.get_axis("Left", "Right")  # -1, 0, +1
+	var v_target := input_dir * v_max
+	var v_cur_x := state.linear_velocity.x
+	var f_engine := 0.0
+	if is_grounded:
+		f_engine = EngineTorque.compute(v_cur_x, v_target, f_max_ground, saturation_full)
+		# 主动刹车（§4.2，默认 f_active_brake = 0）
+		if input_dir == 0.0 and absf(v_cur_x) > 0.01:
+			f_engine -= signf(v_cur_x) * f_active_brake
+	else:
+		f_engine = EngineTorque.compute(v_cur_x, v_target, f_max_air, saturation_full)
+	force.x += f_engine
 	# TODO(Task 5): + 跳跃持续推力
 
 	net_force_this_frame = force
