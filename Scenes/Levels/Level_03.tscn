@@ -1,7 +1,23 @@
 [gd_scene format=3 uid="uid://cfs5j43uhk2is"]
 
 [ext_resource type="PackedScene" uid="uid://cmaagdpmgajtf" path="res://Scenes/Prefabs/player_click.tscn" id="1_h4uoi"]
+[ext_resource type="Script" uid="uid://52x4u2wyrw6u" path="res://Scenes/Levels/level_03.gd" id="1_l68ld"]
+[ext_resource type="PackedScene" uid="uid://dm0rfh2a3snyg" path="res://Prefab/Ball.tscn" id="2_gvoyn"]
+[ext_resource type="Script" uid="uid://oh41ggdt40ep" path="res://Scenes/Levels/timer.gd" id="3_gvoyn"]
 
 [node name="Node2D" type="Node2D" unique_id=1325230277]
+script = ExtResource("1_l68ld")
+ball_scene = ExtResource("2_gvoyn")
 
 [node name="Player_Click" parent="." unique_id=489566763 instance=ExtResource("1_h4uoi")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1398221434]
+polygon = PackedVector2Array(-158, 15, 103, 219, 546, 294, 721, -76, 451, -174, 62, -142)
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1368393930]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=608391375]
+position = Vector2(134, -297)
+
+[node name="Timer" type="Timer" parent="." unique_id=1098901277]
+script = ExtResource("3_gvoyn")

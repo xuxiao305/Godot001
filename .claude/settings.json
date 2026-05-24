@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" init)",
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" status)",
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" log --oneline -5)",
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" add .gitattributes .gitignore Assets/ Icon.png Icon.png.import LICENSE README.md Scenes/ Scripts/ default_env.tres icon.svg icon.svg.import project.godot 2DPlatformerSample.code-workspace kanban_tasks_data.kanban)",
+      "Bash(git -C 'D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample' commit -m ' *)",
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" remote add origin https://github.com/xuxiao305/Godot001.git)",
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" remote -v)",
+      "Bash(git -C \"D:\\\\GoDot\\\\Projects\\\\2DPlatformerSample\" push -u origin master)"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d0f4wabdt7vov"]
+
+[ext_resource type="Texture2D" uid="uid://621as0fwjhum" path="res://Assets/Textures/star_07.png" id="1_5wms6"]
+[ext_resource type="Texture2D" uid="uid://clreg520jah1j" path="res://Assets/platformPack_item008.png" id="2_sj683"]
+
+[node name="GrooveJointTest" type="Node2D" unique_id=715576826]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1579861589]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=162237874]
+texture = ExtResource("1_5wms6")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1747909730]
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D" unique_id=784190063]
+position = Vector2(1, 257)
+texture = ExtResource("2_sj683")
+
+[node name="GrooveJoint2D" type="GrooveJoint2D" parent="." unique_id=796720786]
+node_a = NodePath("../StaticBody2D")
+node_b = NodePath("../RigidBody2D")
+disable_collision = false
+initial_offset = 18.0

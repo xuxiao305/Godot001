@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://cmaagdpmgajtf"]
+[gd_scene load_steps=10 format=3 uid="uid://cmaagdpmgajtf"]
 
-[ext_resource type="Script" uid="uid://ce7pqjofian8x" path="res://Scripts/player_point_click.gd" id="1_sy0o7"]
+[ext_resource type="Script" path="res://Scripts/PlayerPointClick.cs" id="1_sy0o7"]
 [ext_resource type="Texture2D" uid="uid://cbss87b7xk5lc" path="res://Assets/Spritesheet/platformerPack_character.png" id="2_5kjkd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3ikw"]

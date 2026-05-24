@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(md|txt\\)$\")",
+      "Bash(wc -l \"D:\\\\GoDot\\\\Source\\\\godot-master/modules/gdscript\"/*.cpp)"
+    ]
+  }
+}

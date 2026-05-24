@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://dk37knufh3qra"]
 
-[ext_resource type="Script" path="res://Scripts/Demos/demo_rigid_body.gd" id="1"]
+[ext_resource type="Script" uid="uid://qauu24hnkuwq" path="res://Scripts/Demos/demo_rigid_body.gd" id="1"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1152, 40)
@@ -14,133 +14,157 @@ size = Vector2(20, 648)
 [sub_resource type="RectangleShape2D" id="CubeShape"]
 size = Vector2(64, 64)
 
-[sub_resource type="CircleShape2D" id="BallShape"]
-radius = 24.0
-
 [sub_resource type="PhysicsMaterial" id="BouncyMat"]
 bounce = 0.9
+
+[sub_resource type="CircleShape2D" id="BallShape"]
+radius = 24.0
 
 [sub_resource type="PhysicsMaterial" id="FlatMat"]
 bounce = 0.1
 
-[node name="RigidBodyDemo" type="Node2D"]
+[node name="RigidBodyDemo" type="Node2D" unique_id=1579038549]
 script = ExtResource("1")
 title = "RigidBody 物理属性"
 description = "拖拽物体 — 体验不同质量、弹性和摩擦力的表现"
 demo_index = 2
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=95426530]
 position = Vector2(576, 324)
 zoom = Vector2(0.8, 0.8)
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1522068021]
+offset_right = 1152.0
+offset_bottom = 648.0
 color = Color(0.15, 0.15, 0.2, 1)
-size = Vector2(1152, 648)
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="." unique_id=1831324247]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=457796579]
 position = Vector2(576, 620)
 shape = SubResource("GroundShape")
 
-[node name="ColorRect" type="ColorRect" parent="Ground"]
+[node name="ColorRect" type="ColorRect" parent="Ground" unique_id=71027048]
+offset_top = 600.0
+offset_right = 1152.0
+offset_bottom = 640.0
 color = Color(0.3, 0.25, 0.2, 1)
-size = Vector2(1152, 40)
-position = Vector2(0, 600)
 
-[node name="Slope" type="StaticBody2D" parent="."]
+[node name="Slope" type="StaticBody2D" parent="." unique_id=1396723371]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Slope"]
-position = Vector2(900, 560)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slope" unique_id=1776918525]
+position = Vector2(887, 502)
 rotation = -0.463648
 shape = SubResource("SlopeShape")
 
-[node name="ColorRect" type="ColorRect" parent="Slope"]
-color = Color(0.3, 0.25, 0.2, 1)
-size = Vector2(300, 20)
-position = Vector2(750, 560)
+[node name="ColorRect" type="ColorRect" parent="Slope" unique_id=2115513245]
+offset_left = 750.0
+offset_top = 560.0
+offset_right = 1050.0
+offset_bottom = 580.0
 rotation = -0.463648
+color = Color(0.3, 0.25, 0.2, 1)
 
-[node name="LeftWall" type="StaticBody2D" parent="."]
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=2030161406]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=876881783]
 position = Vector2(10, 324)
 shape = SubResource("WallShape")
 
-[node name="RightWall" type="StaticBody2D" parent="."]
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=2130738353]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=2042481050]
 position = Vector2(1142, 324)
 shape = SubResource("WallShape")
 
-[node name="HeavyCube" type="RigidBody2D" parent="."]
+[node name="HeavyCube" type="RigidBody2D" parent="." unique_id=1844350026]
 position = Vector2(250, 300)
 mass = 5.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HeavyCube"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeavyCube" unique_id=354261147]
 shape = SubResource("CubeShape")
 
-[node name="ColorRect" type="ColorRect" parent="HeavyCube"]
+[node name="ColorRect" type="ColorRect" parent="HeavyCube" unique_id=2047980205]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
 color = Color(0.8, 0.2, 0.2, 1)
-size = Vector2(64, 64)
-position = Vector2(-32, -32)
 
-[node name="Label" type="Label" parent="HeavyCube"]
-position = Vector2(-30, -10)
+[node name="Label" type="Label" parent="HeavyCube" unique_id=2002244927]
+offset_left = -30.0
+offset_top = -10.0
+offset_right = -30.0
+offset_bottom = -10.0
 text = "重方块
 质量=5"
 horizontal_alignment = 1
 
-[node name="LightCube" type="RigidBody2D" parent="."]
+[node name="LightCube" type="RigidBody2D" parent="." unique_id=1646298670]
 position = Vector2(450, 300)
 mass = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LightCube"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightCube" unique_id=1453902090]
 shape = SubResource("CubeShape")
 
-[node name="ColorRect" type="ColorRect" parent="LightCube"]
+[node name="ColorRect" type="ColorRect" parent="LightCube" unique_id=1252787619]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
 color = Color(0.2, 0.8, 0.2, 1)
-size = Vector2(64, 64)
-position = Vector2(-32, -32)
 
-[node name="Label" type="Label" parent="LightCube"]
-position = Vector2(-30, -10)
+[node name="Label" type="Label" parent="LightCube" unique_id=306776547]
+offset_left = -30.0
+offset_top = -10.0
+offset_right = -30.0
+offset_bottom = -10.0
 text = "轻方块
 质量=0.5"
 horizontal_alignment = 1
 
-[node name="BouncyBall" type="RigidBody2D" parent="."]
+[node name="BouncyBall" type="RigidBody2D" parent="." unique_id=362336648]
 position = Vector2(650, 200)
 physics_material_override = SubResource("BouncyMat")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BouncyBall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BouncyBall" unique_id=1958141323]
 shape = SubResource("BallShape")
 
-[node name="ColorRect" type="ColorRect" parent="BouncyBall"]
+[node name="ColorRect" type="ColorRect" parent="BouncyBall" unique_id=1963188604]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
 color = Color(0.2, 0.5, 0.9, 1)
-size = Vector2(48, 48)
-position = Vector2(-24, -24)
 
-[node name="Label" type="Label" parent="BouncyBall"]
-position = Vector2(-28, -26)
+[node name="Label" type="Label" parent="BouncyBall" unique_id=581819133]
+offset_left = -28.0
+offset_top = -26.0
+offset_right = -28.0
+offset_bottom = -26.0
 text = "高弹性
 弹力=0.9"
 horizontal_alignment = 1
 
-[node name="FlatBall" type="RigidBody2D" parent="."]
+[node name="FlatBall" type="RigidBody2D" parent="." unique_id=719357001]
 position = Vector2(850, 200)
 physics_material_override = SubResource("FlatMat")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FlatBall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlatBall" unique_id=110047474]
 shape = SubResource("BallShape")
 
-[node name="ColorRect" type="ColorRect" parent="FlatBall"]
+[node name="ColorRect" type="ColorRect" parent="FlatBall" unique_id=775718613]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
 color = Color(0.6, 0.6, 0.6, 1)
-size = Vector2(48, 48)
-position = Vector2(-24, -24)
 
-[node name="Label" type="Label" parent="FlatBall"]
-position = Vector2(-28, -26)
+[node name="Label" type="Label" parent="FlatBall" unique_id=1543877362]
+offset_left = -28.0
+offset_top = -26.0
+offset_right = -28.0
+offset_bottom = -26.0
 text = "低弹性
 弹力=0.1"
 horizontal_alignment = 1

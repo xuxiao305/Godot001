@@ -39,7 +39,7 @@ const DEMOS: Dictionary = {
 	},
 	9: {
 		"name": "GearJoint 齿轮关节",
-		"path": "",
+		"path": "", 
 		"description": "旋转联动传递"
 	},
 	10: {
