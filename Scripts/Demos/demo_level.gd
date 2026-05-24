@@ -13,11 +13,11 @@ extends Node2D
 
 # --------- PRIVATE VARIABLES ---------- #
 
-const DRAG_STIFFNESS: float = 20.0                ## 拖拽刚度（越大越紧跟鼠标）
-const DRAG_DAMPING: float = 2.0                   ## 拖拽阻尼（越大越不抖）
+const DRAG_STIFFNESS: float = 60.0                ## 拖拽刚度（越大越紧跟鼠标）
+const DRAG_DAMPING: float = 15.0                  ## 拖拽阻尼（建议约 2*sqrt(stiffness) 临界阻尼）
+const DRAG_MAX_FORCE: float = 8000.0              ## 单帧拖拽力上限，防止鼠标跳变时爆冲
 
 var _drag_body: RigidBody2D = null                ## 当前拖拽中的刚体
-var _drag_saved_damp: float = 0.0                 ## 拖拽期间保存的原 linear_damp
 var _ui_canvas: CanvasLayer = null
 var _title_label: Label = null
 var _desc_label: Label = null
@@ -38,7 +38,11 @@ func _physics_process(_delta: float) -> void:
 	if _drag_body != null and is_instance_valid(_drag_body):
 		var target := get_global_mouse_position()
 		var offset := target - _drag_body.global_position
-		_drag_body.linear_velocity = offset * DRAG_STIFFNESS
+		# 弹簧拉向鼠标 + 临界阻尼抑制速度；用力而非覆写 velocity，避免和 joint 互相清掉
+		var force := offset * DRAG_STIFFNESS - _drag_body.linear_velocity * DRAG_DAMPING
+		if force.length() > DRAG_MAX_FORCE:
+			force = force.normalized() * DRAG_MAX_FORCE
+		_drag_body.apply_central_force(force * _drag_body.mass)
 
 # --------- UI SETUP ---------- #
 
@@ -112,12 +116,8 @@ func _try_pick_body(_screen_pos: Vector2) -> void:
 
 func _start_drag(body: RigidBody2D) -> void:
 	_drag_body = body
-	_drag_saved_damp = body.linear_damp
-	body.linear_damp = DRAG_DAMPING
 
 func _release_body() -> void:
-	if _drag_body != null and is_instance_valid(_drag_body):
-		_drag_body.linear_damp = _drag_saved_damp
 	_drag_body = null
 
 # --------- NAVIGATION ---------- #

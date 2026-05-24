@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7m2vfdgnxqr3"]
+[gd_scene format=3 uid="uid://c7m2vfdgnxqr3"]
 
-[ext_resource type="Script" path="res://Scripts/Demos/demo_damped_spring.gd" id="1"]
-[ext_resource type="Script" path="res://Scripts/Demos/joint_line_visualizer.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://btslyfhq2x4kp" path="res://Scenes/Demos/demo_weld_joint.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://ebjkw3hp8qz5n" path="res://Scenes/Demos/demo_rope_joint.tscn" id="4"]
+[ext_resource type="Script" uid="uid://dvk4n8tahwjqr" path="res://Scripts/Demos/demo_damped_spring.gd" id="1"]
+[ext_resource type="Script" uid="uid://bj3xq7m4v2pna" path="res://Scripts/Demos/joint_line_visualizer.gd" id="2"]
+[ext_resource type="Script" uid="uid://cakh57q728hx4" path="res://Scenes/Demos/spring_stiff.gd" id="2_3wdce"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1152, 40)
@@ -17,66 +16,75 @@ size = Vector2(80, 16)
 [sub_resource type="RectangleShape2D" id="WeightShape"]
 size = Vector2(60, 60)
 
-[node name="DampedSpringDemo" type="Node2D"]
+[node name="DampedSpringDemo" type="Node2D" unique_id=1599009415]
 script = ExtResource("1")
 title = "DampedSpring 弹簧关节"
 description = "拖下重物 — 左侧硬高阻尼,右侧软低阻尼"
 demo_index = 4
-prev_scene = ExtResource("3")
-next_scene = ExtResource("4")
+next_scene = "res://Scenes/Demos/demo_rope_joint.tscn"
+prev_scene = "res://Scenes/Demos/demo_weld_joint.tscn"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1665145257]
 position = Vector2(576, 324)
 zoom = Vector2(0.8, 0.8)
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=859944693]
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.12, 0.14, 0.2, 1)
 
-[node name="Ground" type="StaticBody2D" parent="."]
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+[node name="Ground" type="StaticBody2D" parent="." unique_id=599484000]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1003282342]
 position = Vector2(576, 620)
 shape = SubResource("GroundShape")
-[node name="ColorRect" type="ColorRect" parent="Ground"]
+
+[node name="ColorRect" type="ColorRect" parent="Ground" unique_id=386448481]
 offset_top = 600.0
 offset_right = 1152.0
 offset_bottom = 640.0
 color = Color(0.3, 0.25, 0.2, 1)
 
-[node name="LeftWall" type="StaticBody2D" parent="."]
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=475794053]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=2089456108]
 position = Vector2(10, 324)
 shape = SubResource("WallShape")
 
-[node name="RightWall" type="StaticBody2D" parent="."]
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1401772720]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=253262758]
 position = Vector2(1142, 324)
 shape = SubResource("WallShape")
 
-[node name="AnchorStiff" type="StaticBody2D" parent="."]
+[node name="AnchorStiff" type="StaticBody2D" parent="." unique_id=1521145231]
 position = Vector2(380, 120)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnchorStiff"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnchorStiff" unique_id=2092968704]
 shape = SubResource("AnchorShape")
-[node name="ColorRect" type="ColorRect" parent="AnchorStiff"]
+
+[node name="ColorRect" type="ColorRect" parent="AnchorStiff" unique_id=1790735197]
 offset_left = -40.0
 offset_top = -8.0
 offset_right = 40.0
 offset_bottom = 8.0
 color = Color(0.5, 0.5, 0.55, 1)
 
-[node name="WeightStiff" type="RigidBody2D" parent="."]
+[node name="WeightStiff" type="RigidBody2D" parent="." unique_id=344703159]
 position = Vector2(380, 350)
 mass = 2.0
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WeightStiff"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeightStiff" unique_id=1066350049]
 shape = SubResource("WeightShape")
-[node name="ColorRect" type="ColorRect" parent="WeightStiff"]
+
+[node name="ColorRect" type="ColorRect" parent="WeightStiff" unique_id=1594300437]
 offset_left = -30.0
 offset_top = -30.0
 offset_right = 30.0
 offset_bottom = 30.0
 color = Color(0.85, 0.35, 0.35, 1)
-[node name="Label" type="Label" parent="WeightStiff"]
+
+[node name="Label" type="Label" parent="WeightStiff" unique_id=941876254]
 offset_left = -40.0
 offset_top = -10.0
 offset_right = 40.0
@@ -84,47 +92,55 @@ offset_bottom = 10.0
 text = "硬 + 高阻尼"
 horizontal_alignment = 1
 
-[node name="SpringStiff" type="DampedSpringJoint2D" parent="."]
-position = Vector2(380, 235)
-length = 230.0
-rest_length = 230.0
-stiffness = 80.0
-damping = 5.0
+[node name="SpringStiff" type="DampedSpringJoint2D" parent="." unique_id=1202490195]
+position = Vector2(379, 122)
 node_a = NodePath("../AnchorStiff")
 node_b = NodePath("../WeightStiff")
+length = 100.0
+rest_length = 100.0
+stiffness = 1.0
+damping = 5.0
+script = ExtResource("2_3wdce")
 
-[node name="SpringStiffLine" type="Line2D" parent="."]
-script = ExtResource("2")
+[node name="SpringStiffLine" type="Line2D" parent="." unique_id=1861747082]
+top_level = true
+points = PackedVector2Array(380, 120, 370, 137.6923, 390, 155.38461, 370, 173.07693, 390, 190.76923, 370, 208.46155, 390, 226.15385, 370, 243.84616, 390, 261.53845, 370, 279.23077, 390, 296.9231, 370, 314.6154, 390, 332.3077, 380, 350)
 width = 4.0
-default_color = Color(0.8, 0.8, 0.4, 1.0)
+default_color = Color(0.8, 0.8, 0.4, 1)
+script = ExtResource("2")
 point_a = NodePath("../AnchorStiff")
 point_b = NodePath("../WeightStiff")
 spring_segments = 12
 spring_amplitude = 10.0
 
-[node name="AnchorSoft" type="StaticBody2D" parent="."]
+[node name="AnchorSoft" type="StaticBody2D" parent="." unique_id=339322111]
 position = Vector2(780, 120)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnchorSoft"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnchorSoft" unique_id=1099700827]
 shape = SubResource("AnchorShape")
-[node name="ColorRect" type="ColorRect" parent="AnchorSoft"]
+
+[node name="ColorRect" type="ColorRect" parent="AnchorSoft" unique_id=351606374]
 offset_left = -40.0
 offset_top = -8.0
 offset_right = 40.0
 offset_bottom = 8.0
 color = Color(0.5, 0.5, 0.55, 1)
 
-[node name="WeightSoft" type="RigidBody2D" parent="."]
+[node name="WeightSoft" type="RigidBody2D" parent="." unique_id=1876939062]
 position = Vector2(780, 350)
 mass = 2.0
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WeightSoft"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeightSoft" unique_id=914087005]
 shape = SubResource("WeightShape")
-[node name="ColorRect" type="ColorRect" parent="WeightSoft"]
+
+[node name="ColorRect" type="ColorRect" parent="WeightSoft" unique_id=689849884]
 offset_left = -30.0
 offset_top = -30.0
 offset_right = 30.0
 offset_bottom = 30.0
 color = Color(0.3, 0.6, 0.9, 1)
-[node name="Label" type="Label" parent="WeightSoft"]
+
+[node name="Label" type="Label" parent="WeightSoft" unique_id=32818968]
 offset_left = -40.0
 offset_top = -10.0
 offset_right = 40.0
@@ -132,19 +148,22 @@ offset_bottom = 10.0
 text = "软 + 低阻尼"
 horizontal_alignment = 1
 
-[node name="SpringSoft" type="DampedSpringJoint2D" parent="."]
+[node name="SpringSoft" type="DampedSpringJoint2D" parent="." unique_id=1773114817]
 position = Vector2(780, 235)
+node_a = NodePath("../AnchorSoft")
+node_b = NodePath("../WeightSoft")
 length = 230.0
 rest_length = 230.0
 stiffness = 15.0
 damping = 0.5
-node_a = NodePath("../AnchorSoft")
-node_b = NodePath("../WeightSoft")
 
-[node name="SpringSoftLine" type="Line2D" parent="."]
-script = ExtResource("2")
+[node name="SpringSoftLine" type="Line2D" parent="." unique_id=971812488]
+top_level = true
+position = Vector2(0, -1)
+points = PackedVector2Array(780, 120, 770, 137.6923, 790, 155.38461, 770, 173.07693, 790, 190.76923, 770, 208.46155, 790, 226.15385, 770, 243.84616, 790, 261.53845, 770, 279.23077, 790, 296.9231, 770, 314.6154, 790, 332.3077, 780, 350)
 width = 4.0
-default_color = Color(0.5, 0.85, 1.0, 1.0)
+default_color = Color(0.5, 0.85, 1, 1)
+script = ExtResource("2")
 point_a = NodePath("../AnchorSoft")
 point_b = NodePath("../WeightSoft")
 spring_segments = 12
