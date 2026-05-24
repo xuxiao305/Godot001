@@ -27,10 +27,6 @@ config/icon="res://Icon.png"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
-[dotnet]
-
-project/assembly_name="2DPlatformerSample"
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot-box2d/plugin.cfg")
