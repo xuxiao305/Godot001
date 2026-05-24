@@ -1,25 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://dt3clvl0001"]
+[gd_scene load_steps=8 format=3 uid="uid://dt3clvl0001"]
 
 [ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="1"]
-
-[sub_resource type="RectangleShape2D" id="GroundShape"]
-size = Vector2(1280, 40)
 
 [sub_resource type="PhysicsMaterial" id="GroundMat"]
 friction = 0.1
 
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(10, 120)
+
+[sub_resource type="RectangleShape2D" id="StandShape"]
+size = Vector2(200, 40)
+
+[sub_resource type="RectangleShape2D" id="StandTargetShape"]
+size = Vector2(200, 40)
+
+[sub_resource type="RectangleShape2D" id="RunSourceShape"]
+size = Vector2(400, 40)
+
+[sub_resource type="RectangleShape2D" id="RunTargetShape"]
+size = Vector2(200, 40)
+
 [node name="TestLevel" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(640, 360)
+position = Vector2(700, 400)
 enabled = true
 
 [node name="Player3C" parent="." instance=ExtResource("1")]
-position = Vector2(400, 100)
+position = Vector2(130, 100)
 
-[node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(640, 600)
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(50, 540)
 physics_material_override = SubResource("GroundMat")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
-shape = SubResource("GroundShape")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("WallShape")
+
+[node name="StandPlatform" type="StaticBody2D" parent="."]
+position = Vector2(160, 600)
+physics_material_override = SubResource("GroundMat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StandPlatform"]
+shape = SubResource("StandShape")
+
+[node name="StandTarget" type="StaticBody2D" parent="."]
+position = Vector2(490, 600)
+physics_material_override = SubResource("GroundMat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StandTarget"]
+shape = SubResource("StandTargetShape")
+
+[node name="RunSource" type="StaticBody2D" parent="."]
+position = Vector2(800, 600)
+physics_material_override = SubResource("GroundMat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunSource"]
+shape = SubResource("RunSourceShape")
+
+[node name="RunTarget" type="StaticBody2D" parent="."]
+position = Vector2(1300, 600)
+physics_material_override = SubResource("GroundMat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunTarget"]
+shape = SubResource("RunTargetShape")
