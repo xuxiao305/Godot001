@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../../Source/godot-master"
+		},
+		{
+			"path": "../../../ObsidianNote/MyNote/白日做梦/PlatformerPhysics/docs"
 		}
 	],
 	"settings": {
