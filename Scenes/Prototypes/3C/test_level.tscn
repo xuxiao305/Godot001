@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dt3clvl0001"]
+[gd_scene load_steps=9 format=3 uid="uid://dt3clvl0001"]
 
 [ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="1"]
+[ext_resource type="Script" uid="uid://scamfollow001" path="res://Scripts/Prototypes/3C/camera_follow.gd" id="2"]
 
 [sub_resource type="PhysicsMaterial" id="GroundMat"]
 friction = 0.1
@@ -22,9 +23,11 @@ size = Vector2(200, 40)
 
 [node name="TestLevel" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="CameraFollow" type="Camera2D" parent="." node_paths=PackedStringArray("target_path")]
 position = Vector2(700, 400)
 enabled = true
+script = ExtResource("2")
+target_path = NodePath("../Player3C")
 
 [node name="Player3C" parent="." instance=ExtResource("1")]
 position = Vector2(130, 100)
