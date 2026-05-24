@@ -1,4 +1,5 @@
-# WeldJoint Demo —— 展示多个刚体被焊接成一个整体
+# Weld Demo —— 用 PinJoint2D + angular_limit_enabled 锁住相对旋转，等效于焊接
+# (godot-box2d 未注册 WeldJoint2D 类，只能用此方案近似)
 extends DemoLevel
 
 

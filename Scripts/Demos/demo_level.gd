@@ -8,8 +8,8 @@ extends Node2D
 @export var title: String = "Demo"                 ## Demo 名称
 @export var description: String = ""               ## 单行说明
 @export var demo_index: int = 0                    ## 在 Demo 序列中的序号
-@export var next_scene: PackedScene                ## 下一个 Demo 场景
-@export var prev_scene: PackedScene                ## 上一个 Demo 场景
+@export_file("*.tscn") var next_scene: String = ""  ## 下一个 Demo 场景路径（用字符串而非 PackedScene，避免循环 ext_resource）
+@export_file("*.tscn") var prev_scene: String = ""  ## 上一个 Demo 场景路径
 
 # --------- PRIVATE VARIABLES ---------- #
 
@@ -82,7 +82,7 @@ func _setup_ui() -> void:
 	prev_btn.position = Vector2(140, 100)
 	prev_btn.size = Vector2(100, 32)
 	prev_btn.pressed.connect(_on_prev_pressed)
-	prev_btn.disabled = (prev_scene == null)
+	prev_btn.disabled = (prev_scene == "")
 	_ui_canvas.add_child(prev_btn)
 
 	var next_btn := Button.new()
@@ -90,7 +90,7 @@ func _setup_ui() -> void:
 	next_btn.position = Vector2(250, 100)
 	next_btn.size = Vector2(100, 32)
 	next_btn.pressed.connect(_on_next_pressed)
-	next_btn.disabled = (next_scene == null)
+	next_btn.disabled = (next_scene == "")
 	_ui_canvas.add_child(next_btn)
 
 # --------- MOUSE DRAG ---------- #
@@ -126,14 +126,12 @@ func _on_back_pressed() -> void:
 	_load_scene("res://Scenes/Demos/demo_menu.tscn")
 
 func _on_prev_pressed() -> void:
-	if prev_scene != null:
-		get_tree().change_scene_to_packed(prev_scene)
+	if prev_scene != "":
+		get_tree().change_scene_to_file(prev_scene)
 
 func _on_next_pressed() -> void:
-	if next_scene != null:
-		get_tree().change_scene_to_packed(next_scene)
+	if next_scene != "":
+		get_tree().change_scene_to_file(next_scene)
 
 func _load_scene(path: String) -> void:
-	var packed := load(path) as PackedScene
-	if packed != null:
-		get_tree().change_scene_to_packed(packed)
+	get_tree().change_scene_to_file(path)
