@@ -1,0 +1,127 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmousescn01f"]
+
+[ext_resource type="Script" uid="uid://dmousdrg001f" path="res://Scripts/Demos/demo_mouse_drag.gd" id="1"]
+[ext_resource type="Script" uid="uid://ddragvisl001e" path="res://Scripts/Demos/drag_visualizer.gd" id="2"]
+
+[sub_resource type="RectangleShape2D" id="GroundShape"]
+size = Vector2(1152, 40)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(20, 648)
+
+[sub_resource type="RectangleShape2D" id="BoxShape"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="BallShape"]
+radius = 32.0
+
+[sub_resource type="RectangleShape2D" id="BarShape"]
+size = Vector2(120, 24)
+
+[sub_resource type="RectangleShape2D" id="MiniShape"]
+size = Vector2(36, 36)
+
+[node name="MouseDragDemo" type="Node2D"]
+script = ExtResource("1")
+title = "MouseDrag 拖拽可视化"
+description = "拖拽任意物体 — 黄色弹簧线 = 鼠标牵引；蓝色拖尾 = 物体轨迹"
+demo_index = 10
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.08, 0.1, 0.15, 1)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(576, 620)
+shape = SubResource("GroundShape")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_top = 600.0
+offset_right = 1152.0
+offset_bottom = 640.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(10, 324)
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(1142, 324)
+shape = SubResource("WallShape")
+
+[node name="Box" type="RigidBody2D" parent="."]
+position = Vector2(300, 500)
+mass = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box"]
+shape = SubResource("BoxShape")
+
+[node name="ColorRect" type="ColorRect" parent="Box"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0.85, 0.35, 0.35, 1)
+
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(500, 500)
+mass = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("BallShape")
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0.3, 0.6, 0.9, 1)
+
+[node name="Bar" type="RigidBody2D" parent="."]
+position = Vector2(700, 500)
+mass = 1.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bar"]
+shape = SubResource("BarShape")
+
+[node name="ColorRect" type="ColorRect" parent="Bar"]
+offset_left = -60.0
+offset_top = -12.0
+offset_right = 60.0
+offset_bottom = 12.0
+color = Color(0.45, 0.75, 0.4, 1)
+
+[node name="Mini" type="RigidBody2D" parent="."]
+position = Vector2(880, 500)
+mass = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mini"]
+shape = SubResource("MiniShape")
+
+[node name="ColorRect" type="ColorRect" parent="Mini"]
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
+color = Color(0.85, 0.55, 0.25, 1)
+
+[node name="DragViz" type="Node2D" parent="."]
+script = ExtResource("2")
+spring_segments = 12
+spring_amplitude = 8.0
+spring_color = Color(1.0, 0.9, 0.3, 1.0)
+spring_width = 3.0
+trail_length = 80
+trail_color = Color(0.5, 0.85, 1.0, 0.7)
+trail_width = 4.0
