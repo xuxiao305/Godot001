@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d04etorqtstc1"]
+
+[ext_resource type="Script" uid="uid://c03etorqtestn" path="res://Scripts/Prototypes/3C/tests/test_engine_torque.gd" id="1_en4q"]
+
+[node name="TestEngineTorque" type="Node"]
+script = ExtResource("1_en4q")
