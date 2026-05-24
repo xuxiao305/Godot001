@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dt3clvl0001"]
+[gd_scene load_steps=10 format=3 uid="uid://dt3clvl0001"]
 
 [ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="1"]
 [ext_resource type="Script" uid="uid://scamfollow001" path="res://Scripts/Prototypes/3C/camera_follow.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://ddbgpanel001" path="res://Scenes/Prototypes/3C/debug_panel.tscn" id="3"]
 
 [sub_resource type="PhysicsMaterial" id="GroundMat"]
 friction = 0.1
@@ -66,3 +67,6 @@ physics_material_override = SubResource("GroundMat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RunTarget"]
 shape = SubResource("RunTargetShape")
+
+[node name="DebugPanel" parent="." instance=ExtResource("3") node_paths=PackedStringArray("player_path")]
+player_path = NodePath("../Player3C")
