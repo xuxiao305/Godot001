@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dwpnwpnrkt01"]
+
+[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/weapon.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dwpnprojbal01" path="res://Scenes/Prototypes/Weapon/projectiles/ballistic_projectile.tscn" id="2"]
+
+[node name="RocketLauncher" type="Node2D"]
+script = ExtResource("1")
+projectile_scene = ExtResource("2")
+fire_action = &"Fire2"
+cooldown = 0.8
+projectile_initial_speed = 3000.0
+muzzle_offset = Vector2(50, 20)
+recoil_impulse = 200.0
+recoil_enabled = true
+aim_line_length = 200.0
