@@ -13,6 +13,9 @@ extends Node2D
 # direction = 弹道方向（DirectionalImpulse 需要）；normal = 命中面法线（可选）；source = Projectile 节点（受体打印用）。
 var _ctx: Dictionary = {}
 
+func _ready() -> void:
+	add_to_group("effect")
+
 # Projectile / weapon_demo 在 instantiate + add_child 之后调用一次此方法。
 # 必须先 add_child（取得 world_2d）再 trigger。
 func trigger(center: Vector2, ctx: Dictionary) -> void:

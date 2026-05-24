@@ -12,6 +12,7 @@ var _age: float = 0.0
 var _hit_handled: bool = false  # 防止同帧多 body_entered 触发多个 Effect
 
 func _ready() -> void:
+	add_to_group("projectile")
 	contact_monitor = true
 	max_contacts_reported = 4
 	body_entered.connect(_on_body_entered)
