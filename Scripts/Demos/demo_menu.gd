@@ -51,7 +51,15 @@ const DEMOS: Dictionary = {
 
 
 func _ready() -> void:
+	print("[demo_menu] ready, setting up UI")
 	_setup_menu_ui()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		print("[demo_menu] _input mouse btn=%d at %s" % [event.button_index, event.position])
+	elif event is InputEventKey and event.pressed:
+		print("[demo_menu] _input key=%d" % event.keycode)
 
 
 func _setup_menu_ui() -> void:
@@ -105,7 +113,7 @@ func _setup_menu_ui() -> void:
 
 		if demo["path"] != "":
 			var path: String = demo["path"]
-			btn.pressed.connect(func(): _on_demo_selected(path))
+			btn.pressed.connect(_on_demo_selected.bind(path))
 		else:
 			btn.disabled = true
 			btn.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
@@ -125,12 +133,19 @@ func _setup_menu_ui() -> void:
 
 
 func _on_demo_selected(scene_path: String) -> void:
+	print("[demo_menu] button clicked, loading: ", scene_path)
 	var packed := load(scene_path) as PackedScene
-	if packed != null:
-		SceneTransition.load_scene(packed)
+	if packed == null:
+		push_error("[demo_menu] failed to load: %s" % scene_path)
+		return
+	print("[demo_menu] loaded OK, requesting transition")
+	SceneTransition.load_scene(packed)
 
 
 func _on_game_pressed() -> void:
+	print("[demo_menu] back-to-game pressed")
 	var scene := load("res://Scenes/Levels/Level_01.tscn") as PackedScene
-	if scene != null:
-		SceneTransition.load_scene(scene)
+	if scene == null:
+		push_error("[demo_menu] failed to load Level_01.tscn")
+		return
+	SceneTransition.load_scene(scene)

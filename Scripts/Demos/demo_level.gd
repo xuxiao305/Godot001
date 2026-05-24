@@ -1,4 +1,5 @@
 # Demo 基类 —— 所有 Box2D Demo 关卡继承此类
+class_name DemoLevel
 extends Node2D
 
 # --------- EXPORT VARIABLES ---------- #
@@ -12,8 +13,11 @@ extends Node2D
 
 # --------- PRIVATE VARIABLES ---------- #
 
-var _mouse_joint: MouseJoint2D = null             ## 当前拖拽中的关节
-var _static_anchor: StaticBody2D = null           ## MouseJoint 的静态锚点
+const DRAG_STIFFNESS: float = 20.0                ## 拖拽刚度（越大越紧跟鼠标）
+const DRAG_DAMPING: float = 2.0                   ## 拖拽阻尼（越大越不抖）
+
+var _drag_body: RigidBody2D = null                ## 当前拖拽中的刚体
+var _drag_saved_damp: float = 0.0                 ## 拖拽期间保存的原 linear_damp
 var _ui_canvas: CanvasLayer = null
 var _title_label: Label = null
 var _desc_label: Label = null
@@ -30,8 +34,11 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			_release_body()
 
-	elif event is InputEventMouseMotion and _mouse_joint != null:
-		_update_drag_target(event.position)
+func _physics_process(_delta: float) -> void:
+	if _drag_body != null and is_instance_valid(_drag_body):
+		var target := get_global_mouse_position()
+		var offset := target - _drag_body.global_position
+		_drag_body.linear_velocity = offset * DRAG_STIFFNESS
 
 # --------- UI SETUP ---------- #
 
@@ -104,32 +111,14 @@ func _try_pick_body(_screen_pos: Vector2) -> void:
 			break
 
 func _start_drag(body: RigidBody2D) -> void:
-	# 创建静态锚点（放在鼠标位置）
-	_static_anchor = StaticBody2D.new()
-	_static_anchor.global_position = get_global_mouse_position()
-	add_child(_static_anchor)
-
-	# 创建 MouseJoint2D
-	_mouse_joint = MouseJoint2D.new()
-	_mouse_joint.node_a = _static_anchor.get_path()
-	_mouse_joint.node_b = body.get_path()
-	_mouse_joint.target = body.global_position
-	_mouse_joint.stiffness = 100.0
-	_mouse_joint.damping = 0.7
-	_mouse_joint.max_force = 5000.0
-	add_child(_mouse_joint)
-
-func _update_drag_target(_screen_pos: Vector2) -> void:
-	if _mouse_joint != null:
-		_mouse_joint.target = get_global_mouse_position()
+	_drag_body = body
+	_drag_saved_damp = body.linear_damp
+	body.linear_damp = DRAG_DAMPING
 
 func _release_body() -> void:
-	if _mouse_joint != null:
-		_mouse_joint.queue_free()
-		_mouse_joint = null
-	if _static_anchor != null:
-		_static_anchor.queue_free()
-		_static_anchor = null
+	if _drag_body != null and is_instance_valid(_drag_body):
+		_drag_body.linear_damp = _drag_saved_damp
+	_drag_body = null
 
 # --------- NAVIGATION ---------- #
 
