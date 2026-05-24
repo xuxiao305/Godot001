@@ -51,7 +51,7 @@ wielder_path = NodePath("..")
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(800, 600)
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 physics_material_override = SubResource("WallMat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
@@ -67,7 +67,7 @@ color = Color(0.3, 0.3, 0.3, 1)
 [node name="ArenaWallLeft" type="StaticBody2D" parent="."]
 position = Vector2(20, 200)
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallLeft"]
 shape = SubResource("WallShape")
@@ -82,7 +82,7 @@ color = Color(0.3, 0.3, 0.3, 1)
 [node name="ArenaWallRight" type="StaticBody2D" parent="."]
 position = Vector2(1580, 200)
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallRight"]
 shape = SubResource("WallShape")
@@ -97,7 +97,7 @@ color = Color(0.3, 0.3, 0.3, 1)
 [node name="ArenaWallTop" type="StaticBody2D" parent="."]
 position = Vector2(800, -180)
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallTop"]
 shape = SubResource("TopWallShape")
@@ -112,7 +112,7 @@ color = Color(0.3, 0.3, 0.3, 1)
 [node name="StaticWall" type="StaticBody2D" parent="."]
 position = Vector2(1100, 460)
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 physics_material_override = SubResource("WallMat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticWall"]
@@ -128,7 +128,7 @@ color = Color(0.45, 0.45, 0.45, 1)
 [node name="Ceiling" type="StaticBody2D" parent="."]
 position = Vector2(400, -100)
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
 shape = SubResource("CeilingShape")
