@@ -7,6 +7,7 @@ extends RigidBody2D
 # 单位约定：1 m = 100 px。spec 中所有 m, m/s, N 的数值在 export 默认值里都乘以此常量。
 const PX_PER_M: float = 100.0
 const EngineTorque := preload("res://Scripts/Prototypes/3C/engine_torque.gd")
+const JumpController := preload("res://Scripts/Prototypes/3C/jump_controller.gd")
 
 # --------- EXPORT (Debug 面板会读写这些) ---------- #
 @export_category("Engine — Ground (§4.2)")
@@ -39,6 +40,7 @@ var current_state: String = "Idle"
 var net_force_this_frame: Vector2 = Vector2.ZERO
 
 var _ground_debounce := GroundCheck.Debouncer.new()
+var _jump := JumpController.new()
 
 # --------- LIFECYCLE ---------- #
 func _ready() -> void:
@@ -59,6 +61,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# 未接地时不暴露哨兵值 1.0（"完美朝下"的假象），归零方便 Debug 面板读
 	ground_normal_y = gc.min_normal_y if gc.grounded else 0.0
 
+	# 2.5 跳跃触发（v1：只接地起跳；Coyote/Buffer 在 Task 7 加）
+	if Input.is_action_just_pressed("Jump") and is_grounded:
+		var impulse := _jump.trigger_jump(j_jump_initial, f_jump_hold, hold_window_max)
+		state.apply_central_impulse(impulse)
+
 	# 2. 恒定重力（ADR-0003）
 	var force := Vector2(0, gravity_y * mass)
 
@@ -75,7 +82,9 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	else:
 		f_engine = EngineTorque.compute(v_cur_x, v_target, f_max_air, saturation_full)
 	force.x += f_engine
-	# TODO(Task 5): + 跳跃持续推力
+	# 4. 跳跃持续推力（§4.4）
+	var jump_hold_force := _jump.tick(state.step, Input.is_action_pressed("Jump"), state.linear_velocity.y)
+	force += jump_hold_force
 
 	net_force_this_frame = force
 	state.apply_central_force(force)
