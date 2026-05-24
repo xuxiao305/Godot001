@@ -9,6 +9,7 @@ const PX_PER_M: float = 100.0
 const EngineTorque := preload("res://Scripts/Prototypes/3C/engine_torque.gd")
 const JumpController := preload("res://Scripts/Prototypes/3C/jump_controller.gd")
 const InputBuffer := preload("res://Scripts/Prototypes/3C/input_buffer.gd")
+const MovementState := preload("res://Scripts/Prototypes/3C/movement_state.gd")
 
 # --------- EXPORT (Debug 面板会读写这些) ---------- #
 @export_category("Engine — Ground (§4.2)")
@@ -37,7 +38,7 @@ const InputBuffer := preload("res://Scripts/Prototypes/3C/input_buffer.gd")
 # --------- RUNTIME STATE (Debug 面板会读) ---------- #
 var is_grounded: bool = false
 var ground_normal_y: float = 0.0
-var current_state: String = "Idle"
+var current_state: MovementState.State = MovementState.State.IDLE
 var net_force_this_frame: Vector2 = Vector2.ZERO
 
 var _ground_debounce := GroundCheck.Debouncer.new()
@@ -58,20 +59,24 @@ func _ready() -> void:
 
 # 用 _integrate_forces 而非 _physics_process —— Box2D 提供完整 state，且这是 Godot 推荐的物理操作时机。
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	# 1. 接地检测
+	# === 1. 观察物理 ===
 	_ground_debounce.buffer_frames = ground_state_buffer_frames
 	var gc := GroundCheck.check(state, cos_theta_max)
 	is_grounded = _ground_debounce.feed(gc.grounded)
 	# 未接地时不暴露哨兵值 1.0（"完美朝下"的假象），归零方便 Debug 面板读
 	ground_normal_y = gc.min_normal_y if gc.grounded else 0.0
+	current_state = MovementState.derive(
+		is_grounded, state.linear_velocity.x, state.linear_velocity.y
+	)
 
+	# === 2. 更新计时器 ===
 	var now := Time.get_ticks_msec() / 1000.0
-	# 同步 export 滑条值（Task 10 Debug 面板会实时改这两个）
+	# 同步 export 滑条值（Debug 面板会实时改这两个）
 	_input_buf.coyote_time = coyote_time
 	_input_buf.jump_buffer_time = jump_buffer_time
 	_input_buf.update_grounded(is_grounded, now)
 
-	# 2.5 跳跃触发（Coyote / Buffer）
+	# === 3. 处理跳跃输入（Coyote / Buffer） ===
 	if Input.is_action_just_pressed("Jump"):
 		_input_buf.on_jump_pressed(now)
 	# 满足条件即起跳：
@@ -85,40 +90,26 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		if not is_grounded:
 			_input_buf.consume_coyote()
 
-	# 2. 恒定重力（ADR-0003）
-	var force := Vector2(0, gravity_y * mass)
+	# === 4. 累加力（重力 + 发动机 + 跳跃持续推力） ===
+	var force := Vector2(0, gravity_y * mass)  # 恒定重力（ADR-0003）
+	force.x += _compute_engine_force_x(state.linear_velocity.x)
+	# 跳跃持续推力（§4.4），由 JumpController 自维护 hold_active 窗口
+	force += _jump.tick(state.step, Input.is_action_pressed("Jump"), state.linear_velocity.y)
 
-	# 3. 地面/空中发动机力（§4.2 §4.3）
-	var input_dir := Input.get_axis("Left", "Right")  # -1, 0, +1
-	var v_target := input_dir * v_max
-	var v_cur_x := state.linear_velocity.x
-	var f_engine := 0.0
-	if is_grounded:
-		f_engine = EngineTorque.compute(v_cur_x, v_target, f_max_ground, saturation_full)
-		# 主动刹车（§4.2，默认 f_active_brake = 0）
-		if input_dir == 0.0 and absf(v_cur_x) > 0.01:
-			f_engine -= signf(v_cur_x) * f_active_brake
-	else:
-		f_engine = EngineTorque.compute(v_cur_x, v_target, f_max_air, saturation_full)
-	force.x += f_engine
-	# 4. 跳跃持续推力（§4.4）
-	var jump_hold_force := _jump.tick(state.step, Input.is_action_pressed("Jump"), state.linear_velocity.y)
-	force += jump_hold_force
-
-	# 5. 状态转换（仅用于显示，不影响物理）
-	var vy := state.linear_velocity.y
-	var vx := state.linear_velocity.x
-	if is_grounded:
-		if absf(vx) < 5.0:
-			current_state = "Idle"
-		else:
-			current_state = "Running"
-	else:
-		if vy < 0.0:
-			current_state = "Rising"
-		else:
-			current_state = "Falling"
-	# Landed 是瞬时态，v1 简化：不做单独 Landed 帧
-
+	# === 5. 应用 ===
 	net_force_this_frame = force
 	state.apply_central_force(force)
+
+
+# 按当前状态选 ground/air 发动机配方，返回本帧水平力分量。
+# 在内在发动机派下，"力的选择"是 state 唯一参与控制流的位置（详见 design §3.1）。
+func _compute_engine_force_x(vx: float) -> float:
+	var input_dir := Input.get_axis("Left", "Right")  # -1, 0, +1
+	var v_target := input_dir * v_max
+	var on_ground := MovementState.is_grounded_state(current_state)
+	var f_max := f_max_ground if on_ground else f_max_air
+	var f := EngineTorque.compute(vx, v_target, f_max, saturation_full)
+	# 主动刹车（§4.2，默认 f_active_brake = 0）—— 仅地面态生效
+	if on_ground and input_dir == 0.0 and absf(vx) > 0.01:
+		f -= signf(vx) * f_active_brake
+	return f

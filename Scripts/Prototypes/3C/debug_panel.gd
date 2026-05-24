@@ -4,6 +4,8 @@
 class_name DebugPanel
 extends CanvasLayer
 
+const MovementState := preload("res://Scripts/Prototypes/3C/movement_state.gd")
+
 @export var player_path: NodePath
 @export var default_save_path: String = "user://3c_params.json"
 
@@ -47,8 +49,13 @@ func _process(_dt: float) -> void:
 	if not visible or _player == null:
 		return
 	for key in READOUT_KEYS:
-		if _value_labels.has(key):
-			(_value_labels[key] as Label).text = "%s: %s" % [key, _player.get(key)]
+		if not _value_labels.has(key):
+			continue
+		var label := _value_labels[key] as Label
+		if key == "current_state":
+			label.text = "%s: %s" % [key, MovementState.to_display(_player.current_state)]
+		else:
+			label.text = "%s: %s" % [key, _player.get(key)]
 
 func _build_ui() -> void:
 	_root = PanelContainer.new()
