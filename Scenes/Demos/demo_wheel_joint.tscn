@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dwheelscn01c"]
 
 [ext_resource type="Script" uid="uid://dwheeljnt001c" path="res://Scripts/Demos/demo_wheel_joint.gd" id="1"]
+[ext_resource type="Script" uid="uid://1qi4q6s6nhin" path="res://Scripts/Prototypes/3C/camera_follow.gd" id="2_4oloh"]
+[ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="3_b044s"]
 
 [sub_resource type="RectangleShape2D" id="WallShape"]
 size = Vector2(20, 648)
@@ -20,227 +22,228 @@ size = Vector2(36, 8)
 [sub_resource type="CircleShape2D" id="WheelShape"]
 radius = 22.0
 
-[node name="WheelJointDemo" type="Node2D"]
+[node name="WheelJointDemo" type="Node2D" unique_id=729307697]
 script = ExtResource("1")
+left_wheel_path = NodePath("LeftWheelBody")
+right_wheel_path = NodePath("RightWheelBody")
 title = "WheelJoint 轮子关节"
 description = "摆臂(PinJoint) + DampedSpring 悬挂；A/D 给轮子施加扭矩前后开"
 demo_index = 8
-prev_scene = "res://Scenes/Demos/demo_motor_joint.tscn"
 next_scene = "res://Scenes/Demos/demo_gear_joint.tscn"
-left_wheel_path = NodePath("LeftWheelBody")
-right_wheel_path = NodePath("RightWheelBody")
-drive_torque = 5000.0
+prev_scene = "res://Scenes/Demos/demo_motor_joint.tscn"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576, 324)
-zoom = Vector2(0.8, 0.8)
-
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=2092236297]
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.1, 0.14, 0.2, 1)
 
-[node name="LeftWall" type="StaticBody2D" parent="."]
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=958177944]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=2051470870]
 position = Vector2(10, 324)
 shape = SubResource("WallShape")
 
-[node name="RightWall" type="StaticBody2D" parent="."]
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=2057257479]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=230267932]
 position = Vector2(1142, 324)
 shape = SubResource("WallShape")
 
-[node name="GroundA" type="StaticBody2D" parent="."]
+[node name="GroundA" type="StaticBody2D" parent="." unique_id=418279573]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA" unique_id=1966034466]
 position = Vector2(220, 600)
 shape = SubResource("GroundFlat")
 
-[node name="ColorRect" type="ColorRect" parent="GroundA"]
+[node name="ColorRect" type="ColorRect" parent="GroundA" unique_id=1505108777]
 offset_left = 20.0
 offset_top = 580.0
 offset_right = 420.0
 offset_bottom = 620.0
 color = Color(0.3, 0.25, 0.2, 1)
 
-[node name="Bump1" type="StaticBody2D" parent="."]
+[node name="Bump1" type="StaticBody2D" parent="." unique_id=2093641190]
+position = Vector2(-1, 19)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bump1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bump1" unique_id=53273653]
 position = Vector2(480, 590)
 shape = SubResource("GroundBump")
 
-[node name="ColorRect" type="ColorRect" parent="Bump1"]
+[node name="ColorRect" type="ColorRect" parent="Bump1" unique_id=1720117610]
 offset_left = 420.0
 offset_top = 560.0
 offset_right = 540.0
 offset_bottom = 620.0
 color = Color(0.35, 0.3, 0.22, 1)
 
-[node name="GroundB" type="StaticBody2D" parent="."]
+[node name="GroundB" type="StaticBody2D" parent="." unique_id=179407255]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB" unique_id=1124056643]
 position = Vector2(740, 600)
 shape = SubResource("GroundFlat")
 
-[node name="ColorRect" type="ColorRect" parent="GroundB"]
+[node name="ColorRect" type="ColorRect" parent="GroundB" unique_id=81924416]
 offset_left = 540.0
 offset_top = 580.0
 offset_right = 940.0
 offset_bottom = 620.0
 color = Color(0.3, 0.25, 0.2, 1)
 
-[node name="Bump2" type="StaticBody2D" parent="."]
+[node name="Bump2" type="StaticBody2D" parent="." unique_id=600624148]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bump2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bump2" unique_id=1016236563]
 position = Vector2(1000, 590)
 shape = SubResource("GroundBump")
 
-[node name="ColorRect" type="ColorRect" parent="Bump2"]
+[node name="ColorRect" type="ColorRect" parent="Bump2" unique_id=465713098]
 offset_left = 940.0
 offset_top = 560.0
 offset_right = 1060.0
 offset_bottom = 620.0
 color = Color(0.35, 0.3, 0.22, 1)
 
-[node name="GroundC" type="StaticBody2D" parent="."]
+[node name="GroundC" type="StaticBody2D" parent="." unique_id=1809519548]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC" unique_id=1443327981]
 position = Vector2(1100, 600)
 shape = SubResource("GroundFlat")
 
-[node name="ColorRect" type="ColorRect" parent="GroundC"]
+[node name="ColorRect" type="ColorRect" parent="GroundC" unique_id=1198114771]
 offset_left = 1060.0
 offset_top = 580.0
 offset_right = 1132.0
 offset_bottom = 620.0
 color = Color(0.3, 0.25, 0.2, 1)
 
-[node name="CarBody" type="RigidBody2D" parent="."]
+[node name="CarBody" type="RigidBody2D" parent="." unique_id=285306809]
 position = Vector2(220, 480)
 mass = 4.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CarBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarBody" unique_id=1378408936]
 shape = SubResource("BodyShape")
 
-[node name="ColorRect" type="ColorRect" parent="CarBody"]
+[node name="ColorRect" type="ColorRect" parent="CarBody" unique_id=2010518971]
 offset_left = -80.0
 offset_top = -18.0
 offset_right = 80.0
 offset_bottom = 18.0
 color = Color(0.85, 0.35, 0.35, 1)
 
-[node name="LeftArm" type="RigidBody2D" parent="."]
+[node name="LeftArm" type="RigidBody2D" parent="." unique_id=198239911]
 position = Vector2(150, 500)
 mass = 0.3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArm"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArm" unique_id=2092931486]
 shape = SubResource("ArmShape")
 disabled = true
 
-[node name="ColorRect" type="ColorRect" parent="LeftArm"]
+[node name="ColorRect" type="ColorRect" parent="LeftArm" unique_id=1328840513]
 offset_left = -18.0
 offset_top = -4.0
 offset_right = 18.0
 offset_bottom = 4.0
 color = Color(0.5, 0.5, 0.5, 1)
 
-[node name="LeftWheelBody" type="RigidBody2D" parent="."]
+[node name="LeftWheelBody" type="RigidBody2D" parent="." unique_id=376443711]
 position = Vector2(135, 520)
 mass = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWheelBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWheelBody" unique_id=2096771035]
 shape = SubResource("WheelShape")
 
-[node name="ColorRect" type="ColorRect" parent="LeftWheelBody"]
+[node name="ColorRect" type="ColorRect" parent="LeftWheelBody" unique_id=2060192585]
 offset_left = -22.0
 offset_top = -22.0
 offset_right = 22.0
 offset_bottom = 22.0
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Marker" type="ColorRect" parent="LeftWheelBody"]
-offset_left = 0.0
+[node name="Marker" type="ColorRect" parent="LeftWheelBody" unique_id=1979819311]
 offset_top = -2.0
 offset_right = 20.0
 offset_bottom = 2.0
 color = Color(0.95, 0.95, 0.6, 1)
 
-[node name="LeftArmPin" type="PinJoint2D" parent="."]
+[node name="LeftArmPin" type="PinJoint2D" parent="." unique_id=80463390]
 position = Vector2(168, 500)
 node_a = NodePath("../CarBody")
 node_b = NodePath("../LeftArm")
-softness = 0.0
 
-[node name="LeftWheelPin" type="PinJoint2D" parent="."]
+[node name="LeftWheelPin" type="PinJoint2D" parent="." unique_id=738625678]
 position = Vector2(135, 520)
 node_a = NodePath("../LeftArm")
 node_b = NodePath("../LeftWheelBody")
-softness = 0.0
 
-[node name="LeftSpring" type="DampedSpringJoint2D" parent="."]
+[node name="LeftSpring" type="DampedSpringJoint2D" parent="." unique_id=538013279]
 position = Vector2(135, 500)
+node_a = NodePath("../CarBody")
+node_b = NodePath("../LeftWheelBody")
 length = 40.0
 rest_length = 40.0
 stiffness = 80.0
 damping = 8.0
-node_a = NodePath("../CarBody")
-node_b = NodePath("../LeftWheelBody")
 
-[node name="RightArm" type="RigidBody2D" parent="."]
+[node name="RightArm" type="RigidBody2D" parent="." unique_id=1867380578]
 position = Vector2(290, 500)
 mass = 0.3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArm"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArm" unique_id=2117073794]
 shape = SubResource("ArmShape")
 disabled = true
 
-[node name="ColorRect" type="ColorRect" parent="RightArm"]
+[node name="ColorRect" type="ColorRect" parent="RightArm" unique_id=641277985]
 offset_left = -18.0
 offset_top = -4.0
 offset_right = 18.0
 offset_bottom = 4.0
 color = Color(0.5, 0.5, 0.5, 1)
 
-[node name="RightWheelBody" type="RigidBody2D" parent="."]
+[node name="RightWheelBody" type="RigidBody2D" parent="." unique_id=1906427243]
 position = Vector2(305, 520)
 mass = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWheelBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWheelBody" unique_id=1555382544]
 shape = SubResource("WheelShape")
 
-[node name="ColorRect" type="ColorRect" parent="RightWheelBody"]
+[node name="ColorRect" type="ColorRect" parent="RightWheelBody" unique_id=2023453639]
 offset_left = -22.0
 offset_top = -22.0
 offset_right = 22.0
 offset_bottom = 22.0
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Marker" type="ColorRect" parent="RightWheelBody"]
-offset_left = 0.0
+[node name="Marker" type="ColorRect" parent="RightWheelBody" unique_id=1447239773]
 offset_top = -2.0
 offset_right = 20.0
 offset_bottom = 2.0
 color = Color(0.95, 0.95, 0.6, 1)
 
-[node name="RightArmPin" type="PinJoint2D" parent="."]
+[node name="RightArmPin" type="PinJoint2D" parent="." unique_id=1551007813]
 position = Vector2(272, 500)
 node_a = NodePath("../CarBody")
 node_b = NodePath("../RightArm")
-softness = 0.0
 
-[node name="RightWheelPin" type="PinJoint2D" parent="."]
+[node name="RightWheelPin" type="PinJoint2D" parent="." unique_id=1810407452]
 position = Vector2(305, 520)
 node_a = NodePath("../RightArm")
 node_b = NodePath("../RightWheelBody")
-softness = 0.0
 
-[node name="RightSpring" type="DampedSpringJoint2D" parent="."]
+[node name="RightSpring" type="DampedSpringJoint2D" parent="." unique_id=1441418316]
 position = Vector2(305, 500)
+node_a = NodePath("../CarBody")
+node_b = NodePath("../RightWheelBody")
 length = 40.0
 rest_length = 40.0
 stiffness = 80.0
 damping = 8.0
-node_a = NodePath("../CarBody")
-node_b = NodePath("../RightWheelBody")
+
+[node name="CameraFollow" type="Camera2D" parent="." unique_id=1408332310]
+position = Vector2(618.00006, 254)
+scale = Vector2(1.2706679, 7.9137645)
+script = ExtResource("2_4oloh")
+target_path = NodePath("../Player3C")
+
+[node name="Player3C" parent="." unique_id=1353026340 instance=ExtResource("3_b044s")]
+position = Vector2(21, 364)
+rotation = 0.06946202
+saturation_full = 100.0

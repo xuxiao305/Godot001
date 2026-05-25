@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="2D Platformer - Starter Kit"
 config/tags=PackedStringArray("starterkit")
-run/main_scene="res://Scenes/Demos/demo_menu.tscn"
+run/main_scene="uid://dwpndemo0001"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/bg_color=Color(0.105882, 0.458824, 0.733333, 1)
 boot_splash/image="res://Assets/Splash/2D Platformer Starter Kit Splash.png"
@@ -26,10 +26,6 @@ config/icon="res://Icon.png"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot-box2d/plugin.cfg")
 
 [input]
 
@@ -69,14 +65,6 @@ SpawnEffect={
 ]
 }
 
-[physics]
-
-2d/physics_engine="Box2D"
-
-[rendering]
-
-environment/defaults/default_clear_color=Color(0.105469, 0.457031, 0.730469, 1)
-
 [layer_names]
 
 2d_physics/layer_1="world"
@@ -84,3 +72,10 @@ environment/defaults/default_clear_color=Color(0.105469, 0.457031, 0.730469, 1)
 2d_physics/layer_3="destructible"
 2d_physics/layer_4="projectile"
 
+[physics]
+
+2d/physics_engine="Rapier2D"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.105469, 0.457031, 0.730469, 1)
