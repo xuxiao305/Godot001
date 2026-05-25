@@ -17,6 +17,7 @@ var _vy_sign_held_since: float = -INF
 var _last_vy_sign: int = 0
 
 func _ready() -> void:
+	zoom = Vector2(0.5, 0.5)   # 1:1 像素单位
 	if not target_path.is_empty():
 		_target = get_node(target_path) as Node2D
 

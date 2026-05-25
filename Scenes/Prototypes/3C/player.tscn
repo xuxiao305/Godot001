@@ -1,24 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp3cplayer001"]
+[gd_scene format=3 uid="uid://dp3cplayer001"]
 
-[ext_resource type="Script" uid="uid://dp3cplayer002" path="res://Scripts/Prototypes/3C/player.gd" id="1"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape"]
-radius = 40.0
-height = 180.0
+[ext_resource type="Script" uid="uid://dokmyb6iwbeyl" path="res://Scripts/Prototypes/3C/player.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cbss87b7xk5lc" path="res://Assets/Spritesheet/platformerPack_character.png" id="2_fw8hg"]
 
 [sub_resource type="PhysicsMaterial" id="PlayerMat"]
-friction = 1.0
+friction = 0.25
 
-[node name="Player3C" type="RigidBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fw8hg"]
+radius = 26.5
+height = 65.88
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_465us"]
+atlas = ExtResource("2_fw8hg")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asy7f"]
+atlas = ExtResource("2_fw8hg")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78u88"]
+atlas = ExtResource("2_fw8hg")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oewrn"]
+atlas = ExtResource("2_fw8hg")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5krk3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_465us")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asy7f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78u88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oewrn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player3C" type="RigidBody2D" unique_id=1353026340]
 physics_material_override = SubResource("PlayerMat")
 script = ExtResource("1")
+f_active_brake = 100.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1299911463]
+position = Vector2(-2, 14)
+shape = SubResource("CapsuleShape2D_fw8hg")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -40.0
-offset_top = -90.0
-offset_right = 40.0
-offset_bottom = 90.0
-color = Color(0.85, 0.2, 0.2, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1355114425]
+sprite_frames = SubResource("SpriteFrames_5krk3")
+frame_progress = 0.72919047
