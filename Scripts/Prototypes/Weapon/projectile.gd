@@ -10,6 +10,8 @@ extends RigidBody2D
 
 var _age: float = 0.0
 var _hit_handled: bool = false  # 防止同帧多 body_entered 触发多个 Effect
+var _hit_point: Vector2 = Vector2.ZERO
+var _hit_dir: Vector2 = Vector2.RIGHT
 
 func _ready() -> void:
 	add_to_group("projectile")
@@ -26,11 +28,14 @@ func _on_body_entered(body: Node) -> void:
 	if _hit_handled:
 		return
 	_hit_handled = true
-	# 命中点 = projectile 当前位置（精度足够；CCD 命中点可由 contact 取，v1 不做）
-	var hit_point := global_position
-	# 弹道方向 = 当前速度方向（命中瞬间）
-	var dir := linear_velocity.normalized() if linear_velocity.length_squared() > 0.0 else Vector2.RIGHT
-	_spawn_effect(hit_point, dir)
+	# 捕获命中位置和方向，然后 defer 到空闲帧再做 Effect spawn。
+	# 物理 step 内做 intersect_point / add_child 会在 Box2D 里破坏内部状态导致卡死。
+	_hit_point = global_position
+	_hit_dir = linear_velocity.normalized() if linear_velocity.length_squared() > 0.0 else Vector2.RIGHT
+	call_deferred("_handle_hit_deferred")
+
+func _handle_hit_deferred() -> void:
+	_spawn_effect(_hit_point, _hit_dir)
 	queue_free()
 
 func _spawn_effect(point: Vector2, direction: Vector2) -> void:

@@ -1,15 +1,8 @@
 [gd_scene format=3 uid="uid://dwpnwpnpist01"]
 
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/weapon.gd" id="1"]
+[ext_resource type="Script" uid="uid://bfbk36xxs3ubu" path="res://Scripts/Prototypes/Weapon/weapon.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dwpnprojdir01" path="res://Scenes/Prototypes/Weapon/projectiles/direct_projectile.tscn" id="2"]
 
-[node name="Pistol" type="Node2D"]
+[node name="Pistol" type="Node2D" unique_id=1233921493]
 script = ExtResource("1")
-projectile_scene = ExtResource("2")
-fire_action = &"Fire1"
-cooldown = 0.2
-projectile_initial_speed = 12000.0
-muzzle_offset = Vector2(50, 20)
-recoil_impulse = 100.0
-recoil_enabled = true
-aim_line_length = 200.0
+projectile = ExtResource("2")

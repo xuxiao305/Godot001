@@ -15,5 +15,5 @@ func _ready() -> void:
 func take_damage(amount: float, point: Vector2, source: Node) -> void:
 	var before := hp
 	hp = maxf(0.0, hp - amount)
-	var src_name := "<null>" if source == null else source.name
+	var src_name: String = "<null>" if source == null else source.name
 	print("[TestDummy %s] dmg=%.1f hp %.1f → %.1f @%s by %s" % [name, amount, before, hp, point, src_name])

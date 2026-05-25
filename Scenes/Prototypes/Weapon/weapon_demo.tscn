@@ -1,13 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://dwpndemo0001"]
+[gd_scene format=3 uid="uid://dwpndemo0001"]
 
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/weapon_demo.gd" id="1"]
+[ext_resource type="Script" uid="uid://bvrqbm3mlsvoh" path="res://Scripts/Prototypes/Weapon/weapon_demo.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="2"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/3C/camera_follow.gd" id="3"]
+[ext_resource type="Script" uid="uid://1qi4q6s6nhin" path="res://Scripts/Prototypes/3C/camera_follow.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://dwpnwpnpist01" path="res://Scenes/Prototypes/Weapon/weapons/pistol.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://dwpnwpnrkt01" path="res://Scenes/Prototypes/Weapon/weapons/rocket_launcher.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://dwpndummy001" path="res://Scenes/Prototypes/Weapon/test_dummy.tscn" id="6"]
-[ext_resource type="PackedScene" uid="uid://dwpnfxrocket01" path="res://Scenes/Prototypes/Weapon/effects/rocket_explosion_effect.tscn" id="7"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/weapon_debug_panel.gd" id="8"]
+[ext_resource type="PackedScene" uid="uid://1lk2yaahwtrk" path="res://Scenes/Prototypes/Weapon/effects/rocket_explosion_effect.tscn" id="7"]
+[ext_resource type="Script" uid="uid://bp2f8hi16wfpr" path="res://Scripts/Prototypes/Weapon/weapon_debug_panel.gd" id="8"]
 
 [sub_resource type="PhysicsMaterial" id="WallMat"]
 friction = 0.4
@@ -27,134 +27,126 @@ size = Vector2(40, 200)
 [sub_resource type="RectangleShape2D" id="CeilingShape"]
 size = Vector2(400, 20)
 
-[node name="WeaponDemo" type="Node2D"]
+[node name="WeaponDemo" type="Node2D" unique_id=381556973]
 script = ExtResource("1")
 player_path = NodePath("Player3C")
-player_spawn = Vector2(400, 400)
 standalone_effect_scene = ExtResource("7")
 
-[node name="CameraFollow" type="Camera2D" parent="."]
+[node name="CameraFollow" type="Camera2D" parent="." unique_id=2111786082]
 position = Vector2(400, 400)
 scale = Vector2(2, 2)
 script = ExtResource("3")
 target_path = NodePath("../Player3C")
 
-[node name="Player3C" parent="." groups=["player"] instance=ExtResource("2")]
+[node name="Player3C" parent="." unique_id=1326205253 groups=["player"] instance=ExtResource("2")]
 position = Vector2(400, 400)
 
-[node name="Pistol" parent="Player3C" instance=ExtResource("4")]
-wielder_path = NodePath("..")
+[node name="Pistol" parent="Player3C" unique_id=1008438548 instance=ExtResource("4")]
+holder_path = NodePath("..")
 
-[node name="RocketLauncher" parent="Player3C" instance=ExtResource("5")]
-wielder_path = NodePath("..")
+[node name="RocketLauncher" parent="Player3C" unique_id=156781665 instance=ExtResource("5")]
+holder_path = NodePath("..")
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="." unique_id=52602481]
 position = Vector2(800, 600)
-collision_layer = 1
 collision_mask = 13
 physics_material_override = SubResource("WallMat")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=611144079]
 shape = SubResource("GroundShape")
 
-[node name="ColorRect" type="ColorRect" parent="Ground"]
+[node name="ColorRect" type="ColorRect" parent="Ground" unique_id=1464892917]
 offset_left = -800.0
 offset_top = -40.0
 offset_right = 800.0
 offset_bottom = 40.0
 color = Color(0.3, 0.3, 0.3, 1)
 
-[node name="ArenaWallLeft" type="StaticBody2D" parent="."]
+[node name="ArenaWallLeft" type="StaticBody2D" parent="." unique_id=1382549012]
 position = Vector2(20, 200)
-collision_layer = 1
 collision_mask = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallLeft"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallLeft" unique_id=1559835088]
 shape = SubResource("WallShape")
 
-[node name="ColorRect" type="ColorRect" parent="ArenaWallLeft"]
+[node name="ColorRect" type="ColorRect" parent="ArenaWallLeft" unique_id=292544589]
 offset_left = -20.0
 offset_top = -400.0
 offset_right = 20.0
 offset_bottom = 400.0
 color = Color(0.3, 0.3, 0.3, 1)
 
-[node name="ArenaWallRight" type="StaticBody2D" parent="."]
+[node name="ArenaWallRight" type="StaticBody2D" parent="." unique_id=1315168534]
 position = Vector2(1580, 200)
-collision_layer = 1
 collision_mask = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallRight"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallRight" unique_id=2063192412]
 shape = SubResource("WallShape")
 
-[node name="ColorRect" type="ColorRect" parent="ArenaWallRight"]
+[node name="ColorRect" type="ColorRect" parent="ArenaWallRight" unique_id=903301064]
 offset_left = -20.0
 offset_top = -400.0
 offset_right = 20.0
 offset_bottom = 400.0
 color = Color(0.3, 0.3, 0.3, 1)
 
-[node name="ArenaWallTop" type="StaticBody2D" parent="."]
+[node name="ArenaWallTop" type="StaticBody2D" parent="." unique_id=743984689]
 position = Vector2(800, -180)
-collision_layer = 1
 collision_mask = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallTop"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaWallTop" unique_id=324784553]
 shape = SubResource("TopWallShape")
 
-[node name="ColorRect" type="ColorRect" parent="ArenaWallTop"]
+[node name="ColorRect" type="ColorRect" parent="ArenaWallTop" unique_id=879716232]
 offset_left = -800.0
 offset_top = -20.0
 offset_right = 800.0
 offset_bottom = 20.0
 color = Color(0.3, 0.3, 0.3, 1)
 
-[node name="StaticWall" type="StaticBody2D" parent="."]
+[node name="StaticWall" type="StaticBody2D" parent="." unique_id=1812173223]
 position = Vector2(1100, 460)
-collision_layer = 1
 collision_mask = 13
 physics_material_override = SubResource("WallMat")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticWall" unique_id=1565013420]
 shape = SubResource("StaticWallShape")
 
-[node name="ColorRect" type="ColorRect" parent="StaticWall"]
+[node name="ColorRect" type="ColorRect" parent="StaticWall" unique_id=1016678094]
 offset_left = -20.0
 offset_top = -100.0
 offset_right = 20.0
 offset_bottom = 100.0
 color = Color(0.45, 0.45, 0.45, 1)
 
-[node name="Ceiling" type="StaticBody2D" parent="."]
+[node name="Ceiling" type="StaticBody2D" parent="." unique_id=2054918865]
 position = Vector2(400, -100)
-collision_layer = 1
 collision_mask = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=465297633]
 shape = SubResource("CeilingShape")
 
-[node name="ColorRect" type="ColorRect" parent="Ceiling"]
+[node name="ColorRect" type="ColorRect" parent="Ceiling" unique_id=1230426340]
 offset_left = -200.0
 offset_top = -10.0
 offset_right = 200.0
 offset_bottom = 10.0
 color = Color(0.4, 0.35, 0.35, 1)
 
-[node name="Dummy1" parent="." instance=ExtResource("6")]
+[node name="Dummy1" parent="." unique_id=497289174 instance=ExtResource("6")]
 position = Vector2(800, 540)
 
-[node name="Dummy2" parent="." instance=ExtResource("6")]
+[node name="Dummy2" parent="." unique_id=1545133525 instance=ExtResource("6")]
 position = Vector2(900, 540)
 
-[node name="Dummy3" parent="." instance=ExtResource("6")]
+[node name="Dummy3" parent="." unique_id=135798661 instance=ExtResource("6")]
 position = Vector2(1000, 540)
 
-[node name="FloorDummy" parent="." instance=ExtResource("6")]
+[node name="FloorDummy" parent="." unique_id=248795725 instance=ExtResource("6")]
 position = Vector2(400, 540)
 
-[node name="DebugPanel" type="CanvasLayer" parent="."]
+[node name="DebugPanel" type="CanvasLayer" parent="." unique_id=1803648882]
 script = ExtResource("8")
 pistol_path = NodePath("../Player3C/Pistol")
 rocket_path = NodePath("../Player3C/RocketLauncher")
 demo_path = NodePath("..")
-
