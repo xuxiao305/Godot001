@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ikph11ocftsb"]
+
+[sub_resource type="PhysicsMaterial" id="MatDefault"]
+friction = 0.4
+
+[sub_resource type="RectangleShape2D" id="ShapeWalkway"]
+size = Vector2(600, 225)
+
+[node name="Ground" type="StaticBody2D" unique_id=564516770]
+physics_material_override = SubResource("MatDefault")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471532271]
+position = Vector2(0, 115)
+scale = Vector2(3, 1)
+shape = SubResource("ShapeWalkway")
