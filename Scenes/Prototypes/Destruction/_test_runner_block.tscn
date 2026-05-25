@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dttdbl01"]
+
+[ext_resource type="Script" uid="uid://dttdbl02" path="res://Scripts/Prototypes/Destruction/tests/test_block_damage.gd" id="1_tdbl"]
+
+[node name="TestBlockDamage" type="Node"]
+script = ExtResource("1_tdbl")

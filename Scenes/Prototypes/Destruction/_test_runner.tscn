@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dtrnr001"]
+
+[ext_resource type="Script" uid="uid://dttdpl01" path="res://Scripts/Prototypes/Destruction/tests/test_destruction_pipeline.gd" id="1_tdpl"]
+
+[node name="TestDestructionPipeline" type="Node"]
+script = ExtResource("1_tdpl")

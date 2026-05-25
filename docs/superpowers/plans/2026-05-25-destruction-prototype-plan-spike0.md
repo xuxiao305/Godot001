@@ -5,7 +5,7 @@
 **Spike 文件：**
 - 脚本：`Scripts/Prototypes/Destruction/spike/spike_pin_reaction.gd`
 - 场景：`Scenes/Prototypes/Destruction/spike/spike_pin_reaction.tscn`
-- Smoke 日志：`Scenes/Prototypes/Destruction/spike/spike0_smoke_20260525_005711.log(.stdout)`
+- Smoke 日志：headless 跑出的日志已 inline 节录到本文件，原始 log 文件未入库
 
 **结论：** 选 (c) — v1 不实现物理路径
 
@@ -154,7 +154,7 @@ phase=PIN_DELETED  sigma_proxy=10.426  (-5.213, -5.213)  <- 一直稳在 ~10
 | import | `--headless --quit` | ✅ 无相关 SCRIPT ERROR（仅打印无关的 demo_menu ready） |
 | smoke run | headless 跑 .tscn 8s 自退 | ✅ 无 stderr，正常 print，自然 quit |
 
-Smoke 日志路径：`Scenes/Prototypes/Destruction/spike/spike0_smoke_20260525_005711.log.stdout`
+Smoke 日志已 inline 节录在本文件 (b)/(b') 段落，原始 log 未入库（一次性 evidence）。
 
 ---
 
