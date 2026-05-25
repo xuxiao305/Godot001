@@ -7,7 +7,13 @@
 			"path": "../../Source/godot-master"
 		},
 		{
-			"path": "../../../ObsidianNote/MyNote/白日做梦/PlatformerPhysics/docs"
+			"path": "../../../ObsidianNote/MyNote/白日做梦/PlatformerPhysics"
+		},
+		{
+			"path": "../../Source/rapier-master"
+		},
+		{
+			"path": "../../Source/godot-rapier-physics"
 		}
 	],
 	"settings": {
