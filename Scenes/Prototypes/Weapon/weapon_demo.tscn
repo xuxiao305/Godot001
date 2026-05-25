@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dwpnwpnrkt01" path="res://Scenes/Prototypes/Weapon/weapons/rocket_launcher.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://dwpndummy001" path="res://Scenes/Prototypes/Weapon/test_dummy.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://1lk2yaahwtrk" path="res://Scenes/Prototypes/Weapon/effects/rocket_explosion_effect.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://dwpnprojbal01" path="res://Scenes/Prototypes/Weapon/projectiles/ballistic_projectile.tscn" id="7_1ewq5"]
 [ext_resource type="Script" uid="uid://bp2f8hi16wfpr" path="res://Scripts/Prototypes/Weapon/weapon_debug_panel.gd" id="8"]
+[ext_resource type="Script" path="res://Scripts/Prototypes/UI/Debug_Info.gd" id="9_83b60"]
 
 [sub_resource type="PhysicsMaterial" id="WallMat"]
 friction = 0.4
@@ -45,6 +47,7 @@ position = Vector2(400, 400)
 holder_path = NodePath("..")
 
 [node name="RocketLauncher" parent="Player3C" unique_id=156781665 instance=ExtResource("5")]
+projectile = ExtResource("7_1ewq5")
 holder_path = NodePath("..")
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=52602481]
@@ -150,3 +153,6 @@ script = ExtResource("8")
 pistol_path = NodePath("../Player3C/Pistol")
 rocket_path = NodePath("../Player3C/RocketLauncher")
 demo_path = NodePath("..")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1571379172]
+script = ExtResource("9_83b60")

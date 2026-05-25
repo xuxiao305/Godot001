@@ -23,6 +23,8 @@ func _physics_process(delta: float) -> void:
 	_age += delta
 	if _age >= max_lifetime:
 		queue_free()
+	if linear_velocity.length_squared() > 0.01:
+		rotation = linear_velocity.angle()
 
 func _on_body_entered(body: Node) -> void:
 	if _hit_handled:

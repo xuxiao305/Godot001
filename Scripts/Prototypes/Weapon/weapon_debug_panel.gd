@@ -35,7 +35,8 @@ func _ready() -> void:
 		_demo = get_node(demo_path) as WeaponDemo
 	_build_ui()
 	visible = false
-
+	
+	
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F1:
 		visible = not visible
@@ -48,7 +49,10 @@ func _process(_dt: float) -> void:
 			_value_labels["active_projectiles"].text = "active projectiles: %d" % _demo.count_active_projectiles()
 		if _value_labels.has("active_effects"):
 			_value_labels["active_effects"].text = "active effects: %d" % _demo.count_active_effects()
-	# Pistol/Rocket recoil 开关与 affect_player 复选框由 toggle 自身回写
+		# Pistol/Rocket recoil 开关与 affect_player 复选框由 toggle 自身回写
+	
+	
+		
 
 func _build_ui() -> void:
 	var root := PanelContainer.new()

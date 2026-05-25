@@ -1,31 +1,28 @@
 [gd_scene format=3 uid="uid://dwpnprojdir01"]
 
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/projectile.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dwpnfxpistol01" path="res://Scenes/Prototypes/Weapon/effects/pistol_hit_effect.tscn" id="2"]
+[ext_resource type="Script" uid="uid://b5e431p360it8" path="res://Scripts/Prototypes/Weapon/projectile.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://1lk2v3qq7lrk" path="res://Scenes/Prototypes/Weapon/effects/pistol_hit_effect.tscn" id="2"]
 
 [sub_resource type="PhysicsMaterial" id="ProjMat"]
 friction = 0.0
-bounce = 0.0
 
 [sub_resource type="CircleShape2D" id="ProjShape"]
 radius = 8.0
 
-[node name="DirectProjectile" type="RigidBody2D"]
+[node name="DirectProjectile" type="RigidBody2D" unique_id=917472178]
 collision_layer = 8
 collision_mask = 5
-gravity_scale = 0.0
-linear_damp = 0.0
-mass = 1.0
-continuous_cd = 2
+mass = 0.1
 physics_material_override = SubResource("ProjMat")
+gravity_scale = 0.0
+continuous_cd = 2
 script = ExtResource("1")
 effect_scene = ExtResource("2")
-max_lifetime = 1.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=546773476]
 shape = SubResource("ProjShape")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1969705089]
 offset_left = -10.0
 offset_top = -2.0
 offset_right = 10.0
