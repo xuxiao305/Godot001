@@ -27,3 +27,6 @@ obj/
 # Claude Code / Superpowers artifacts
 .claude/worktrees/
 .superpowers/
+
+# Debug log files
+**/log.txt
