@@ -57,7 +57,7 @@ func _ready() -> void:
 	_input_buf.coyote_time = coyote_time
 	_input_buf.jump_buffer_time = jump_buffer_time
 
-# 用 _integrate_forces 而非 _physics_process —— Box2D 提供完整 state，且这是 Godot 推荐的物理操作时机。
+# 用 _integrate_forces 而非 _physics_process 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# === 1. 观察物理 ===
 	_ground_debounce.buffer_frames = ground_state_buffer_frames

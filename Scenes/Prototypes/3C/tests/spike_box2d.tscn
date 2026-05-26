@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxkr0h0mftjo8"]
-
-[ext_resource type="Script" uid="uid://cxn3g8pdmyjlr" path="res://Scripts/Prototypes/3C/tests/spike_box2d.gd" id="1_rwqka"]
-
-[node name="SpikeBox2D" type="Node2D"]
-script = ExtResource("1_rwqka")
