@@ -52,10 +52,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		_spawn_falling_block()
 
 func _spawn_falling_block() -> void:
+	# Debug projectile: heavy + visible so impact damage chain (spec T6) can be observed.
+	# Wall blocks have no sprite (visualizer only draws Constraint lines), so we add
+	# a red square Polygon2D child to track where this spawn block goes.
 	var spawn_pos := Vector2(0, -400)
 	var b := BlockFactoryKlass.create(pipeline, spawn_pos, 25.0, impact, 200.0)
 	b.name = "FallingBlock"
+	b.mass = 5.0  # ~800× default, momentum on landing well above impact_threshold=2
+	var viz := Polygon2D.new()
+	var s := 12.5
+	viz.polygon = PackedVector2Array([Vector2(-s, -s), Vector2(s, -s), Vector2(s, s), Vector2(-s, s)])
+	viz.color = Color(1.0, 0.2, 0.2, 0.85)
+	b.add_child(viz)
 	structure_holder.add_child(b)
+	print("[demo] FallingBlock spawned at %s, mass=%.2f" % [spawn_pos, b.mass])
 
 func _physics_process(_dt: float) -> void:
 	pipeline.dispatch_damage_events()

@@ -48,7 +48,9 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		return
 	for i in state.get_contact_count():
 		var other = state.get_contact_collider_object(i)
-		if not (other is RigidBody2D):
+		# spec §4.3: impact damage is Block↔Block only. Exclude projectile / player /
+		# world contacts (otherwise weapon hits would double-tap damage).
+		if not (other is Block):
 			continue
 		# Prevent double-counting: only process pairs where self.instance_id < other.instance_id
 		if self.get_instance_id() >= other.get_instance_id():
