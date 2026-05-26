@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cspikebfsc0"]
+
+[ext_resource type="Script" uid="uid://cspikebfgd0" path="res://Scripts/Prototypes/Destruction/spike/spike_block_factory.gd" id="1_spike"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(800, 20)
+
+[node name="SpikeBlockFactory" type="Node2D"]
+script = ExtResource("1_spike")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(0, 200)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
