@@ -108,11 +108,11 @@ _Avoid_: 火箭跳（多义 —— Quake 火箭跳实际也是 self-splash，但
 _Avoid_: 火箭跳来源（错）、反作用力（与"自爆跳"易混）
 
 **冲击伤害 (Impact Damage)**:
-Rapier2D contact 中 normal impulse 超阈值时由 ImpactWatcher 自动转换为 take_damage 调用。是 DamageField 之外**另一条**自然进入伤害系统的路径 —— 高处掉下的体块砸到下层体块，触发链式破坏，不需要任何武器参与。详见 [destruction spec §4.3](2026-05-24-destruction-prototype-design.md)。
+物理引擎接触点 impulse 超阈值时由 ImpactWatcher 自动转换为 take_damage 调用，经 first-contact gate（过滤稳态接触）+ Constraint gate（过滤共享约束的邻居）双重过滤后生效。是 DamageField 之外**另一条**自然进入伤害系统的路径 —— 高处掉下的体块砸到下层体块，触发链式破坏，不需要任何武器参与。详见 [destruction spec §4.3](2026-05-24-destruction-prototype-design.md)。
 _Avoid_: 碰撞伤害（多义）
 
 **Constraint（约束）**:
-体块（Block）之间的物理连接，运行期 = 一根 PinJoint2D 包装（angular_limit=0 等效 weld）。有两个独立断裂路径：
+体块（Block）之间的物理连接，运行期 = 一根 PinJoint2D 封装（Flex = 单销不锁旋转；Weld = 单销 + per-block lock_rotation）。GridStructure 按 `block_size × 1.42` 阈值检测邻居（覆盖直连 + 对角，每 Block 最多 8 个邻居）。有两个独立断裂路径：
 - 伤害路径（v1）：自身血量归零即断（由 Block 的伤害传递驱动）
 - 应力路径（v2）：每帧检测 PinJoint 内部应力，超 stress_threshold 即断
 详见 [destruction spec §4.2](2026-05-24-destruction-prototype-design.md)。
