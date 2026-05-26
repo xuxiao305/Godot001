@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dgridstrct00"]
+
+[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/grid_structure.gd" id="1_grid"]
+[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/constraint_visualizer.gd" id="2_viz"]
+
+[node name="GridStructure" type="Node2D"]
+script = ExtResource("1_grid")
+
+[node name="ConstraintVisualizer" type="Node2D" parent="."]
+script = ExtResource("2_viz")
