@@ -9,8 +9,8 @@
 class_name ImpactWatcher
 extends RefCounted
 
-@export var impact_threshold: float = 2.0
-@export var impact_coefficient: float = 10.0
+var impact_threshold: float = 2.0
+var impact_coefficient: float = 10.0
 
 var pipeline: DestructionPipeline = null
 var enabled: bool = true
