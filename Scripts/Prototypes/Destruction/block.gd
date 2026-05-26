@@ -37,3 +37,20 @@ func take_damage(amount: float, point: Vector2, source) -> void:
 		if pipeline != null:
 			pipeline.queue_block_destroy(self)
 		block_destroyed.emit(global_position)
+
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	if impact_watcher == null:
+		return
+	if not impact_watcher.enabled:
+		return
+	for i in state.get_contact_count():
+		var other = state.get_contact_collider_object(i)
+		if not (other is Block):
+			continue
+		# Prevent double-counting: only process pairs where self.instance_id < other.instance_id
+		if self.get_instance_id() >= other.get_instance_id():
+			continue
+		var impulse: Vector2 = state.get_contact_impulse(i)
+		var j_normal: float = impulse.length()
+		var local_pos := state.get_contact_local_position(i)
+		impact_watcher.on_contact(self, other as Block, j_normal, local_pos)
