@@ -313,6 +313,23 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
     state.linear_velocity *= 0.99
 ```
 
+以上_integrate_forces函数的参数 `state` 是 `PhysicsDirectBodyState2D` — 物理引擎在**当前步进**中给你的只读快照 + 安全写入接口：
+
+| 成员 | 含义 |
+|------|------|
+| `linear_velocity` | 当前线速度（已累加本帧所有 impulse） |
+| `angular_velocity` | 当前角速度 |
+| `transform` | 位置 + 旋转 |
+| `step` | 本物理步的 delta 时间 |
+| `mass` / `inertia` | 质量 / 转动惯量 |
+| `contact_count` | 当前接触点数量 |
+| `get_contact_*()` | 获取接触点法线、位置、碰撞对象 |
+| `space_state` | 物理空间句柄，可做射线检测等 |
+| `apply_central_force()` | 给质心加持续力 |
+| `apply_central_impulse()` | 给质心加瞬时冲量 |
+
+> **注意**：这里的 `state` 是 Godot API 层的 `PhysicsDirectBodyState2D`，与 Rapier bridge Rust 代码中 `RapierBody.state`（内部属性缓存）是两回事。Bridge 的 `self.state` 是刚体进入空间前的延迟缓存，不暴露给 GDScript。
+
 内部实现：Rapier 在 `omit_force_integration` 时会将 `gravity_scale` 设为 0，将模拟阻尼设为 0，完全依赖用户在回调中自行处理。
 
 ---

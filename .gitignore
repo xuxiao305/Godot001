@@ -23,3 +23,7 @@ mono_crash.*.json
 *.sln.DotSettings.user
 bin/
 obj/
+
+# Claude Code / Superpowers artifacts
+.claude/worktrees/
+.superpowers/
