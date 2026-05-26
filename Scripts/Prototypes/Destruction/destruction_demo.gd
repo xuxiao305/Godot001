@@ -5,6 +5,7 @@ extends Node2D
 const DestructionPipeline := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 const ImpactWatcher := preload("res://Scripts/Prototypes/Destruction/impact_watcher.gd")
 const GridStructureKlass := preload("res://Scripts/Prototypes/Destruction/grid_structure.gd")
+const BlockFactoryKlass := preload("res://Scripts/Prototypes/Destruction/block_factory.gd")
 
 @onready var structure_holder: Node2D = $StructureHolder
 
@@ -42,6 +43,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		_load_scene("arch")
 	elif event.is_action_pressed("Scene3"):
 		_load_scene("house")
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_B:
+		_spawn_falling_block()
+
+func _spawn_falling_block() -> void:
+	var spawn_pos := Vector2(0, -400)
+	var b := BlockFactoryKlass.create(pipeline, spawn_pos, 25.0, impact, 200.0)
+	b.name = "FallingBlock"
+	structure_holder.add_child(b)
 
 func _physics_process(_dt: float) -> void:
 	pipeline.dispatch_damage_events()

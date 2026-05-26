@@ -1,21 +1,37 @@
 [gd_scene format=3 uid="uid://ddemomain001"]
 
 [ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/destruction_demo.gd" id="1_demo"]
+[ext_resource type="PackedScene" uid="uid://dp3cplayer001" path="res://Scenes/Prototypes/3C/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://dwpnwpnpist01" path="res://Scenes/Prototypes/Weapon/weapons/pistol.tscn" id="3_pistol"]
+[ext_resource type="PackedScene" uid="uid://dwpnwpnrkt01" path="res://Scenes/Prototypes/Weapon/weapons/rocket_launcher.tscn" id="4_rocket"]
+[ext_resource type="PackedScene" uid="uid://dwpnprojbal01" path="res://Scenes/Prototypes/Weapon/projectiles/ballistic_projectile.tscn" id="5_ballistic"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
-size = Vector2(1200, 20)
+size = Vector2(1600, 40)
 
 [node name="DestructionDemo" type="Node2D"]
 script = ExtResource("1_demo")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -150)
+position = Vector2(100, -150)
 zoom = Vector2(1.5, 1.5)
 
 [node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(0, 25)
+position = Vector2(0, 50)
+collision_layer = 1
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
 shape = SubResource("GroundShape")
 
 [node name="StructureHolder" type="Node2D" parent="."]
+
+[node name="Player3C" parent="." groups=["player"] instance=ExtResource("2_player")]
+position = Vector2(-250, -50)
+
+[node name="Pistol" parent="Player3C" instance=ExtResource("3_pistol")]
+holder_path = NodePath("..")
+
+[node name="RocketLauncher" parent="Player3C" instance=ExtResource("4_rocket")]
+projectile = ExtResource("5_ballistic")
+holder_path = NodePath("..")
