@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dhousescn001"]
+
+[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/grid_structure.gd" id="1_grid"]
+[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/constraint_visualizer.gd" id="2_viz"]
+[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/wall_builder.gd" id="3_builder"]
+
+[node name="House" type="Node2D"]
+script = ExtResource("1_grid")
+auto_build = false
+
+[node name="ConstraintVisualizer" type="Node2D" parent="."]
+script = ExtResource("2_viz")
+
+[node name="WallBuilder" type="Node2D" parent="."]
+script = ExtResource("3_builder")
+pattern = "house"

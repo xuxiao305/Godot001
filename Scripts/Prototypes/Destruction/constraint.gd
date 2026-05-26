@@ -9,24 +9,28 @@
 class_name Constraint
 extends RefCounted
 
+const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
+const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
+
 var pin: PinJoint2D
-var block_a: Block
-var block_b: Block
+var block_a  # Block
+var block_b  # Block
 
 var initial_health: float = 50.0
 var health: float = 50.0
-var pipeline: DestructionPipeline = null
+var pipeline = null  # DestructionPipeline
 
 var _queued_for_destroy: bool = false
 
 # 装配：在两 block 共享边中点创建 PinJoint2D，angular_limit 锁死相对旋转。
 # shared_center = 共享边中点世界坐标。
 static func create(
-	a: Block, b: Block,
+	a,  # Block
+	b,  # Block
 	shared_center: Vector2,
 	parent: Node
-) -> Constraint:
-	var c := Constraint.new()
+):  # -> Constraint
+	var c = load("res://Scripts/Prototypes/Destruction/constraint.gd").new()
 	c.block_a = a
 	c.block_b = b
 	c.health = c.initial_health

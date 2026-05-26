@@ -26,11 +26,11 @@ func _draw() -> void:
 	for c in _constraints:
 		if not is_instance_valid(c) or not is_instance_valid(c.pin):
 			continue
-		var block_a: Block = c.block_a
-		var block_b: Block = c.block_b
+		var block_a = c.block_a  # Block
+		var block_b = c.block_b  # Block
 		if not is_instance_valid(block_a) or not is_instance_valid(block_b):
 			continue
-		var health_ratio := c.health / c.initial_health if c.initial_health > 0.0 else 0.0
+		var health_ratio: float = c.health / c.initial_health if c.initial_health > 0.0 else 0.0
 		var col: Color
 		if health_ratio > 0.5:
 			col = healthy_color

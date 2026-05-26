@@ -10,13 +10,15 @@
 class_name Block
 extends RigidBody2D
 
+const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
+
 signal block_destroyed(position: Vector2)
 
 @export var initial_health: float = 100.0
 @export var damage_propagation_ratio: float = 0.3
 
 var health: float = 100.0
-var pipeline: DestructionPipeline = null
+var pipeline = null  # DestructionPipeline
 var connected_constraints: Array = []  # Constraint 对象
 
 var impact_watcher = null  # ImpactWatcher (Task 5)
@@ -45,7 +47,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		return
 	for i in state.get_contact_count():
 		var other = state.get_contact_collider_object(i)
-		if not (other is Block):
+		if not (other is RigidBody2D):
 			continue
 		# Prevent double-counting: only process pairs where self.instance_id < other.instance_id
 		if self.get_instance_id() >= other.get_instance_id():
@@ -53,4 +55,4 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		var impulse: Vector2 = state.get_contact_impulse(i)
 		var j_normal: float = impulse.length()
 		var local_pos := state.get_contact_local_position(i)
-		impact_watcher.on_contact(self, other as Block, j_normal, local_pos)
+		impact_watcher.on_contact(self, other, j_normal, local_pos)

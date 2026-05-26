@@ -9,10 +9,13 @@
 class_name ImpactWatcher
 extends RefCounted
 
+const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
+const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
+
 var impact_threshold: float = 2.0
 var impact_coefficient: float = 10.0
 
-var pipeline: DestructionPipeline = null
+var pipeline = null  # DestructionPipeline
 var enabled: bool = true
 
 # Pure function: impulse -> damage amount
@@ -23,7 +26,7 @@ static func impact_to_damage(normal_impulse: float, threshold: float, coefficien
 
 # Called by Block._integrate_forces. One call per contact (instance_id comparison
 # to prevent double-counting is handled on the Block side).
-func on_contact(block_a: Block, block_b: Block, normal_impulse: float, point: Vector2) -> void:
+func on_contact(block_a, block_b, normal_impulse: float, point: Vector2) -> void:
 	if not enabled:
 		return
 	var dmg := impact_to_damage(normal_impulse, impact_threshold, impact_coefficient)

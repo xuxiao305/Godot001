@@ -4,18 +4,18 @@
 class_name BlockFactory
 extends RefCounted
 
-const Block := preload("res://Scripts/Prototypes/Destruction/block.gd")
+const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
 
 # block_size 像素
 # impact 参数未类型标注 —— ImpactWatcher 在 Task 5 才创建，避免 parse error
 static func create(
-	pipeline: DestructionPipeline,
+	pipeline,  # DestructionPipeline,
 	pos: Vector2,
 	block_size: float,
 	impact,  # ImpactWatcher (nullable until Task 5)
 	initial_health: float = 100.0
-) -> Block:
-	var b := Block.new()
+) -> RigidBody2D:
+	var b := BlockKlass.new()
 	b.global_position = pos
 	b.initial_health = initial_health
 	b.pipeline = pipeline
