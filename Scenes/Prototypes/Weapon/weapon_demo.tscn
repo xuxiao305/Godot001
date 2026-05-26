@@ -29,6 +29,23 @@ size = Vector2(40, 200)
 [sub_resource type="RectangleShape2D" id="CeilingShape"]
 size = Vector2(400, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ewq5"]
+size = Vector2(160, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43464"]
+size = Vector2(36, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fjdv"]
+radius = 22.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fjdv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_01wv8"]
+radius = 80.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_01wv8"]
+size = Vector2(56, 40)
+
 [node name="WeaponDemo" type="Node2D" unique_id=381556973]
 script = ExtResource("1")
 player_path = NodePath("Player3C")
@@ -108,7 +125,7 @@ offset_bottom = 20.0
 color = Color(0.3, 0.3, 0.3, 1)
 
 [node name="StaticWall" type="StaticBody2D" parent="." unique_id=1812173223]
-position = Vector2(1100, 460)
+position = Vector2(737, 644)
 collision_mask = 13
 physics_material_override = SubResource("WallMat")
 
@@ -156,3 +173,292 @@ demo_path = NodePath("..")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1571379172]
 script = ExtResource("9_83b60")
+
+[node name="CarBody" type="RigidBody2D" parent="." unique_id=1490978626]
+position = Vector2(620, 502)
+mass = 4.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarBody" unique_id=550203641]
+shape = SubResource("RectangleShape2D_1ewq5")
+
+[node name="ColorRect" type="ColorRect" parent="CarBody" unique_id=400736186]
+offset_left = -80.0
+offset_top = -18.0
+offset_right = 80.0
+offset_bottom = 18.0
+color = Color(0.85, 0.35, 0.35, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="LeftArm" type="RigidBody2D" parent="." unique_id=1123181593]
+position = Vector2(550, 522)
+mass = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArm" unique_id=887849995]
+shape = SubResource("RectangleShape2D_43464")
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="LeftArm" unique_id=2062416028]
+offset_left = -18.0
+offset_top = -4.0
+offset_right = 18.0
+offset_bottom = 4.0
+color = Color(0.5, 0.5, 0.5, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="LeftWheelBody" type="RigidBody2D" parent="." unique_id=395062773]
+position = Vector2(535, 542)
+mass = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWheelBody" unique_id=1303750472]
+shape = SubResource("CircleShape2D_7fjdv")
+
+[node name="ColorRect" type="ColorRect" parent="LeftWheelBody" unique_id=1412548605]
+offset_left = -22.0
+offset_top = -22.0
+offset_right = 22.0
+offset_bottom = 22.0
+color = Color(0.2, 0.2, 0.2, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Marker" type="ColorRect" parent="LeftWheelBody" unique_id=2132151844]
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+color = Color(0.95, 0.95, 0.6, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="LeftArmPin" type="PinJoint2D" parent="." unique_id=1132610972]
+position = Vector2(568, 522)
+node_a = NodePath("../CarBody")
+node_b = NodePath("../LeftArm")
+
+[node name="LeftWheelPin" type="PinJoint2D" parent="." unique_id=417123258]
+position = Vector2(535, 542)
+node_a = NodePath("../LeftArm")
+node_b = NodePath("../LeftWheelBody")
+
+[node name="LeftSpring" type="DampedSpringJoint2D" parent="." unique_id=520452413]
+position = Vector2(535, 522)
+node_a = NodePath("../CarBody")
+node_b = NodePath("../LeftWheelBody")
+length = 40.0
+rest_length = 40.0
+stiffness = 80.0
+damping = 8.0
+
+[node name="RightArm" type="RigidBody2D" parent="." unique_id=1672714673]
+position = Vector2(690, 522)
+mass = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArm" unique_id=1248783]
+shape = SubResource("RectangleShape2D_43464")
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="RightArm" unique_id=729809608]
+offset_left = -18.0
+offset_top = -4.0
+offset_right = 18.0
+offset_bottom = 4.0
+color = Color(0.5, 0.5, 0.5, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RightWheelBody" type="RigidBody2D" parent="." unique_id=1180673814]
+position = Vector2(705, 542)
+mass = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWheelBody" unique_id=2110354929]
+shape = SubResource("CircleShape2D_7fjdv")
+
+[node name="ColorRect" type="ColorRect" parent="RightWheelBody" unique_id=382734282]
+offset_left = -22.0
+offset_top = -22.0
+offset_right = 22.0
+offset_bottom = 22.0
+color = Color(0.2, 0.2, 0.2, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Marker" type="ColorRect" parent="RightWheelBody" unique_id=721088150]
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+color = Color(0.95, 0.95, 0.6, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RightArmPin" type="PinJoint2D" parent="." unique_id=2083106772]
+position = Vector2(672, 522)
+node_a = NodePath("../CarBody")
+node_b = NodePath("../RightArm")
+
+[node name="RightWheelPin" type="PinJoint2D" parent="." unique_id=657741321]
+position = Vector2(705, 542)
+node_a = NodePath("../RightArm")
+node_b = NodePath("../RightWheelBody")
+
+[node name="RightSpring" type="DampedSpringJoint2D" parent="." unique_id=313874751]
+position = Vector2(705, 522)
+node_a = NodePath("../CarBody")
+node_b = NodePath("../RightWheelBody")
+length = 40.0
+rest_length = 40.0
+stiffness = 80.0
+damping = 8.0
+
+[node name="LeftAnchor" type="StaticBody2D" parent="RightSpring" unique_id=1661024820]
+position = Vector2(199, -319)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/LeftAnchor" unique_id=1918082477]
+shape = SubResource("RectangleShape2D_7fjdv")
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/LeftAnchor" unique_id=767227679]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.6, 0.6, 0.65, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RightAnchor" type="StaticBody2D" parent="RightSpring" unique_id=470283345]
+position = Vector2(499, -319)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/RightAnchor" unique_id=759227022]
+shape = SubResource("RectangleShape2D_7fjdv")
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/RightAnchor" unique_id=403631552]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.6, 0.6, 0.65, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="LeftGear" type="RigidBody2D" parent="RightSpring" unique_id=1084842662]
+position = Vector2(199, -319)
+gravity_scale = 0.0
+angular_damp = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/LeftGear" unique_id=1772853046]
+shape = SubResource("CircleShape2D_01wv8")
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/LeftGear" unique_id=1263691038]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0.85, 0.55, 0.25, 0.6)
+metadata/_edit_use_anchors_ = true
+
+[node name="RadiusMarker" type="ColorRect" parent="RightSpring/LeftGear" unique_id=53875741]
+offset_top = -4.0
+offset_right = 78.0
+offset_bottom = 4.0
+color = Color(0.1, 0.1, 0.15, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RightGear" type="RigidBody2D" parent="RightSpring" unique_id=1623983833]
+position = Vector2(499, -319)
+gravity_scale = 0.0
+angular_damp = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/RightGear" unique_id=373742000]
+shape = SubResource("CircleShape2D_01wv8")
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/RightGear" unique_id=990853884]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0.3, 0.6, 0.9, 0.6)
+metadata/_edit_use_anchors_ = true
+
+[node name="RadiusMarker" type="ColorRect" parent="RightSpring/RightGear" unique_id=246375789]
+offset_top = -4.0
+offset_right = 78.0
+offset_bottom = 4.0
+color = Color(0.1, 0.1, 0.15, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="LeftPin" type="PinJoint2D" parent="RightSpring" unique_id=747103328]
+position = Vector2(199, -319)
+node_a = NodePath("../LeftAnchor")
+node_b = NodePath("../LeftGear")
+
+[node name="RightPin" type="PinJoint2D" parent="RightSpring" unique_id=665687564]
+position = Vector2(499, -319)
+node_a = NodePath("../RightAnchor")
+node_b = NodePath("../RightGear")
+
+[node name="Brick1" type="RigidBody2D" parent="RightSpring/RightPin" unique_id=1390507325]
+position = Vector2(-1015, 331)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/RightPin/Brick1" unique_id=1772682705]
+shape = SubResource("RectangleShape2D_01wv8")
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/RightPin/Brick1" unique_id=1067836661]
+offset_left = -28.0
+offset_top = -20.0
+offset_right = 28.0
+offset_bottom = 20.0
+color = Color(0.85, 0.55, 0.25, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Brick2" type="RigidBody2D" parent="RightSpring/RightPin" unique_id=1026620562]
+position = Vector2(-1015, 291)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/RightPin/Brick2" unique_id=2112768279]
+shape = SubResource("RectangleShape2D_01wv8")
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/RightPin/Brick2" unique_id=1826648976]
+offset_left = -28.0
+offset_top = -20.0
+offset_right = 28.0
+offset_bottom = 20.0
+color = Color(0.85, 0.55, 0.25, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Brick3" type="RigidBody2D" parent="RightSpring/RightPin" unique_id=13796201]
+position = Vector2(-1015, 251)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/RightPin/Brick3" unique_id=474109716]
+shape = SubResource("RectangleShape2D_01wv8")
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/RightPin/Brick3" unique_id=470183870]
+offset_left = -28.0
+offset_top = -20.0
+offset_right = 28.0
+offset_bottom = 20.0
+color = Color(0.85, 0.55, 0.25, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Brick4" type="RigidBody2D" parent="RightSpring/RightPin" unique_id=1470770664]
+position = Vector2(-1015, 211)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSpring/RightPin/Brick4" unique_id=335392420]
+shape = SubResource("RectangleShape2D_01wv8")
+
+[node name="ColorRect" type="ColorRect" parent="RightSpring/RightPin/Brick4" unique_id=1488409608]
+offset_left = -28.0
+offset_top = -20.0
+offset_right = 28.0
+offset_bottom = 20.0
+color = Color(0.85, 0.55, 0.25, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Weld1_2" type="PinJoint2D" parent="RightSpring/RightPin" unique_id=1893448451]
+position = Vector2(-1015, 311)
+node_a = NodePath("../Brick1")
+node_b = NodePath("../Brick2")
+angular_limit_enabled = true
+
+[node name="Weld2_3" type="PinJoint2D" parent="RightSpring/RightPin" unique_id=121937994]
+position = Vector2(-1015, 271)
+node_a = NodePath("../Brick2")
+node_b = NodePath("../Brick3")
+angular_limit_enabled = true
+
+[node name="Weld3_4" type="PinJoint2D" parent="RightSpring/RightPin" unique_id=1451873047]
+position = Vector2(-1015, 231)
+node_a = NodePath("../Brick3")
+node_b = NodePath("../Brick4")
+angular_limit_enabled = true

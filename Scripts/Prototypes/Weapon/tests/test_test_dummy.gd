@@ -1,6 +1,6 @@
 # Scripts/Prototypes/Weapon/tests/test_test_dummy.gd
 # 受体纯函数测试 —— 验证 take_damage 累计与初始 hp。
-# 不验证物理（冲量受体走 Box2D apply_central_impulse，无需测）。
+# 不验证物理（冲量受体走 apply_central_impulse，无需测）。
 extends Node
 
 const TestDummy := preload("res://Scripts/Prototypes/Weapon/test_dummy.gd")

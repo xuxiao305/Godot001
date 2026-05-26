@@ -31,7 +31,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	_hit_handled = true
 	# 捕获命中位置和方向，然后 defer 到空闲帧再做 Effect spawn。
-	# 物理 step 内做 intersect_point / add_child 会在 Box2D 里破坏内部状态导致卡死。
+	# 物理 step 内做 intersect_point / add_child 会破坏物理引擎内部状态导致卡死。
 	_hit_point = global_position
 	_hit_dir = linear_velocity.normalized() if linear_velocity.length_squared() > 0.0 else Vector2.RIGHT
 	call_deferred("_handle_hit_deferred")

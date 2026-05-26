@@ -1,19 +1,17 @@
-[gd_scene format=3 uid="uid://dwpnfxpistol01"]
+[gd_scene format=3 uid="uid://1lk2v3qq7lrk"]
 
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/effect.gd" id="1"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/damage_fields/point_damage.gd" id="2"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/Weapon/force_fields/directional_impulse.gd" id="3"]
+[ext_resource type="Script" uid="uid://bubk86djqxjvd" path="res://Scripts/Prototypes/Weapon/effect.gd" id="1"]
+[ext_resource type="Script" uid="uid://l3jgdqvwue2h" path="res://Scripts/Prototypes/Weapon/damage_fields/point_damage.gd" id="2"]
+[ext_resource type="Script" uid="uid://bxhrgu7c3qf7l" path="res://Scripts/Prototypes/Weapon/force_fields/directional_impulse.gd" id="3"]
 
-[node name="PistolHitEffect" type="Node2D"]
+[node name="PistolHitEffect" type="Node2D" unique_id=1630546711]
 script = ExtResource("1")
-visual_radius_px = 12.0
 visual_duration = 0.12
+visual_radius_px = 12.0
 visual_color = Color(1, 1, 0.4, 0.9)
 
-[node name="PointDamage" type="Node2D" parent="."]
+[node name="PointDamage" type="Node2D" parent="." unique_id=1101791790]
 script = ExtResource("2")
-amount = 50.0
 
-[node name="DirectionalImpulse" type="Node2D" parent="."]
+[node name="DirectionalImpulse" type="Node2D" parent="." unique_id=1411221887]
 script = ExtResource("3")
-magnitude = 100.0

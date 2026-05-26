@@ -16,12 +16,14 @@ const RadialDamage := preload("res://Scripts/Prototypes/Weapon/damage_fields/rad
 func apply(space_state: PhysicsDirectSpaceState2D, center: Vector2, ctx: Dictionary) -> void:
 	var circle := CircleShape2D.new()
 	circle.radius = radius
-	var q := PhysicsShapeQueryParameters2D.new()
-	q.shape = circle
-	q.transform = Transform2D(0.0, center)
-	q.collide_with_bodies = true
-	q.collide_with_areas = false
-	var hits := space_state.intersect_shape(q, max_bodies)
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = circle
+	query.transform = Transform2D(0.0, center)
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+
+	var hits := space_state.intersect_shape(query, max_bodies)
+	
 	for hit in hits:
 		var body := hit.get("collider") as RigidBody2D
 		if body == null:
