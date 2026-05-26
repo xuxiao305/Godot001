@@ -1,15 +1,18 @@
-# Scripts/Prototypes/Destruction/impact_watcher.gd
-# System: listens to contact impulses -> converts above-threshold impulses to damage events
-# queued into damage_events queue.
-# spec section 4.3: do NOT call take_damage directly from contact callback (avoids topology
-# changes mid-physics-step).
-#
-# Actual contact detection is done by Block._integrate_forces (reads get_contact_impulse),
-# this class only handles conversion + enqueueing.
+﻿# Scripts/Prototypes/Destruction/impact_watcher.gd
+# 系统：监听接触冲量 -> 将超过阈值的冲量转换为伤害事件
+# 将damage_events设计为一个纯数据结构（字典列表），而不是直接调用take_damage接口，是为了避免在物理步骤中直接修改Block状态（take_damage可能导致Block销毁，进而修改物理拓扑）
+# DestructionPipeline会在物理步骤结束后处理
+
+# 实际的接触检测由 Block._integrate_forces 完成（读取 get_contact_impulse），
+# 以便直接访问接触冲量数据（ImpactWatcher 只负责转换和入队）。
+
+# 这个类只负责转换和入队。实际的接触检测由 Block._integrate_forces 完成（读取 get_contact_impulse）
+# 以便直接访问接触冲量数据（ImpactWatcher 只负责转换和入队）。
+
 class_name ImpactWatcher
 extends RefCounted
 
-const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
+const BlockKlass := preload("res://Scripts/Prototypes/Blocks/block.gd")
 const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
 var impact_threshold: float = 2.0

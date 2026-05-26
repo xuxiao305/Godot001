@@ -44,7 +44,7 @@ func drain_constraint_destroys() -> Array:
 # 约束：target 必须 1) 仍有效（is_instance_valid）且 2) 有 take_damage 方法。
 # 已在 destroy queue 的 target 仍会被派发（take_damage 内部的 _queued_for_destroy guard 处理幂等）。
 func dispatch_damage_events() -> void:
-	for ev in drain_damage_events():
-		var target = ev.target
+	for damage_event in drain_damage_events():
+		var target = damage_event.target
 		if is_instance_valid(target) and target.has_method("take_damage"):
-			target.take_damage(ev.amount, ev.point, ev.source)
+			target.take_damage(damage_event.amount, damage_event.point, damage_event.source)

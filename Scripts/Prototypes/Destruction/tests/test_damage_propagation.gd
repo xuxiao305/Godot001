@@ -1,11 +1,11 @@
-# Scripts/Prototypes/Destruction/tests/test_damage_propagation.gd
+﻿# Scripts/Prototypes/Destruction/tests/test_damage_propagation.gd
 # 验 Block.take_damage 内的 Path X：按 damage_propagation_ratio 传递给所有相连 Constraint。
 # 也验 Constraint.take_damage 致命伤入队。
 extends Node
 
-const Block := preload("res://Scripts/Prototypes/Destruction/block.gd")
-const FlexConstraint := preload("res://Scripts/Prototypes/Destruction/flex_constraint.gd")
-const WeldConstraint := preload("res://Scripts/Prototypes/Destruction/weld_constraint.gd")
+const Block := preload("res://Scripts/Prototypes/Blocks/block.gd")
+const FlexConstraint := preload("res://Scripts/Prototypes/Constraints/flex_constraint.gd")
+const WeldConstraint := preload("res://Scripts/Prototypes/Constraints/weld_constraint.gd")
 const DestructionPipeline := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
 # 用伪 Constraint 收传递量 —— 不实例化 PinJoint2D。

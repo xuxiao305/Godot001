@@ -1,4 +1,4 @@
-# Scripts/Prototypes/Destruction/flex_constraint.gd
+﻿# Scripts/Prototypes/Destruction/flex_constraint.gd
 # FlexConstraint —— 一对相邻 Block 之间的"松销"约束。spec §4.2 (flex variant)。
 #
 # 实现：单根 PinJoint2D + angular_limit_lower=angular_limit_upper=0。
@@ -29,7 +29,7 @@ static func create(
 ):  # -> FlexConstraint
 	# load() instead of FlexConstraint.new(): GDScript class_name self-reference
 	# inside a static func of the same file fails to resolve at compile time.
-	var c = load("res://Scripts/Prototypes/Destruction/flex_constraint.gd").new()
+	var c = load("res://Scripts/Prototypes/Constraints/flex_constraint.gd").new()
 	c.block_a = a
 	c.block_b = b
 	c.health = c.initial_health
@@ -41,6 +41,7 @@ static func create(
 	pin.angular_limit_lower = 0.0
 	pin.angular_limit_upper = 0.0
 	parent.add_child(pin)
+
 	# node_a / node_b 必须在 add_child 之后设（NodePath 解析依赖 in_tree）
 	pin.node_a = a.get_path()
 	pin.node_b = b.get_path()

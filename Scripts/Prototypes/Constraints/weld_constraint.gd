@@ -1,4 +1,4 @@
-# Scripts/Prototypes/Destruction/weld_constraint.gd
+﻿# Scripts/Prototypes/Destruction/weld_constraint.gd
 # WeldConstraint —— 一对相邻 Block 之间的"焊死"约束。spec §4.2 (weld variant)。
 #
 # 实现策略（v1，与最初 spec 描述不同）：
@@ -32,7 +32,7 @@ static func create(
 ):  # -> WeldConstraint
 	# load() instead of WeldConstraint.new(): GDScript class_name self-reference
 	# inside a static func of the same file fails to resolve at compile time.
-	var c = load("res://Scripts/Prototypes/Destruction/weld_constraint.gd").new()
+	var c = load("res://Scripts/Prototypes/Constraints/weld_constraint.gd").new()
 	c.block_a = a
 	c.block_b = b
 	c.health = c.initial_health

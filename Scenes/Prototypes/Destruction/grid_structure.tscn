@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dgridstrct00"]
 
-[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/grid_structure.gd" id="1_grid"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/constraint_visualizer.gd" id="2_viz"]
+[ext_resource type="Script" uid="uid://h68pol7sj6ml" path="res://Scripts/Prototypes/Destruction/grid_structure.gd" id="1_grid"]
+[ext_resource type="Script" uid="uid://ded3e6qyo0ajp" path="res://Scripts/Prototypes/Destruction/constraint_visualizer.gd" id="2_viz"]
 
-[node name="GridStructure" type="Node2D"]
+[node name="GridStructure" type="Node2D" unique_id=56421767]
 script = ExtResource("1_grid")
 
-[node name="ConstraintVisualizer" type="Node2D" parent="."]
+[node name="ConstraintVisualizer" type="Node2D" parent="." unique_id=410427143]
 script = ExtResource("2_viz")

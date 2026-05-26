@@ -1,8 +1,8 @@
-# spike_block_factory.gd
+﻿# spike_block_factory.gd
 # F6 smoke: single block falls under gravity onto a ground plane
 extends Node2D
 
-const BlockFactoryCls := preload("res://Scripts/Prototypes/Destruction/block_factory.gd")
+const BlockFactoryCls := preload("res://Scripts/Prototypes/Blocks/block_factory.gd")
 const DestructionPipelineCls := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
 func _ready() -> void:

@@ -1,13 +1,13 @@
-# Scripts/Prototypes/Destruction/grid_structure.gd
+﻿# Scripts/Prototypes/Destruction/grid_structure.gd
 # 可复用 Prefab：扫描子节点 RigidBody2D → 邻居检测 → 建 PinJoint + Constraint。
 # spec §4.6 / §4.11。
 class_name GridStructure
 extends Node2D
 
-const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
-const FlexConstraintKlass := preload("res://Scripts/Prototypes/Destruction/flex_constraint.gd")
-const WeldConstraintKlass := preload("res://Scripts/Prototypes/Destruction/weld_constraint.gd")
-const ConstraintVisualizer := preload("res://Scripts/Prototypes/Destruction/constraint_visualizer.gd")
+const BlockKlass := preload("res://Scripts/Prototypes/Blocks/block.gd")
+const FlexConstraintKlass := preload("res://Scripts/Prototypes/Constraints/flex_constraint.gd")
+const WeldConstraintKlass := preload("res://Scripts/Prototypes/Constraints/weld_constraint.gd")
+const ConstraintVisualizer := preload("res://Scripts/Prototypes/Constraints/constraint_visualizer.gd")
 const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 const ImpactWatcherKlass := preload("res://Scripts/Prototypes/Destruction/impact_watcher.gd")
 
@@ -15,7 +15,7 @@ const KIND_FLEX := 0
 const KIND_WELD := 1
 
 @export var block_size: float = 25.0
-@export var constraint_health: float = 55550.0
+@export var constraint_health: float = 100.0
 @export var auto_build: bool = true
 # Flex = single PinJoint + angular_limit (soft, wobbly stack feel — rope/cloth/wood-lattice).
 # Weld = double PinJoint on shared-edge endpoints (geometrically rigid — brick/stone/masonry).
@@ -43,7 +43,7 @@ func build_constraints() -> void:
 			if impact_watcher != null and child.impact_watcher == null:
 				child.impact_watcher = impact_watcher
 
-	var threshold := block_size * 1.05
+	var threshold := block_size * 1.42  # Covers direct + diagonal neighbors
 	for i in _blocks.size():
 		var a = _blocks[i]  # Block
 		for j in range(i + 1, _blocks.size()):

@@ -1,11 +1,11 @@
-# Scripts/Prototypes/Destruction/wall_builder.gd
+﻿# Scripts/Prototypes/Destruction/wall_builder.gd
 # Programmatic block placer for test scenes.
 # Attach to a Node2D child of GridStructure. At _ready(), creates
 # Block children via BlockFactory, then triggers constraint build.
 extends Node2D
 
-const BlockFactoryKlass := preload("res://Scripts/Prototypes/Destruction/block_factory.gd")
-const GridStructureKlass := preload("res://Scripts/Prototypes/Destruction/grid_structure.gd")
+const BlockFactoryKlass := preload("res://Scripts/Prototypes/Blocks/block_factory.gd")
+const GridStructureKlass := preload("res://Scripts/Prototypes/Blocks/grid_structure.gd")
 
 ## Override in subclass or set in inspector
 @export var pattern: String = ""  # "grid W H", "arch", "house"

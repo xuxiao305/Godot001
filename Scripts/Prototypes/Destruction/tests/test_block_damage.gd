@@ -1,8 +1,8 @@
-# Scripts/Prototypes/Destruction/tests/test_block_damage.gd
+﻿# Scripts/Prototypes/Destruction/tests/test_block_damage.gd
 # 验 Block 的血量、take_damage、销毁入队行为。不验 Constraint 传递。
 extends Node
 
-const Block := preload("res://Scripts/Prototypes/Destruction/block.gd")
+const Block := preload("res://Scripts/Prototypes/Blocks/block.gd")
 const DestructionPipeline := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
 func _ready() -> void:

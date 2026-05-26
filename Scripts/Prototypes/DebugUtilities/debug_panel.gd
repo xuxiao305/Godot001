@@ -14,11 +14,13 @@ var impact = null  # ImpactWatcher
 @onready var _destroy_label: Label = $Panel/VBox/Stats/DestroyLabel
 @onready var _sw_propagation: CheckBox = $Panel/VBox/Toggles/PropagationToggle
 @onready var _sw_impact: CheckBox = $Panel/VBox/Toggles/ImpactToggle
+@onready var _sw_contact_debug: CheckBox = $Panel/VBox/Toggles/ContactDebugToggle
 
 func _ready() -> void:
 	_panel.visible = true
 	_sw_propagation.toggled.connect(_on_propagation_toggled)
 	_sw_impact.toggled.connect(_on_impact_toggled)
+	_sw_contact_debug.toggled.connect(_on_contact_debug_toggled)
 
 func _on_propagation_toggled(b: bool) -> void:
 	if impact != null:
@@ -27,6 +29,9 @@ func _on_propagation_toggled(b: bool) -> void:
 func _on_impact_toggled(b: bool) -> void:
 	if impact != null:
 		impact.enabled = b
+
+func _on_contact_debug_toggled(b: bool) -> void:
+	Block.debug_contact_impulse = b
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F1:

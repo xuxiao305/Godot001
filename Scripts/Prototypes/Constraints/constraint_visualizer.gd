@@ -28,16 +28,22 @@ func _draw() -> void:
 			continue
 		var block_a = c.block_a  # Block
 		var block_b = c.block_b  # Block
+
 		if not is_instance_valid(block_a) or not is_instance_valid(block_b):
 			continue
+		
 		var health_ratio: float = c.health / c.initial_health if c.initial_health > 0.0 else 0.0
 		var col: Color
+		
 		if health_ratio > 0.5:
 			col = healthy_color
 		elif health_ratio > 0.3:
 			col = warning_color
 		else:
 			col = critical_color
-		draw_line(block_a.global_position - global_position,
+		
+		draw_line(
+			block_a.global_position - global_position,
 			block_b.global_position - global_position,
-			col, line_width)
+			col, line_width
+			)

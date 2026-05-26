@@ -1,11 +1,11 @@
-# Scripts/Prototypes/Destruction/destruction_demo.gd
+﻿# Scripts/Prototypes/Destruction/destruction_demo.gd
 # 主场景控制器：装配 pipeline / impact / 场景加载 / 帧末批处理。
 extends Node2D
 
 const DestructionPipeline := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 const ImpactWatcher := preload("res://Scripts/Prototypes/Destruction/impact_watcher.gd")
-const GridStructureKlass := preload("res://Scripts/Prototypes/Destruction/grid_structure.gd")
-const BlockFactoryKlass := preload("res://Scripts/Prototypes/Destruction/block_factory.gd")
+const GridStructureKlass := preload("res://Scripts/Prototypes/Blocks/grid_structure.gd")
+const BlockFactoryKlass := preload("res://Scripts/Prototypes/Blocks/block_factory.gd")
 
 @onready var structure_holder: Node2D = $StructureHolder
 

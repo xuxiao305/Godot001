@@ -1,16 +1,18 @@
 [gd_scene format=3 uid="uid://dhousescn001"]
 
-[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/grid_structure.gd" id="1_grid"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/constraint_visualizer.gd" id="2_viz"]
-[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/wall_builder.gd" id="3_builder"]
+[ext_resource type="Script" uid="uid://h68pol7sj6ml" path="res://Scripts/Prototypes/Destruction/grid_structure.gd" id="1_grid"]
+[ext_resource type="Script" uid="uid://ded3e6qyo0ajp" path="res://Scripts/Prototypes/Destruction/constraint_visualizer.gd" id="2_viz"]
+[ext_resource type="Script" uid="uid://b52rlqqkwwenm" path="res://Scripts/Prototypes/Destruction/wall_builder.gd" id="3_builder"]
 
-[node name="House" type="Node2D"]
+[node name="House" type="Node2D" unique_id=1547729320]
 script = ExtResource("1_grid")
+constraint_health = 100.0
 auto_build = false
 
-[node name="ConstraintVisualizer" type="Node2D" parent="."]
+[node name="ConstraintVisualizer" type="Node2D" parent="." unique_id=749082368]
 script = ExtResource("2_viz")
 
-[node name="WallBuilder" type="Node2D" parent="."]
+[node name="WallBuilder" type="Node2D" parent="." unique_id=249985174]
 script = ExtResource("3_builder")
 pattern = "house"
+block_health = 5000.0
