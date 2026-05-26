@@ -88,6 +88,7 @@ offset_top = 580.0
 offset_right = 940.0
 offset_bottom = 620.0
 color = Color(0.3, 0.25, 0.2, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Bump2" type="StaticBody2D" parent="." unique_id=600624148]
 
@@ -101,6 +102,7 @@ offset_top = 560.0
 offset_right = 1060.0
 offset_bottom = 620.0
 color = Color(0.35, 0.3, 0.22, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="GroundC" type="StaticBody2D" parent="." unique_id=1809519548]
 
@@ -114,6 +116,7 @@ offset_top = 580.0
 offset_right = 1132.0
 offset_bottom = 620.0
 color = Color(0.3, 0.25, 0.2, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="CarBody" type="RigidBody2D" parent="." unique_id=285306809]
 position = Vector2(220, 480)
@@ -128,6 +131,7 @@ offset_top = -18.0
 offset_right = 80.0
 offset_bottom = 18.0
 color = Color(0.85, 0.35, 0.35, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="LeftArm" type="RigidBody2D" parent="." unique_id=198239911]
 position = Vector2(150, 500)
@@ -143,6 +147,7 @@ offset_top = -4.0
 offset_right = 18.0
 offset_bottom = 4.0
 color = Color(0.5, 0.5, 0.5, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="LeftWheelBody" type="RigidBody2D" parent="." unique_id=376443711]
 position = Vector2(135, 520)
@@ -157,12 +162,14 @@ offset_top = -22.0
 offset_right = 22.0
 offset_bottom = 22.0
 color = Color(0.2, 0.2, 0.2, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Marker" type="ColorRect" parent="LeftWheelBody" unique_id=1979819311]
 offset_top = -2.0
 offset_right = 20.0
 offset_bottom = 2.0
 color = Color(0.95, 0.95, 0.6, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="LeftArmPin" type="PinJoint2D" parent="." unique_id=80463390]
 position = Vector2(168, 500)
@@ -197,6 +204,7 @@ offset_top = -4.0
 offset_right = 18.0
 offset_bottom = 4.0
 color = Color(0.5, 0.5, 0.5, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="RightWheelBody" type="RigidBody2D" parent="." unique_id=1906427243]
 position = Vector2(305, 520)
@@ -211,12 +219,14 @@ offset_top = -22.0
 offset_right = 22.0
 offset_bottom = 22.0
 color = Color(0.2, 0.2, 0.2, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Marker" type="ColorRect" parent="RightWheelBody" unique_id=1447239773]
 offset_top = -2.0
 offset_right = 20.0
 offset_bottom = 2.0
 color = Color(0.95, 0.95, 0.6, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="RightArmPin" type="PinJoint2D" parent="." unique_id=1551007813]
 position = Vector2(272, 500)
@@ -244,6 +254,6 @@ script = ExtResource("2_4oloh")
 target_path = NodePath("../Player3C")
 
 [node name="Player3C" parent="." unique_id=1353026340 instance=ExtResource("3_b044s")]
-position = Vector2(21, 364)
+position = Vector2(504, 372)
 rotation = 0.06946202
 saturation_full = 100.0

@@ -1,4 +1,4 @@
-# Demo 基类 —— 所有 Box2D Demo 关卡继承此类
+# Demo 基类 —— 所有物理 Demo 关卡继承此类
 class_name DemoLevel
 extends Node2D
 

@@ -1,4 +1,4 @@
-# Box2D Demo 主菜单 —— 列出所有可用的 Demo 关卡
+# 物理 Demo 主菜单 —— 列出所有可用的 Demo 关卡
 extends Node2D
 
 const DEMOS: Dictionary = {
@@ -22,7 +22,7 @@ const DEMOS: Dictionary = {
 		"path": "res://Scenes/Demos/demo_rope_joint.tscn",
 		"description": "刚性摆锤与多段链条"
 	},
-	# PulleyJoint 需要"两段绳子等长约束"的关节；godot-box2d v0.9.11 不提供
+	# PulleyJoint 需要"两段绳子等长约束"的关节；Rapier2D 同样未提供
 	# PulleyJoint2D 节点类，只能用脚本伪造（失去物理正确性）。暂时跳过。
 	6: {
 		"name": "PulleyJoint 滑轮关节 (不可用)",
@@ -101,7 +101,7 @@ func _setup_menu_ui() -> void:
 	var title_label := Label.new()
 	title_label.add_theme_font_size_override("font_size", 28)
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.text = "Box2D 物理 Demo 合集"
+	title_label.text = "2D 物理 Demo 合集"
 	vbox.add_child(title_label)
 
 	var spacer := Control.new()
