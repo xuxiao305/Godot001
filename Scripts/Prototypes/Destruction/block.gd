@@ -14,15 +14,23 @@ const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/
 
 signal block_destroyed(position: Vector2)
 
-@export var initial_health: float = 100.0
+@export var initial_health: float = 0.0
 @export var damage_propagation_ratio: float = 0.3
 
-var health: float = 100.0
+var health: float = 1000.0
 var pipeline = null  # DestructionPipeline
 var connected_constraints: Array = []  # Constraint 对象
 
 var impact_watcher = null  # ImpactWatcher (Task 5)
 var _queued_for_destroy: bool = false
+
+# Tracks Block instance_ids in contact with self last physics frame.
+# Used to gate ImpactWatcher to first-contact-only — settling/steady stacking
+# stops firing damage after the first frame of contact, while genuine impact
+# events (falling debris, projectile-spawned debris) reliably fire on the new
+# contact frame. Stress path (sustained joint reaction force) is independent
+# and deferred to v2.
+var _prev_contact_ids: Dictionary = {}
 
 func _ready() -> void:
 	health = initial_health
@@ -46,16 +54,25 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		return
 	if not impact_watcher.enabled:
 		return
+	var this_frame: Dictionary = {}
 	for i in state.get_contact_count():
 		var other = state.get_contact_collider_object(i)
 		# spec §4.3: impact damage is Block↔Block only. Exclude projectile / player /
 		# world contacts (otherwise weapon hits would double-tap damage).
 		if not (other is Block):
 			continue
-		# Prevent double-counting: only process pairs where self.instance_id < other.instance_id
+		# Prevent double-counting: only the lesser instance_id reports the pair.
 		if self.get_instance_id() >= other.get_instance_id():
+			continue
+		var other_id := other.get_instance_id()
+		this_frame[other_id] = true
+		# First-contact gate: skip if this pair was already touching last frame.
+		# Filters out self-weight / stacking pressure (steady contact) while still
+		# catching new impact events (debris falling onto structure, etc.).
+		if _prev_contact_ids.has(other_id):
 			continue
 		var impulse: Vector2 = state.get_contact_impulse(i)
 		var j_normal: float = impulse.length()
 		var local_pos := state.get_contact_local_position(i)
 		impact_watcher.on_contact(self, other, j_normal, local_pos)
+	_prev_contact_ids = this_frame

@@ -22,7 +22,7 @@ static func create(
 	# Body 参数（spec §4.1）
 	b.freeze = false
 	b.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC  # freeze_mode 仅在 freeze=true 时生效
-	b.mass = 0.00625  # density 1.0 @ 25px → mass ≈ 0.00625
+	b.mass = 0.1 
 	var mat := PhysicsMaterial.new()
 	mat.friction = 0.6
 	mat.bounce = 0.05
@@ -37,6 +37,15 @@ static func create(
 	var cs := CollisionShape2D.new()
 	cs.shape = shape
 	b.add_child(cs)
+	# Visual: spec §3.1 "v1 每个 Block 独立显示色块". 半透明 (alpha 0.75) 让
+	# ConstraintVisualizer 的连线能透过来显示血量颜色。名为 "Visual" 便于外部覆盖
+	# 颜色（如 destruction_demo._spawn_falling_block 把它涂红区分调试块）。
+	var s := block_size * 0.5
+	var visual := Polygon2D.new()
+	visual.name = "Visual"
+	visual.polygon = PackedVector2Array([Vector2(-s, -s), Vector2(s, -s), Vector2(s, s), Vector2(-s, s)])
+	visual.color = Color(0.75, 0.72, 0.65, 0.75)  # 米灰，砖石质感
+	b.add_child(visual)
 	# collision layers 由 GridStructure 在 add_child 后统一设（或在此设默认值）
 	b.collision_layer = 4   # layer 4 = block
 	b.collision_mask = 4 | 1  # block + world（layer 1 = world）
