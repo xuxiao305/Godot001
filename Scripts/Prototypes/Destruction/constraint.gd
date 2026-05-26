@@ -58,4 +58,7 @@ func destroy() -> void:
 	if _queued_for_destroy:
 		if is_instance_valid(pin):
 			pin.queue_free()
-		_queued_for_destroy = false  # 防重入
+		if is_instance_valid(block_a):
+			block_a.connected_constraints.erase(self)
+		if is_instance_valid(block_b):
+			block_b.connected_constraints.erase(self)
