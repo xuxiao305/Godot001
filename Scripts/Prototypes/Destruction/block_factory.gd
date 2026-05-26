@@ -21,7 +21,7 @@ static func create(
 	b.pipeline = pipeline
 	# Body 参数（spec §4.1）
 	b.freeze = false
-	b.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC  # 仅未 freeze 时生效；freeze=true 才冻结
+	b.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC  # freeze_mode 仅在 freeze=true 时生效
 	b.mass = 0.00625  # density 1.0 @ 25px → mass ≈ 0.00625
 	var mat := PhysicsMaterial.new()
 	mat.friction = 0.6
@@ -38,7 +38,7 @@ static func create(
 	cs.shape = shape
 	b.add_child(cs)
 	# collision layers 由 GridStructure 在 add_child 后统一设（或在此设默认值）
-	b.collision_layer = 4   # layer 3 = block（按项目实际 layer bit 调整）
+	b.collision_layer = 4   # layer 4 = block
 	b.collision_mask = 4 | 1  # block + world（layer 1 = world）
 	b.impact_watcher = impact
 	return b
