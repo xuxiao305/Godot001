@@ -7,11 +7,11 @@
 ### 物理派别
 
 **内在发动机派 (Inner Engine)**:
-角色作为 Box2D dynamic body，玩家的所有操作（移动、跳跃、空中转向）都转化为施加在角色上的力或冲量，由 Box2D 物理解算演化速度。角色自发的力与场景施加的力（爆炸、推、碰撞）处于同一本体论层级，物理反馈自然涌现。**本项目采用此派别**。
+角色作为 dynamic body，玩家的所有操作（移动、跳跃、空中转向）都转化为施加在角色上的力或冲量，由物理解算演化速度。角色自发的力与场景施加的力（爆炸、推、碰撞）处于同一本体论层级，物理反馈自然涌现。**本项目采用此派别**。
 _Avoid_: 力派 (force school)、动力学派 (dynamics school)、纯物理派
 
 **速度覆盖派 (Velocity Override)**:
-每帧手动写入 `linear_velocity` 压制 Box2D 自由演化，输入即响应。Celeste / Hollow Knight 等典型作品采用。**本项目已弃用此派别**，仅作对比术语保留。
+每帧手动写入 `linear_velocity` 压制自由演化，输入即响应。Celeste / Hollow Knight 等典型作品采用。**本项目已弃用此派别**，仅作对比术语保留。
 _Avoid_: 直接控制派、kinematic-emulated dynamic
 
 ### 角色行为概念
@@ -35,7 +35,7 @@ _Avoid_: 加速时间常数（这是速度覆盖派术语）
 _Avoid_: 滑步、漂移
 
 **地面摩擦 (Ground Friction)**:
-角色与地面接触时由 Box2D 物理材质（角色 fixture + 地面 fixture）共同决定的减速力。本项目的**第一调参对象** —— 走 / 滑 / 急停的手感主要靠它调，不靠速度覆盖。
+角色与地面接触时由物理材质（角色 fixture + 地面 fixture）共同决定的减速力。本项目的**第一调参对象** —— 走 / 滑 / 急停的手感主要靠它调，不靠速度覆盖。
 
 **主动刹车 (Active Braking)**:
 无方向输入时，角色发动机可选地额外施加与当前速度相反的小力。是地面摩擦的**微调补充**，**不是**主要减速机制。默认 0；当某些地面（如冰）摩擦太低导致控制失态时，可临时调高补救。
@@ -70,7 +70,7 @@ _Avoid_: 流畅、响应（指 input response 时另说）
 **三元组分解 (Weapon × Projectile × Effect)**:
 本项目所有"开火 → 击中 → 后果"链路统一分解为三个正交对象：
 - **Weapon（武器）** —— 瞄准 + 触发 + 飞行道具生成器（cooldown、muzzle、initial_speed）
-- **Projectile（飞行道具）** —— 飞行过程载体（Box2D body、寿命、命中检测）
+- **Projectile（飞行道具）** —— 飞行过程载体（寿命、命中检测）
 - **Effect（效果）** —— 命中后果（伤害 + 物理力）
 组合即玩法：手枪 = 直射 Projectile + 单点伤害 Effect；火箭炮 = 抛物线 Projectile + 范围 Effect。详见 [ADR-0010](docs/adr/0010-weapon-projectile-effect-decomposition.md)。
 _Avoid_: 子弹 = 单一类（混合飞行 + 伤害）
@@ -95,9 +95,9 @@ _Avoid_: 爆炸力（太含糊）
 项目级约定：所有可受损物理体（Block、Constraint、未来的 Enemy、Player）都实现 `take_damage(amount, point, source)` 方法。DamageField 通过 duck typing 调用，不依赖任何接口/基类。是 [ADR-0007](docs/adr/0007-effect-dual-channel.md) 的核心 invariant。
 _Avoid_: IDamageable 接口、伤害事件总线（v1 不引入抽象层）
 
-**伤害转发 (Damage Forwarding)**:
-Block.take_damage 内部除了扣自己的血，还会按比例 `damage_to_constraint_ratio`（默认 0.3）调用其所有相连 Constraint 的 take_damage。结果：DamageField 命中 Block 即可自然削弱周围约束 → 体块可能塌而非碎。Effect 完全不知道有 Constraint —— 单向依赖原则（[ADR-0007](docs/adr/0007-effect-dual-channel.md)）。
-_Avoid_: 约束伤害、连带伤害
+**伤害传递 (Damage Propagation)**:
+Block.take_damage 内部除了扣自己的血，还会按比例 `damage_propagation_ratio`（默认 0.3）调用其所有相连 Constraint 的 take_damage。结果：DamageField 命中 Block 即可自然削弱周围约束 → 体块可能塌而非碎。Effect 完全不知道有 Constraint —— 单向依赖原则（[ADR-0007](docs/adr/0007-effect-dual-channel.md)）。
+_Avoid_: 约束伤害（不如"伤害传递"精确）、连带伤害、伤害转发（旧词，已废弃）
 
 **自爆跳 (Self-Splash Jump)**:
 玩家朝脚下开枪 → Projectile 在脚下爆炸 → Effect 的 ForceField 把玩家自己推飞。**不是**后坐力造成的反向跳跃 —— 后坐力（2 N·s）量级远小于自爆冲量（12 N·s 峰值）。是 [ADR-0007](docs/adr/0007-effect-dual-channel.md) `affect_player=true` 的涌现产物，详见 [ADR-0008](docs/adr/0008-self-splash-jump.md)。
@@ -108,18 +108,18 @@ _Avoid_: 火箭跳（多义 —— Quake 火箭跳实际也是 self-splash，但
 _Avoid_: 火箭跳来源（错）、反作用力（与"自爆跳"易混）
 
 **冲击伤害 (Impact Damage)**:
-Box2D contact 中 normal impulse 超阈值时由 ImpactWatcher 自动转换为 take_damage 调用。是 DamageField 之外**另一条**自然进入伤害系统的路径 —— 高处掉下的体块砸到下层体块，触发链式破坏，不需要任何武器参与。详见 [destruction spec §4.3](2026-05-24-destruction-prototype-design.md)。
+Rapier2D contact 中 normal impulse 超阈值时由 ImpactWatcher 自动转换为 take_damage 调用。是 DamageField 之外**另一条**自然进入伤害系统的路径 —— 高处掉下的体块砸到下层体块，触发链式破坏，不需要任何武器参与。详见 [destruction spec §4.3](2026-05-24-destruction-prototype-design.md)。
 _Avoid_: 碰撞伤害（多义）
 
 **Constraint（约束）**:
-体块（Block）之间的物理连接，运行期 = 一条 Box2D weld joint 包装。有两个独立断裂路径：
-- 物理路径：每帧扫描 reaction_force / reaction_torque，超阈值即断
-- 伤害路径：自身血量归零即断（由 Block 的伤害转发驱动）
-详见 [destruction spec §4.2](2026-05-24-destruction-prototype-design.md)。**取代早期文档中的"Bond"一词** —— 全项目统一称 Constraint。
-_Avoid_: Bond（旧词，已废弃）、关节（太底层）、焊接
+体块（Block）之间的物理连接，运行期 = 一根 PinJoint2D 包装（angular_limit=0 等效 weld）。有两个独立断裂路径：
+- 伤害路径（v1）：自身血量归零即断（由 Block 的伤害传递驱动）
+- 应力路径（v2）：每帧检测 PinJoint 内部应力，超 stress_threshold 即断
+详见 [destruction spec §4.2](2026-05-24-destruction-prototype-design.md)。
+_Avoid_: Bond（旧词，已废弃）、焊接、关节
 
 **直射弹 (Direct Projectile)**:
-高速、`gravity_scale = 0` 的 Box2D 物理体；视觉上是直线但仍然走完整碰撞解算，CCD 防穿透。**不是 hitscan**（hitscan = 立即 raycast 命中），因为后者破坏物理一致性、无法被子弹时间慢放、无法被风/力场偏转。详见 [ADR-0009](docs/adr/0009-direct-shot-is-physics-projectile.md)。
+高速、`gravity_scale = 0` 物理体；视觉上是直线但仍然走完整碰撞解算，CCD 防穿透。**不是 hitscan**（hitscan = 立即 raycast 命中），因为后者破坏物理一致性、无法被子弹时间慢放、无法被风/力场偏转。详见 [ADR-0009](docs/adr/0009-direct-shot-is-physics-projectile.md)。
 _Avoid_: 激光、hitscan、瞬发弹（这三个都暗示无飞行过程）
 
 **抛物线弹 (Ballistic Projectile)**:
