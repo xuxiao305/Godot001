@@ -4,7 +4,8 @@
 extends Node
 
 const Block := preload("res://Scripts/Prototypes/Destruction/block.gd")
-const Constraint := preload("res://Scripts/Prototypes/Destruction/constraint.gd")
+const FlexConstraint := preload("res://Scripts/Prototypes/Destruction/flex_constraint.gd")
+const WeldConstraint := preload("res://Scripts/Prototypes/Destruction/weld_constraint.gd")
 const DestructionPipeline := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
 # 用伪 Constraint 收传递量 —— 不实例化 PinJoint2D。
@@ -38,13 +39,21 @@ func _ready() -> void:
 	b.take_damage(50.0, Vector2.ZERO, "test")  # 死后再打
 	assert(absf(c1.received_damage - prev) < 0.001, "Block 已死，不应再传递")
 
-	# Constraint take_damage 致死入队
-	var real_c := Constraint.new()
+	# FlexConstraint take_damage 致死入队
+	var real_c := FlexConstraint.new()
 	real_c.pipeline = pipeline
 	real_c.initial_health = 50.0
 	real_c.health = 50.0
 	real_c.take_damage(60.0, Vector2.ZERO, "test")
-	assert(pipeline.constraint_destroy_queue.size() == 1, "致死应入 constraint_destroy_queue")
+	assert(pipeline.constraint_destroy_queue.size() == 1, "flex 致死应入 constraint_destroy_queue")
+
+	# WeldConstraint take_damage 行为相同（duck-type 一致性）
+	var weld_c := WeldConstraint.new()
+	weld_c.pipeline = pipeline
+	weld_c.initial_health = 50.0
+	weld_c.health = 50.0
+	weld_c.take_damage(60.0, Vector2.ZERO, "test")
+	assert(pipeline.constraint_destroy_queue.size() == 2, "weld 致死应再加 1 入队, got %d" % pipeline.constraint_destroy_queue.size())
 
 	print("[TEST damage_propagation] ALL PASS")
 	get_tree().quit()

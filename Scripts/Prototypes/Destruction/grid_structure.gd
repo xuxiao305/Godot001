@@ -5,14 +5,22 @@ class_name GridStructure
 extends Node2D
 
 const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
-const ConstraintKlass := preload("res://Scripts/Prototypes/Destruction/constraint.gd")
+const FlexConstraintKlass := preload("res://Scripts/Prototypes/Destruction/flex_constraint.gd")
+const WeldConstraintKlass := preload("res://Scripts/Prototypes/Destruction/weld_constraint.gd")
 const ConstraintVisualizer := preload("res://Scripts/Prototypes/Destruction/constraint_visualizer.gd")
 const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 const ImpactWatcherKlass := preload("res://Scripts/Prototypes/Destruction/impact_watcher.gd")
 
+const KIND_FLEX := 0
+const KIND_WELD := 1
+
 @export var block_size: float = 25.0
-@export var constraint_health: float = 50.0
+@export var constraint_health: float = 55550.0
 @export var auto_build: bool = true
+# Flex = single PinJoint + angular_limit (soft, wobbly stack feel — rope/cloth/wood-lattice).
+# Weld = double PinJoint on shared-edge endpoints (geometrically rigid — brick/stone/masonry).
+# Default Weld since the 3 demo scenes (brick_wall/arch/house) all want true rigid behavior.
+@export_enum("Flex", "Weld") var constraint_kind: int = KIND_WELD
 var pipeline = null  # DestructionPipeline
 var impact_watcher = null  # ImpactWatcher
 
@@ -47,8 +55,12 @@ func build_constraints() -> void:
 		_visualizer.set_data(_blocks, _constraints)
 
 func _attach_constraint(a, b) -> void:  # a: Block, b: Block
-	var center= (a.global_position + b.global_position) * 0.5
-	var c = ConstraintKlass.create(a, b, center, self)
+	var center = (a.global_position + b.global_position) * 0.5
+	var c
+	if constraint_kind == KIND_WELD:
+		c = WeldConstraintKlass.create(a, b, center, self)
+	else:
+		c = FlexConstraintKlass.create(a, b, center, self)
 	c.initial_health = constraint_health
 	c.health = constraint_health
 	c.pipeline = pipeline

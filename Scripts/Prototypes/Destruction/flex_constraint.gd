@@ -1,16 +1,14 @@
-# Scripts/Prototypes/Destruction/constraint.gd
-# Constraint —— 一对相邻 Block 之间的约束封装。spec §4.2。
+# Scripts/Prototypes/Destruction/flex_constraint.gd
+# FlexConstraint —— 一对相邻 Block 之间的"松销"约束。spec §4.2 (flex variant)。
 #
-# 实现：单根 PinJoint2D + angular_limit_lower=angular_limit_upper=0 等效 weld。
-# Rapier2D 原生支持 angular_limit，无需 godot-box2d 的 2× PinJoint 方案。
+# 实现：单根 PinJoint2D + angular_limit_lower=angular_limit_upper=0。
+# Rapier 把 angular_limit 当软约束（iterative solver corrective force），重力 + 堆叠
+# 载荷下两块仍可绕销轴微旋 → 宏观"软体感 / 木栅 / 绳网"，适合需要弹性的材质。
+# 真焊死的刚体壳走 weld_constraint.gd（双 PinJoint 几何锁死）。
 #
 # 断裂路径（v1）：仅伤害路径。血量归零 → 入 constraint_destroy_queue → 帧末销毁。
-# （v2 加应力路径：每帧检测 PinJoint 内部应力超 stress_threshold。）
-class_name Constraint
+class_name FlexConstraint
 extends RefCounted
-
-const BlockKlass := preload("res://Scripts/Prototypes/Destruction/block.gd")
-const DestructionPipelineKlass := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
 var pin: PinJoint2D
 var block_a  # Block
@@ -22,15 +20,16 @@ var pipeline = null  # DestructionPipeline
 
 var _queued_for_destroy: bool = false
 
-# 装配：在两 block 共享边中点创建 PinJoint2D，angular_limit 锁死相对旋转。
-# shared_center = 共享边中点世界坐标。
+# 装配：在两 block 共享边中点创建 PinJoint2D。
 static func create(
 	a,  # Block
 	b,  # Block
 	shared_center: Vector2,
 	parent: Node
-):  # -> Constraint
-	var c = load("res://Scripts/Prototypes/Destruction/constraint.gd").new()
+):  # -> FlexConstraint
+	# load() instead of FlexConstraint.new(): GDScript class_name self-reference
+	# inside a static func of the same file fails to resolve at compile time.
+	var c = load("res://Scripts/Prototypes/Destruction/flex_constraint.gd").new()
 	c.block_a = a
 	c.block_b = b
 	c.health = c.initial_health
