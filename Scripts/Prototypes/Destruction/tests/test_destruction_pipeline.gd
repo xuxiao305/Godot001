@@ -4,6 +4,11 @@ extends Node
 
 const DestructionPipeline := preload("res://Scripts/Prototypes/Destruction/destruction_pipeline.gd")
 
+class DummyReceiver extends RefCounted:
+	var received := []
+	func take_damage(amount, point, source):
+		received.append(amount)
+
 func _ready() -> void:
 	var p := DestructionPipeline.new()
 
@@ -33,14 +38,12 @@ func _ready() -> void:
 	p.queue_constraint_destroy(fake_constraint)
 	assert(p.drain_constraint_destroys().size() == 1, "constraint 队列幂等 + drain")
 
-	# 6) dispatch_damage_events 调用 take_damage（用假受体）
-	var dummy := RefCounted.new()
-	var received := []
-	dummy.take_damage = func(amount, point, source): received.append(amount)
+	# 6) dispatch_damage_events 调用 take_damage（用 DummyReceiver）
+	var dummy := DummyReceiver.new()
 	p.queue_damage_event({"target": dummy, "amount": 15.0, "point": Vector2.ZERO, "source": "test"})
 	p.dispatch_damage_events()
-	assert(received.size() == 1, "dispatch 应调一次 take_damage")
-	assert(absf(received[0] - 15.0) < 0.001, "dispatch 传入正确 amount, got %f" % received[0])
+	assert(dummy.received.size() == 1, "dispatch 应调一次 take_damage")
+	assert(absf(dummy.received[0] - 15.0) < 0.001, "dispatch 传入正确 amount, got %f" % dummy.received[0])
 	# dispatch 后队列为空
 	assert(p.damage_events.is_empty(), "dispatch 后 damage_events 应为空")
 
