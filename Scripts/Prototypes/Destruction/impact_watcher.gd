@@ -17,6 +17,7 @@ var impact_coefficient: float = 10.0
 
 var pipeline = null  # DestructionPipeline
 var enabled: bool = true
+var propagation_enabled: bool = true
 
 # Pure function: impulse -> damage amount
 static func impact_to_damage(normal_impulse: float, threshold: float, coefficient: float) -> float:

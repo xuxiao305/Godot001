@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dwpnwpnpist01" path="res://Scenes/Prototypes/Weapon/weapons/pistol.tscn" id="3_pistol"]
 [ext_resource type="PackedScene" uid="uid://dwpnwpnrkt01" path="res://Scenes/Prototypes/Weapon/weapons/rocket_launcher.tscn" id="4_rocket"]
 [ext_resource type="PackedScene" uid="uid://dwpnprojbal01" path="res://Scenes/Prototypes/Weapon/projectiles/ballistic_projectile.tscn" id="5_ballistic"]
+[ext_resource type="Script" path="res://Scripts/Prototypes/Destruction/debug_panel.gd" id="6_debug"]
 
 [sub_resource type="RectangleShape2D" id="GroundShape"]
 size = Vector2(1600, 40)
@@ -35,3 +36,50 @@ holder_path = NodePath("..")
 [node name="RocketLauncher" parent="Player3C" instance=ExtResource("4_rocket")]
 projectile = ExtResource("5_ballistic")
 holder_path = NodePath("..")
+
+[node name="DebugPanelLayer" type="CanvasLayer" parent="."]
+script = ExtResource("6_debug")
+
+[node name="Panel" type="Control" parent="DebugPanelLayer"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -180.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="VBox" type="VBoxContainer" parent="DebugPanelLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Stats" type="VBoxContainer" parent="DebugPanelLayer/Panel/VBox"]
+
+[node name="FpsLabel" type="Label" parent="DebugPanelLayer/Panel/VBox/Stats"]
+text = "FPS: --"
+
+[node name="BlockLabel" type="Label" parent="DebugPanelLayer/Panel/VBox/Stats"]
+text = "Blocks: --"
+
+[node name="ConstraintLabel" type="Label" parent="DebugPanelLayer/Panel/VBox/Stats"]
+text = "Constraints: --"
+
+[node name="DestroyLabel" type="Label" parent="DebugPanelLayer/Panel/VBox/Stats"]
+text = "Frame destroy: --"
+
+[node name="Toggles" type="VBoxContainer" parent="DebugPanelLayer/Panel/VBox"]
+
+[node name="PropagationToggle" type="CheckBox" parent="DebugPanelLayer/Panel/VBox/Toggles"]
+text = "伤害传递 (Propagation)"
+button_pressed = true
+
+[node name="ImpactToggle" type="CheckBox" parent="DebugPanelLayer/Panel/VBox/Toggles"]
+text = "冲击伤害 (Impact)"
+button_pressed = true

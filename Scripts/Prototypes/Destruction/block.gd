@@ -31,9 +31,10 @@ func take_damage(amount: float, point: Vector2, source) -> void:
 	if _queued_for_destroy:
 		return
 	health -= amount
-	# Path X 伤害传递到所有相连 Constraint
-	for c in connected_constraints:
-		c.take_damage(amount * damage_propagation_ratio, point, source)
+	# Path X 伤害传递（可通过 DebugPanel → impact_watcher.propagation_enabled 关闭）
+	if impact_watcher == null or impact_watcher.propagation_enabled:
+		for c in connected_constraints:
+			c.take_damage(amount * damage_propagation_ratio, point, source)
 	if health <= 0.0:
 		_queued_for_destroy = true
 		if pipeline != null:

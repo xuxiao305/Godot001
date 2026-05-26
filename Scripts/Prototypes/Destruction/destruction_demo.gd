@@ -17,6 +17,11 @@ func _ready() -> void:
 	pipeline = DestructionPipeline.new()
 	impact = ImpactWatcher.new()
 	impact.pipeline = pipeline
+	# Wire debug panel
+	if has_node("DebugPanelLayer"):
+		var dp = $DebugPanelLayer
+		dp.demo = self
+		dp.impact = impact
 	_load_scene("brick_wall")
 
 func _load_scene(name: String) -> void:
